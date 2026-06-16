@@ -547,10 +547,28 @@ function renderBenchmarkRow(r) {
   const jd = r.jd || {};
   const gap = GAP_LABELS[r.gap_level] || GAP_LABELS.none;
 
-  // 当当权益标签
+  // 算"权益差距"：当当有但京东没有的权益
+  const ddPerksSet = new Set(dd.perks || []);
+  const jdPerksSet = new Set((jd.best_match || {}).perks || []);
+  const distinctivePerks = [...ddPerksSet].filter(p => !jdPerksSet.has(p));
+  const distinctiveSet = new Set(distinctivePerks);
+
+  // 当当权益标签：差异化权益放大、加深底色
   const ddPerks = (dd.perks || []).map(p => {
     const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
-    return `<span class="text-[10px] px-1.5 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
+    const isDistinctive = distinctiveSet.has(p);
+    if (isDistinctive) {
+      // 大号 + 阴影 + 边框加粗 — 突出差异化权益
+      return `<span class="inline-flex items-center text-sm px-2.5 py-1 rounded-md
+                          border-2 ${cls} font-bold shadow-sm">
+                ${p}<span class="ml-1 text-[10px] opacity-70">·当当独有</span>
+              </span>`;
+    }
+    // 普通权益：京东也有的，弱化
+    return `<span class="inline-flex items-center text-xs px-2 py-0.5 rounded
+                        border ${cls} font-medium opacity-70">
+              ${p}
+            </span>`;
   }).join(' ') || '<span class="text-xs text-slate-400">(无)</span>';
 
   // 京东方
@@ -568,10 +586,24 @@ function renderBenchmarkRow(r) {
       </div>`;
   } else {
     const best = jd.best_match || {};
-    const jdPerks = (best.perks || []).map(p => {
+    // 京东侧权益：当当独有的同款用灰色"未对齐"显示；京东自有权益正常显示
+    const jdPerksHtml = distinctivePerks.length > 0
+      ? distinctivePerks.map(p => `
+          <span class="inline-flex items-center text-sm px-2.5 py-1 rounded-md
+                       border-2 border-dashed border-slate-300 bg-slate-50
+                       text-slate-400 font-medium">
+            <span class="line-through">${p}</span>
+            <span class="ml-1 text-[10px]">未对齐</span>
+          </span>
+        `).join(' ')
+      : '';
+    const jdOwnPerks = (best.perks || []).map(p => {
       const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
-      return `<span class="text-[10px] px-1.5 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
-    }).join(' ') || '<span class="text-xs text-slate-400">(无差异化权益)</span>';
+      return `<span class="inline-flex items-center text-xs px-2 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
+    }).join(' ');
+
+    const perksDisplay = (jdPerksHtml + ' ' + jdOwnPerks).trim() ||
+      '<span class="text-xs text-slate-400">(无差异化权益)</span>';
 
     const stats = [
       best.show_count_str ? `近期销量 ${best.show_count_str}` : null,
@@ -588,20 +620,31 @@ function renderBenchmarkRow(r) {
            class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
           ${escapeHtml(best.title || '')}
         </a>
-        <div class="flex flex-wrap gap-1 mb-1.5">${jdPerks}</div>
-        ${stats ? `<p class="text-[10px] text-slate-400">${stats}</p>` : ''}
+        <div class="flex flex-wrap gap-1.5 mb-1.5">${perksDisplay}</div>
+        ${stats ? `<p class="text-[10px] text-slate-400 mt-1">${stats}</p>` : ''}
       </div>`;
   }
+
+  // 顶部缺口标签条 — 突出"权益差"数量
+  const gapBadge = distinctivePerks.length > 0
+    ? `<span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full
+                    bg-${gap.tone}-100 text-${gap.tone}-700 font-bold">
+         京东少 ${distinctivePerks.length} 项权益
+       </span>`
+    : '';
 
   return `
     <div class="bg-white rounded-2xl border border-mint-100 overflow-hidden">
       <!-- 顶部缺口标签条 -->
-      <div class="px-4 py-1.5 bg-${gap.tone}-50 border-b border-${gap.tone}-100
-                  flex items-center justify-between">
-        <span class="text-xs font-medium text-${gap.tone}-700">
+      <div class="px-4 py-2 bg-${gap.tone}-50 border-b border-${gap.tone}-100
+                  flex items-center justify-between flex-wrap gap-2">
+        <span class="text-sm font-medium text-${gap.tone}-700">
           ${gap.icon} ${gap.label} · ${gap.desc}
         </span>
-        ${dd.rank ? `<span class="text-[11px] text-slate-500">当当排名 #${dd.rank}</span>` : ''}
+        <div class="flex items-center gap-2">
+          ${gapBadge}
+          ${dd.rank ? `<span class="text-[11px] text-slate-500">当当排名 #${dd.rank}</span>` : ''}
+        </div>
       </div>
       <!-- 主体：左当当 + 右京东 -->
       <div class="flex flex-col md:flex-row">
@@ -616,8 +659,8 @@ function renderBenchmarkRow(r) {
              class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
             ${escapeHtml(dd.title || '')}
           </a>
-          <p class="text-[10px] text-slate-500 line-clamp-1 mb-2">${escapeHtml(dd.author || '—')}</p>
-          <div class="flex flex-wrap gap-1">${ddPerks}</div>
+          <p class="text-[10px] text-slate-500 line-clamp-1 mb-3">${escapeHtml(dd.author || '—')}</p>
+          <div class="flex flex-wrap gap-1.5">${ddPerks}</div>
         </div>
         <!-- 京东方 -->
         ${jdSection}
