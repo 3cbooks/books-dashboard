@@ -123,14 +123,14 @@ def jd_has_self_version(pop_book: dict, max_results: int = 10,
         skus2 = set(re.findall(r'"sku(?:Id)?":\s*"?(\d{6,14})"?', resp.text))
         all_skus = list((skus | skus2) - {pop_book.get("sku", "")})[:max_results]
 
-        # 筛短 SKU（自营特征）
-        short_skus = [s for s in all_skus if len(s) <= 10]
-        if not short_skus:
-            log.debug("搜 '%s' 未找到短 SKU，尝试下一个 query", keyword[:30])
+        # 不再用 SKU 长度过滤（"14位=POP"是错的，自营也有长 SKU）
+        # 而是查每个 SKU 的详情，用 shop_name 真实判定
+        if not all_skus:
+            log.debug("搜 '%s' 未找到任何 SKU，尝试下一个 query", keyword[:30])
             continue
 
         # 逐个查详情
-        for sku in short_skus:
+        for sku in all_skus:
             info = fetch_detail(sku)
             if info and info.get("is_self"):
                 self_title = normalize_title(info.get("title", ""))

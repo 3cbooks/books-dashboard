@@ -441,113 +441,197 @@ function renderBookFilters() {
   });
 }
 
-// ========== 渲染：当当对标专区 ==========
+// ========== 渲染：当当 vs 京东 权益对标 ==========
+
+const GAP_LABELS = {
+  'no_jd':    { label: '完全缺口',     icon: '❌', tone: 'rose',    desc: '京东根本不卖' },
+  'no_self':  { label: '自营空白',     icon: '⚠️', tone: 'amber',   desc: '京东只 POP 在售' },
+  'perk_gap': { label: '权益差距',     icon: '🎯', tone: 'violet',  desc: '京东自营有但权益少' },
+  'none':     { label: '无明显缺口',   icon: '✅', tone: 'emerald', desc: '京东自营有同等权益' },
+};
 
 function renderDangdangBenchmark() {
   const grid = $('#benchmark-grid');
-  const filterBar = $('#benchmark-filters');
   const summary = $('#benchmark-summary');
+  const filterBar = $('#benchmark-filters');
   if (!grid) return;
 
-  // 只看当当来源、且带权益标签的书
-  const allDD = STATE.books.filter(b => b.source === '当当');
-  const allPerk = allDD.filter(b => b.perks && b.perks.length > 0);
-
-  // 顶部摘要
-  if (allDD.length) {
-    const ratio = (allPerk.length / allDD.length * 100).toFixed(0);
-    const counter = {};
-    allPerk.forEach(b => (b.perks || []).forEach(p => counter[p] = (counter[p] || 0) + 1));
-    const breakdown = Object.entries(counter)
-      .sort((a, b) => b[1] - a[1])
-      .map(([p, c]) => `${p} ${c}`)
-      .join(' · ');
-    summary.innerHTML = `
-      <span class="font-semibold text-slate-900">${allPerk.length}/${allDD.length}</span>
-      本带差异化权益（${ratio}%）<span class="text-slate-400 mx-2">·</span>
-      <span>${breakdown || '无标签'}</span>
-    `;
-  } else {
-    summary.textContent = '暂无当当数据';
+  const items = STATE.benchmark || [];
+  if (!items.length) {
+    summary.textContent = '暂无对标数据';
+    filterBar.innerHTML = '';
+    grid.innerHTML = `<div class="text-sm text-slate-400 py-8 text-center">
+      数据更新后会自动填充</div>`;
+    return;
   }
 
-  // 筛选标签 — 列出所有出现过的权益（按出现频率排序）
-  const counter = {};
-  allPerk.forEach(b => (b.perks || []).forEach(p => counter[p] = (counter[p] || 0) + 1));
-  const perkOrder = ['all', ...Object.keys(counter).sort((a, b) => counter[b] - counter[a])];
+  // 按 gap_level 统计
+  const counts = {};
+  items.forEach(r => counts[r.gap_level] = (counts[r.gap_level] || 0) + 1);
+  const gapKeys = ['no_jd', 'no_self', 'perk_gap', 'none'];
 
-  filterBar.innerHTML = perkOrder.map(p => {
-    const label = p === 'all' ? '全部' : p;
-    const count = p === 'all' ? allPerk.length : counter[p];
-    const active = STATE.activePerk === p;
-    return `<button class="filter-chip ${active ? 'active' : ''}" data-perk="${p}">
-              ${label}
-              <span class="count">${count}</span>
-            </button>`;
-  }).join('');
+  // 摘要：突出"有缺口的"
+  const withGap = items.filter(r => r.gap_level !== 'none').length;
+  summary.innerHTML = `
+    <span class="font-semibold text-slate-900">${withGap}/${items.length}</span> 本带权益的当当书，
+    京东侧存在对标缺口
+    <span class="text-slate-400 mx-2">·</span>
+    缺口类型：${gapKeys
+      .filter(k => counts[k])
+      .map(k => `<span class="text-${GAP_LABELS[k].tone}-700">${GAP_LABELS[k].label} ${counts[k]}</span>`)
+      .join(' · ')}
+  `;
 
+  // 筛选器：缺口类型
+  const activeGap = STATE.activeGap || 'all';
+  const filters = [
+    { key: 'all', label: '全部', count: items.length },
+    ...gapKeys.filter(k => counts[k]).map(k => ({
+      key: k,
+      label: `${GAP_LABELS[k].icon} ${GAP_LABELS[k].label}`,
+      count: counts[k],
+    })),
+  ];
+  filterBar.innerHTML = filters.map(f => `
+    <button class="filter-chip ${activeGap === f.key ? 'active' : ''}"
+            data-gap="${f.key}">
+      ${f.label}
+      <span class="count">${f.count}</span>
+    </button>
+  `).join('');
   $$('#benchmark-filters .filter-chip').forEach(btn => {
     btn.onclick = () => {
-      STATE.activePerk = btn.dataset.perk;
+      STATE.activeGap = btn.dataset.gap;
       renderDangdangBenchmark();
     };
   });
 
-  // 渲染卡片
-  let items;
-  if (STATE.activePerk === 'all') {
-    items = allPerk;
-  } else {
-    items = allPerk.filter(b => (b.perks || []).includes(STATE.activePerk));
-  }
-  // 按榜单排名升序（排名越靠前越值得关注）
-  items = items.slice().sort((a, b) => (a.rank || 99) - (b.rank || 99));
+  // 过滤 + 按"缺口严重度"排序（no_jd → no_self → perk_gap → none），同级别按销量降序
+  const ORDER = { no_jd: 1, no_self: 2, perk_gap: 3, none: 4 };
+  let shown = activeGap === 'all'
+    ? items
+    : items.filter(r => r.gap_level === activeGap);
+  shown = shown.slice().sort((a, b) => {
+    const oa = ORDER[a.gap_level] || 9;
+    const ob = ORDER[b.gap_level] || 9;
+    if (oa !== ob) return oa - ob;
+    return (a.dangdang.rank || 99) - (b.dangdang.rank || 99);
+  });
 
-  if (!items.length) {
-    grid.innerHTML = `<div class="col-span-full text-sm text-slate-400 py-8 text-center">
-      暂无符合条件的当当权益版图书</div>`;
-    return;
-  }
-
-  // 默认展示 5 本（一排），剩余的折叠起来
+  // 默认 5 行，其他折叠
   const DEFAULT_LIMIT = 5;
   const expanded = STATE._benchmarkExpanded === true;
-  const shown = expanded ? items : items.slice(0, DEFAULT_LIMIT);
-  const hiddenCount = items.length - shown.length;
+  const display = expanded ? shown : shown.slice(0, DEFAULT_LIMIT);
 
-  const cardsHtml = shown.map(renderBookCard).join('');
+  grid.innerHTML = display.map(renderBenchmarkRow).join('');
 
-  // 折叠/展开按钮（只在有更多时显示）
-  let toggleHtml = '';
-  if (items.length > DEFAULT_LIMIT) {
-    if (!expanded) {
-      toggleHtml = `
-        <button id="benchmark-toggle"
-                class="col-span-full mt-2 py-2.5 text-sm text-mint-700 font-medium
-                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
-                       transition">
-          展开更多 (+${hiddenCount}) ↓
-        </button>`;
-    } else {
-      toggleHtml = `
-        <button id="benchmark-toggle"
-                class="col-span-full mt-2 py-2.5 text-sm text-slate-500 font-medium
-                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
-                       transition">
-          收起 ↑
-        </button>`;
-    }
+  // "展开更多" 按钮
+  if (shown.length > DEFAULT_LIMIT) {
+    const remain = shown.length - DEFAULT_LIMIT;
+    grid.innerHTML += `
+      <button id="benchmark-toggle"
+              class="w-full mt-2 py-2.5 text-sm ${expanded ? 'text-slate-500' : 'text-mint-700'}
+                     font-medium border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50 transition">
+        ${expanded ? '收起 ↑' : `展开更多 (+${remain}) ↓`}
+      </button>`;
+    const tg = document.getElementById('benchmark-toggle');
+    if (tg) tg.onclick = () => { STATE._benchmarkExpanded = !expanded; renderDangdangBenchmark(); };
+  }
+}
+
+function renderBenchmarkRow(r) {
+  const dd = r.dangdang;
+  const jd = r.jd || {};
+  const gap = GAP_LABELS[r.gap_level] || GAP_LABELS.none;
+
+  // 当当权益标签
+  const ddPerks = (dd.perks || []).map(p => {
+    const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
+    return `<span class="text-[10px] px-1.5 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
+  }).join(' ') || '<span class="text-xs text-slate-400">(无)</span>';
+
+  // 京东方
+  let jdSection;
+  if (!jd.available) {
+    jdSection = `
+      <div class="flex-1 p-4 bg-rose-50/40 rounded-r-2xl border-l-2 border-rose-200">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-[11px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">京东</span>
+          <span class="text-rose-600 text-sm font-medium">❌ 未在售</span>
+        </div>
+        <p class="text-xs text-slate-500">
+          搜索"${escapeHtml(dd.title.slice(0, 16))}…" 无结果
+        </p>
+      </div>`;
+  } else {
+    const best = jd.best_match || {};
+    const isSelf = best.is_self;
+    const shopBadge = isSelf
+      ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">🟢 京东自营</span>`
+      : `<span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">🔵 京东 POP</span>`;
+    const jdPerks = (best.perks || []).map(p => {
+      const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
+      return `<span class="text-[10px] px-1.5 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
+    }).join(' ') || '<span class="text-xs text-slate-400">(无差异化权益)</span>';
+
+    const stats = [
+      best.show_count_str ? `近期销量 ${best.show_count_str}` : null,
+      best.comment_count_str ? `评论 ${best.comment_count_str}` : null,
+    ].filter(Boolean).join(' · ');
+
+    jdSection = `
+      <div class="flex-1 p-4 bg-slate-50/40 rounded-r-2xl border-l-2 border-slate-200">
+        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+          ${shopBadge}
+          ${best.price ? `<span class="text-sm font-semibold text-rose-600">${best.price}</span>` : ''}
+        </div>
+        <a href="${best.detail_url || '#'}" target="_blank" rel="noopener"
+           class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
+          ${escapeHtml(best.title || '')}
+        </a>
+        <p class="text-[10px] text-slate-500 line-clamp-1 mb-2">🏪 ${escapeHtml(best.shop_name || '')}</p>
+        <div class="flex flex-wrap gap-1 mb-1.5">${jdPerks}</div>
+        ${stats ? `<p class="text-[10px] text-slate-400">${stats}</p>` : ''}
+      </div>`;
   }
 
-  grid.innerHTML = cardsHtml + toggleHtml;
+  return `
+    <div class="bg-white rounded-2xl border border-mint-100 overflow-hidden">
+      <!-- 顶部缺口标签条 -->
+      <div class="px-4 py-1.5 bg-${gap.tone}-50 border-b border-${gap.tone}-100
+                  flex items-center justify-between">
+        <span class="text-xs font-medium text-${gap.tone}-700">
+          ${gap.icon} ${gap.label} · ${gap.desc}
+        </span>
+        ${dd.rank ? `<span class="text-[11px] text-slate-500">当当排名 #${dd.rank}</span>` : ''}
+      </div>
+      <!-- 主体：左当当 + 右京东 -->
+      <div class="flex flex-col md:flex-row">
+        <!-- 当当方 -->
+        <div class="flex-1 p-4 bg-mint-50/30">
+          <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-medium">🎯 当当</span>
+            ${dd.price ? `<span class="text-sm font-semibold text-mint-700">${dd.price}</span>` : ''}
+            ${dd.rating ? `<span class="text-xs text-lemon-500">★ ${dd.rating}</span>` : ''}
+          </div>
+          <a href="${dd.url || '#'}" target="_blank" rel="noopener"
+             class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
+            ${escapeHtml(dd.title || '')}
+          </a>
+          <p class="text-[10px] text-slate-500 line-clamp-1 mb-2">${escapeHtml(dd.author || '—')}</p>
+          <div class="flex flex-wrap gap-1">${ddPerks}</div>
+        </div>
+        <!-- 京东方 -->
+        ${jdSection}
+      </div>
+    </div>
+  `;
+}
 
-  const tg = document.getElementById('benchmark-toggle');
-  if (tg) {
-    tg.onclick = () => {
-      STATE._benchmarkExpanded = !expanded;
-      renderDangdangBenchmark();
-    };
-  }
+function escapeHtml(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#39;');
 }
 
 // ========== 渲染：京东 POP 有自营无 ==========
@@ -824,13 +908,14 @@ function renderCategoryChart() {
 
 async function init() {
   // 并行加载所有数据
-  const [meta, books, newBooks, news, insights, jdPopOnly] = await Promise.all([
+  const [meta, books, newBooks, news, insights, jdPopOnly, benchmark] = await Promise.all([
     loadJSON('data/meta.json'),
     loadJSON('data/books.json'),
     loadJSON('data/books_new.json'),
     loadJSON('data/news.json'),
     loadJSON('data/insights.json'),
     loadJSON('data/jd_pop_only.json'),
+    loadJSON('data/benchmark.json'),
   ]);
 
   STATE.meta      = meta      || {};
@@ -839,6 +924,7 @@ async function init() {
   STATE.news      = news      || [];
   STATE.insights  = insights  || [];
   STATE.jdPopOnly = jdPopOnly || [];
+  STATE.benchmark = benchmark || [];
 
   // Header 更新时间
   if (STATE.meta.updated_at) {

@@ -8,6 +8,11 @@
 
   <!-- Tailwind CSS via CDN（无需打包） -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- safelist：动态 class 名（如 bg-rose-50）需要预先列出，否则会被打包工具移除 -->
+  <div class="hidden bg-rose-50 bg-rose-100 text-rose-700 border-rose-100 border-rose-200
+              bg-amber-50 bg-amber-100 text-amber-700 border-amber-100 border-amber-200
+              bg-violet-50 bg-violet-100 text-violet-700 border-violet-100 border-violet-200
+              bg-emerald-50 bg-emerald-100 text-emerald-700 border-emerald-100 border-emerald-200"></div>
   <script>
     tailwind.config = {
       theme: {
@@ -112,7 +117,7 @@
       <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
         <div>
           <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <span>🎯</span> 当当对标专区
+            <span>🎯</span> 当当差异化权益 vs 京东对标
           </h2>
           <p class="text-sm text-slate-500 mt-1" id="benchmark-summary">
             加载中...
@@ -120,14 +125,15 @@
         </div>
       </div>
       <div id="benchmark-filters" class="flex flex-wrap items-center gap-1.5 mb-4">
-        <!-- 由 JS 动态填充 -->
+        <!-- 由 JS 动态填充：按"对标缺口"分类筛 -->
       </div>
-      <div id="benchmark-grid"
-           class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <!-- 由 JS 动态填充：仅显示当当带权益的图书 -->
+      <div id="benchmark-grid" class="space-y-3">
+        <!-- 由 JS 动态填充：每行一个对比卡，左当当右京东 -->
       </div>
       <p class="text-xs text-slate-400 mt-3 italic">
-        💡 这些权益版图书多为当当独家或限定，是当当用户黏性的关键抓手；后续将与京东自营 SKU 自动比对，标出真正的"对标缺口"。
+        💡 用当当带权益的热销书去京东主动搜索同款，对比是否在售、自营/POP 身份、
+        价格、销量、京东侧权益。<strong>"权益差距"</strong>= 京东自营有但权益少；
+        <strong>"自营空白"</strong>= 京东只 POP 在售；<strong>"完全缺口"</strong>= 京东根本没有。
       </p>
     </section>
 

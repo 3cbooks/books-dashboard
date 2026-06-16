@@ -92,6 +92,20 @@ def main() -> int:
         log.error("✗ 京东抓取/比对抛异常:\n%s", traceback.format_exc())
         sources_status["jd"] = "failed"
 
+    # ============ 当当 vs 京东 权益对标 ============
+    # 对当当带权益的书逐一查京东对应版本，做权益对比
+    try:
+        from . import jd_benchmark
+        benchmark_data = jd_benchmark.benchmark_books(
+            books, only_with_perks=True, delay=1.5,
+        )
+        save_json("benchmark.json", benchmark_data)
+        sources_status["benchmark"] = "ok" if benchmark_data else "partial"
+        log.info("✓ 权益对标: %d 本", len(benchmark_data))
+    except Exception:
+        log.error("✗ 权益对标抛异常:\n%s", traceback.format_exc())
+        sources_status["benchmark"] = "failed"
+
     # ============ 豆瓣校验（限流敏感，量要节制）============
     # 豆瓣对单 IP 反爬严，每次大概只能跑 5-10 次就被封
     # 策略：优先校验"看起来最像新书的"

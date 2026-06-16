@@ -64,8 +64,10 @@ SEARCH_KEYWORDS = [
 
 def fetch_pop_skus_via_search(max_per_query: int = 20) -> set[str]:
     """
-    通过京东 m 站搜索广搜 POP 书的 SKU。
-    POP 书 SKU 是 14 位（自营是 7-9 位）。
+    通过京东 m 站搜索广搜疑似 POP 的 SKU。
+
+    注意：以前误以为"14 位 SKU = POP"。实际上少数自营店（比如"XX京东自营旗舰店"）
+    也用 14 位 SKU。所以这里返回'疑似 POP'集合，最终判定要靠详情页 shop_name 检查。
     """
     pop_skus: set[str] = set()
     for kw in SEARCH_KEYWORDS:
@@ -80,7 +82,8 @@ def fetch_pop_skus_via_search(max_per_query: int = 20) -> set[str]:
         )
         if resp is None:
             continue
-        # 14+ 位 SKU = POP，过滤
+        # 取所有 SKU（14+ 位优先，因为 8 位短 SKU 多半是自营）
+        # 自营误混情况让 fetch_detail 阶段的 is_self 来甄别
         skus = set(re.findall(r'(?:item\.m\.jd\.com/product/|"sku(?:Id)?":\s*"?)(\d{11,14})', resp.text))
         before = len(pop_skus)
         pop_skus.update(s for s in skus if len(s) >= 11)
@@ -348,26 +351,40 @@ def fetch(min_show_count: int = 100, max_pop_to_check: int = 100) -> dict:
     log.info("Step 3: 抓京东自营 SKU 池...")
     self_skus = fetch_self_skus_via_search()
 
-    # ============ Step 4: 抓详情 ============
-    log.info("Step 4: 抓 %d 本 POP 书的详情...", len(qualified_pop_skus))
+    # ============ Step 4: 抓详情 + 真实分组 ============
+    # 注意：Step 1 用 SKU 长度筛 POP，但有些自营店铺也用长 SKU
+    # （如"时光学文具京东自营旗舰店"的 SKU 是 14 位但实际是自营）
+    # 所以这里要用 fetch_detail 返回的 is_self 重新分组
+    log.info("Step 4: 抓 %d 本疑似 POP 书的详情，并按 shop_name 真实分组...",
+             len(qualified_pop_skus))
     pop_books: list[dict] = []
+    misclassified_self: list[dict] = []  # 错分到 POP 池的自营书
     for i, sku in enumerate(qualified_pop_skus, 1):
         info = fetch_detail(sku)
         if info:
-            # 把销量数据并入
             sd = sales_data.get(sku, {})
             info["show_count"] = sd.get("show_count", 0)
             info["show_count_str"] = sd.get("show_count_str", "")
             info["comment_count_str"] = sd.get("comment_count_str", "")
             info["avg_score"] = sd.get("avg_score", 0)
-            pop_books.append(info)
+            # 关键：用详情页的 shop_name 重新判断
+            if info.get("is_self"):
+                misclassified_self.append(info)
+                log.debug("  ↪ SKU %s 实际是自营 (店铺: %s)", sku, info.get("shop_name", ""))
+            else:
+                pop_books.append(info)
         if i % 10 == 0:
-            log.info("  详情进度 %d/%d", i, len(qualified_pop_skus))
+            log.info("  详情进度 %d/%d (POP %d, 误分自营 %d)",
+                     i, len(qualified_pop_skus), len(pop_books), len(misclassified_self))
         time.sleep(1)
+
+    if misclassified_self:
+        log.info("⚠ %d 个'14位 SKU'其实是自营（按店铺名识别），已剔除出 POP 池",
+                 len(misclassified_self))
 
     # 抓自营详情（少量，只用来作为快速排除池）
     log.info("Step 5: 抓自营详情池（最多 60 个）...")
-    self_books: list[dict] = []
+    self_books: list[dict] = list(misclassified_self)  # 把上一步误分到 POP 池里的自营也并入
     for i, sku in enumerate(list(self_skus)[:60], 1):
         info = fetch_detail(sku)
         if info and info.get("is_self"):
