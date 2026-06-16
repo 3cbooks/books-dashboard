@@ -60,18 +60,35 @@ def main() -> int:
         new_books = load_json("books_new.json", default=[])
     save_json("books_new.json", new_books)
 
-    # ============ 豆瓣校验热卖榜（修正长红书的"虚假新书"嫌疑）============
-    # 热卖榜里有很多畅销长红书（如《泥潭》），它们的当当详情页有"再版日期"，
-    # 但豆瓣记录的是首版日期，能让前端展示更可信的出版年份。
+    # ============ 豆瓣校验（限流敏感，量要节制）============
+    # 豆瓣对单 IP 反爬严，每次大概只能跑 5-10 次就被封
+    # 策略：优先校验"看起来最像新书的"
+    #   - 热卖榜的前 8 本（用户最关注的头部）
+    #   - 预售书全部（最需要确认的"虚假新书"嫌疑）
     from datetime import datetime, timedelta, timezone
     from . import douban_verify
     today = datetime.now(timezone(timedelta(hours=8)))
+
+    # 1) 校验热卖榜的前 N 本
     if books:
         try:
-            log.info("=== 豆瓣校验热卖榜 ===")
-            douban_verify.cross_check_books(books, today)
+            HOT_VERIFY_TOP = 8
+            log.info("=== 豆瓣校验热卖榜前 %d 本 ===", HOT_VERIFY_TOP)
+            douban_verify.cross_check_books(books[:HOT_VERIFY_TOP], today)
         except Exception:
             log.error("豆瓣校验热卖榜抛异常:\n%s", traceback.format_exc())
+
+    # 2) 校验所有预售书（已经在 dangdang_new.fetch 里跑了）
+    # 此处再跑一次，用上次还没校验过的书（轮换策略）
+    if new_books:
+        unverified = [b for b in new_books
+                      if b.get("verify_status") in (None, "skipped")]
+        if unverified:
+            try:
+                log.info("=== 豆瓣再校验预售书 %d 本（上次未覆盖）===", len(unverified))
+                douban_verify.cross_check_books(unverified, today)
+            except Exception:
+                log.error("豆瓣校验预售书抛异常:\n%s", traceback.format_exc())
 
     # ============ 抓新闻 ============
     from . import baidu_news

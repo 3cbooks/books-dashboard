@@ -224,8 +224,12 @@ def fetch(per_category: int = 4, max_pages: int = 3) -> list[dict]:
 
     # ============ 豆瓣校验 ============
     # 当当的"出版时间"和 ISBN 经常错乱（再版日期、占位数据），
-    # 用豆瓣按"书名+作者"二次校准 → 修正 pub_status，避免把已出版的书误判为预售
-    books = douban_verify.cross_check_books(books, today)
+    # 用豆瓣按"书名+作者"二次校准。
+    # 限流敏感：只校验当当判定为'preorder'的书（最需要验证的"虚假新书"嫌疑）
+    preorder_books = [b for b in books if b.get("pub_status") == "preorder"]
+    if preorder_books:
+        log.info("豆瓣只校验当当判定为预售的 %d 本（节省限流配额）", len(preorder_books))
+        douban_verify.cross_check_books(preorder_books, today)
 
     # 统计
     stats = {
