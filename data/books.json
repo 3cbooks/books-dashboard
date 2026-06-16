@@ -1,164 +1,382 @@
 [
   {
-    "title": "看不见的城市：商业基础设施的诞生",
-    "author": "陈嘉禾",
-    "category": "经管",
-    "rating": 8.7,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
+    "title": "泥潭 刘楚昕",
+    "author": "刘楚昕",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m8.ddimg.cn/22/0/30066718-1_l_1781189403.jpg",
+    "url": "http://product.dangdang.com/30066718.html",
+    "price": "¥39.80",
+    "source": "当当"
   },
   {
-    "title": "硅基生命的黎明",
-    "author": "刘慈欣 / 王晋康",
+    "title": "张嘉佳新书 我是你的遗物",
+    "author": "张嘉佳",
+    "category": "热销",
+    "rating": 4.7,
+    "cover": "http://img3m4.ddimg.cn/95/30/30046694-1_l_1778147185.jpg",
+    "url": "http://product.dangdang.com/30046694.html",
+    "price": "¥39.80",
+    "source": "当当"
+  },
+  {
+    "title": "大中华寻宝记城市系列 泉州寻宝记",
+    "author": "孙家裕",
+    "category": "热销",
+    "rating": 4.2,
+    "cover": "http://img3m1.ddimg.cn/38/14/30055151-1_l_1779764678.jpg",
+    "url": "http://product.dangdang.com/30055151.html",
+    "price": "¥29.80",
+    "source": "当当"
+  },
+  {
+    "title": "财之道丛书・经营十二条",
+    "author": "稻盛和夫",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m3.ddimg.cn/43/33/30070303-1_l_1781059178.jpg",
+    "url": "http://product.dangdang.com/30070303.html",
+    "price": "¥39.80",
+    "source": "当当"
+  },
+  {
+    "title": "紫：陪安东尼度过漫长岁月Ⅶ",
+    "author": "安东尼",
+    "category": "热销",
+    "rating": 4.8,
+    "cover": "http://img3m2.ddimg.cn/68/36/30049142-1_l_1780564554.jpg",
+    "url": "http://product.dangdang.com/30049142.html",
+    "price": "¥35.00",
+    "source": "当当"
+  },
+  {
+    "title": "基本演绎法",
+    "author": "刘洪波",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m7.ddimg.cn/92/28/30057977-1_l_1779080612.jpg",
+    "url": "http://product.dangdang.com/30057977.html",
+    "price": "¥24.00",
+    "source": "当当"
+  },
+  {
+    "title": "我大于一切 把人生的主位，还给自己",
+    "author": "晴山",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m5.ddimg.cn/22/29/30068005-1_l_1780645146.jpg",
+    "url": "http://product.dangdang.com/30068005.html",
+    "price": "¥32.80",
+    "source": "当当"
+  },
+  {
+    "title": "张居正大传 朱东润传记典藏",
+    "author": "朱东润",
+    "category": "人文",
+    "rating": null,
+    "cover": "http://img3m0.ddimg.cn/82/19/30065590-1_l_1780300625.jpg",
+    "url": "http://product.dangdang.com/30065590.html",
+    "price": "¥78.00",
+    "source": "当当"
+  },
+  {
+    "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
+    "author": "柳智宇",
+    "category": "热销",
+    "rating": 5.0,
+    "cover": "http://img3m9.ddimg.cn/33/15/30045939-1_l_1779254036.jpg",
+    "url": "http://product.dangdang.com/30045939.html",
+    "price": "¥39.90",
+    "source": "当当"
+  },
+  {
+    "title": "崇祯传 中华帝王传记",
+    "author": "樊树志",
+    "category": "人文",
+    "rating": 5.0,
+    "cover": "http://img3m1.ddimg.cn/62/20/30064481-1_l_1781150736.jpg",
+    "url": "http://product.dangdang.com/30064481.html",
+    "price": "¥88.00",
+    "source": "当当"
+  },
+  {
+    "title": "刘震云作品选全6册",
+    "author": "刘震云",
     "category": "小说",
-    "rating": 9.1,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "AI 时代的内容创作：从工具到方法论",
-    "author": "李开复",
-    "category": "科技",
-    "rating": 8.3,
-    "cover": "",
-    "url": "https://book.dangdang.com/",
+    "rating": 5.0,
+    "cover": "http://img3m2.ddimg.cn/5/32/30029972-1_l_1780969679.jpg",
+    "url": "http://product.dangdang.com/30029972.html",
+    "price": "¥368.00",
     "source": "当当"
   },
   {
-    "title": "宋朝的城市生活",
-    "author": "吴钩",
-    "category": "人文",
-    "rating": 8.9,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "增长的真相：从单点到飞轮",
-    "author": "李丰",
-    "category": "经管",
+    "title": "花海下的魔术师 特签版 黑马作者御风而行的�~子奇幻热血力作",
+    "author": "御风而行的�~子",
+    "category": "小说",
     "rating": null,
-    "cover": "",
-    "url": "https://book.jd.com/",
-    "source": "京东"
-  },
-  {
-    "title": "山月不知心底事",
-    "author": "辛夷坞",
-    "category": "文学",
-    "rating": 7.8,
-    "cover": "",
-    "url": "https://weread.qq.com/",
-    "source": "微信读书"
-  },
-  {
-    "title": "深海简史",
-    "author": "[英] Helen Scales",
-    "category": "科普",
-    "rating": 8.6,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "故宫的猫与我",
-    "author": "枝裕和",
-    "category": "文学",
-    "rating": 8.4,
-    "cover": "",
-    "url": "https://book.dangdang.com/",
+    "cover": "http://img3m7.ddimg.cn/79/12/30049747-1_l_1779342504.jpg",
+    "url": "http://product.dangdang.com/30049747.html",
+    "price": "¥38.80",
     "source": "当当"
   },
   {
-    "title": "量化思维：用数据看见世界",
-    "author": "薛兆丰 主编",
-    "category": "经管",
-    "rating": null,
-    "cover": "",
-    "url": "https://book.jd.com/",
-    "source": "京东"
+    "title": "白鹿原 陈忠实先生仙逝十周年纪念 精心制作",
+    "author": "陈忠实",
+    "category": "小说",
+    "rating": 5.0,
+    "cover": "http://img3m2.ddimg.cn/46/1/30048922-1_l_1779076144.jpg",
+    "url": "http://product.dangdang.com/30048922.html",
+    "price": "¥32.00",
+    "source": "当当"
   },
   {
-    "title": "森林里的小动物（系列绘本）",
-    "author": "金子美铃",
+    "title": "十日终焉10钟鸣 杀虫队队员新书",
+    "author": "杀虫队队员",
+    "category": "小说",
+    "rating": 5.0,
+    "cover": "http://img3m7.ddimg.cn/90/35/30035007-1_l_1779419730.jpg",
+    "url": "http://product.dangdang.com/30035007.html",
+    "price": "¥38.50",
+    "source": "当当"
+  },
+  {
+    "title": "请和我门外的花坐一会儿",
+    "author": "汪曾祺",
+    "category": "文学",
+    "rating": 5.0,
+    "cover": "http://img3m1.ddimg.cn/41/24/30042581-1_l_1778575984.jpg",
+    "url": "http://product.dangdang.com/30042581.html",
+    "price": "¥89.00",
+    "source": "当当"
+  },
+  {
+    "title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作",
+    "author": "姑苏阿焦",
+    "category": "文学",
+    "rating": null,
+    "cover": "http://img3m8.ddimg.cn/79/36/30060538-1_l_1780628140.jpg",
+    "url": "http://product.dangdang.com/30060538.html",
+    "price": "¥29.90",
+    "source": "当当"
+  },
+  {
+    "title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事",
+    "author": "杨雨坤",
+    "category": "文学",
+    "rating": null,
+    "cover": "http://img3m9.ddimg.cn/59/29/30064379-1_l_1780457994.jpg",
+    "url": "http://product.dangdang.com/30064379.html",
+    "price": "¥33.80",
+    "source": "当当"
+  },
+  {
+    "title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
+    "author": "阿尔贝・加缪",
+    "category": "文学",
+    "rating": null,
+    "cover": "http://img3m0.ddimg.cn/83/15/30056780-1_l_1780994380.jpg",
+    "url": "http://product.dangdang.com/30056780.html",
+    "price": "¥29.90",
+    "source": "当当"
+  },
+  {
+    "title": "樱花树下站谁都美",
+    "author": "施威",
     "category": "童书",
-    "rating": 9.2,
-    "cover": "",
-    "url": "https://book.dangdang.com/",
+    "rating": 4.2,
+    "cover": "http://img3m9.ddimg.cn/15/11/30050079-1_l_1778741467.jpg",
+    "url": "http://product.dangdang.com/30050079.html",
+    "price": "¥39.90",
     "source": "当当"
   },
   {
-    "title": "硅谷之后：科技中心的迁徙",
-    "author": "Margaret O'Mara",
+    "title": "万物有光 救命24小时指南",
+    "author": "卢骁",
+    "category": "童书",
+    "rating": 5.0,
+    "cover": "http://img3m6.ddimg.cn/67/20/30044686-1_l_1779868156.jpg",
+    "url": "http://product.dangdang.com/30044686.html",
+    "price": "¥42.80",
+    "source": "当当"
+  },
+  {
+    "title": "不用明天，无须下次，没有以后",
+    "author": "林小仙",
+    "category": "童书",
+    "rating": 5.0,
+    "cover": "http://img3m9.ddimg.cn/85/34/30047179-1_l_1778830998.jpg",
+    "url": "http://product.dangdang.com/30047179.html",
+    "price": "¥29.50",
+    "source": "当当"
+  },
+  {
+    "title": "我还想看见",
+    "author": "柱子哥",
+    "category": "童书",
+    "rating": 5.0,
+    "cover": "http://img3m5.ddimg.cn/37/15/30044755-1_l_1778653631.jpg",
+    "url": "http://product.dangdang.com/30044755.html",
+    "price": "¥40.00",
+    "source": "当当"
+  },
+  {
+    "title": "肥志百科17 18特典版",
+    "author": "肥志",
     "category": "社科",
     "rating": null,
-    "cover": "",
-    "url": "https://www.publishersweekly.com/",
-    "source": "Publishers Weekly"
-  },
-  {
-    "title": "孤独是一种能力",
-    "author": "周国平",
-    "category": "文学",
-    "rating": 8.0,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "从零造一台计算机",
-    "author": "Charles Petzold",
-    "category": "科技",
-    "rating": 9.4,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "餐桌上的中国",
-    "author": "陈晓卿",
-    "category": "人文",
-    "rating": 8.5,
-    "cover": "",
-    "url": "https://book.dangdang.com/",
+    "cover": "http://img3m6.ddimg.cn/88/16/30066586-1_l_1781083803.jpg",
+    "url": "http://product.dangdang.com/30066586.html",
+    "price": "¥69.00",
     "source": "当当"
   },
   {
-    "title": "重新理解消费：场景的崛起",
-    "author": "黄碧云",
+    "title": "有兽焉13 原著漫画 特别收录全新单行本专属小剧场",
+    "author": "靴下猫腰子",
+    "category": "社科",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/78/17/30055191-1_l_1780285627.jpg",
+    "url": "http://product.dangdang.com/30055191.html",
+    "price": "¥42.80",
+    "source": "当当"
+  },
+  {
+    "title": "她的山，她的海4 晋江高分作品改编漫画 治愈系校园力作 双女主救赎 原著扶华",
+    "author": "扶华",
+    "category": "社科",
+    "rating": null,
+    "cover": "http://img3m4.ddimg.cn/81/33/30070044-1_l_1780899009.jpg",
+    "url": "http://product.dangdang.com/30070044.html",
+    "price": "¥37.50",
+    "source": "当当"
+  },
+  {
+    "title": "灵契",
+    "author": "瓶子",
+    "category": "社科",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/56/33/30037151-1_l_1779868198.jpg",
+    "url": "http://product.dangdang.com/30037151.html",
+    "price": "¥33.80",
+    "source": "当当"
+  },
+  {
+    "title": "米吴科学漫画・奇妙万象篇 第十辑37-40册",
+    "author": "",
     "category": "经管",
     "rating": null,
-    "cover": "",
-    "url": "https://book.jd.com/",
-    "source": "京东"
-  },
-  {
-    "title": "气候启示录",
-    "author": "[美] Bill McKibben",
-    "category": "社科",
-    "rating": 8.2,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
-  },
-  {
-    "title": "网球少年的春天",
-    "author": "新海诚（监修）",
-    "category": "童书",
-    "rating": 8.8,
-    "cover": "",
-    "url": "https://book.dangdang.com/",
+    "cover": "http://img3m1.ddimg.cn/42/25/30053571-1_l_1779273832.jpg",
+    "url": "http://product.dangdang.com/30053571.html",
+    "price": "¥69.80",
     "source": "当当"
   },
   {
-    "title": "我在故宫修文物（精装新版）",
-    "author": "萧寒",
+    "title": "黄洞洞超级懂：超有趣的科学探索之旅",
+    "author": "",
+    "category": "经管",
+    "rating": null,
+    "cover": "http://img3m2.ddimg.cn/84/25/30044802-1_l_1776761375.jpg",
+    "url": "http://product.dangdang.com/30044802.html",
+    "price": "¥69.00",
+    "source": "当当"
+  },
+  {
+    "title": "黄洞洞超级懂",
+    "author": "",
+    "category": "经管",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/83/24/30044801-1_l_1776763935.jpg",
+    "url": "http://product.dangdang.com/30044801.html",
+    "price": "¥69.00",
+    "source": "当当"
+  },
+  {
+    "title": "黄洞洞超级懂",
+    "author": "",
+    "category": "经管",
+    "rating": null,
+    "cover": "http://img3m0.ddimg.cn/82/23/30044800-1_l_1776758533.jpg",
+    "url": "http://product.dangdang.com/30044800.html",
+    "price": "¥69.00",
+    "source": "当当"
+  },
+  {
+    "title": "1929",
+    "author": "安德鲁・罗斯・索尔金",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/96/34/30065901-1_l_1780293330.jpg",
+    "url": "http://product.dangdang.com/30065901.html",
+    "price": "¥90.90",
+    "source": "当当"
+  },
+  {
+    "title": "第二天：金钱进化论",
+    "author": "方言",
+    "category": "科技",
+    "rating": 4.8,
+    "cover": "http://img3m7.ddimg.cn/46/12/30037537-1_l_1778649796.jpg",
+    "url": "http://product.dangdang.com/30037537.html",
+    "price": "¥53.00",
+    "source": "当当"
+  },
+  {
+    "title": "观念的穹顶：经济思想史二十四讲",
+    "author": "罗杰・E.巴克豪斯",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/20/13/30071171-1_l_1781056426.jpg",
+    "url": "http://product.dangdang.com/30071171.html",
+    "price": "¥73.40",
+    "source": "当当"
+  },
+  {
+    "title": "OPE一人即系统：AI时代的单人创业家范式 张祺博士力作 借 AI 解锁单人创业未来",
+    "author": "张祺",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m9.ddimg.cn/97/33/30054319-1_l_1779267298.jpg",
+    "url": "http://product.dangdang.com/30054319.html",
+    "price": "¥74.10",
+    "source": "当当"
+  },
+  {
+    "title": "《宣传画史稿》 朱海辰 著 经典画作 历史图像 一部宣传画艺术史 为当代主题美术创作提供参考 20年研究 超500幅宣传画作品 难忘的时代印记 “中国好书”作者 国家出版基金支持项目",
+    "author": "朱海辰",
     "category": "人文",
-    "rating": 8.9,
-    "cover": "",
-    "url": "https://book.douban.com/",
-    "source": "豆瓣"
+    "rating": null,
+    "cover": "http://img3m8.ddimg.cn/15/11/30061068-1_l_1780386799.jpg",
+    "url": "http://product.dangdang.com/30061068.html",
+    "price": "¥132.00",
+    "source": "当当"
+  },
+  {
+    "title": "治愈系手账简笔画 零基础简笔画入门 新手简笔画从入门到精通 解压简笔画手账素材大全手账党必备简笔画教程图书籍",
+    "author": "",
+    "category": "人文",
+    "rating": null,
+    "cover": "http://img3m5.ddimg.cn/45/10/30044565-1_l_1778743073.jpg",
+    "url": "http://product.dangdang.com/30044565.html",
+    "price": "¥33.80",
+    "source": "当当"
+  },
+  {
+    "title": "高考音乐强化训练 视唱练耳卷",
+    "author": "陈玉香",
+    "category": "人文",
+    "rating": null,
+    "cover": "http://img3m2.ddimg.cn/15/9/30045822-1_l_1777012795.jpg",
+    "url": "http://product.dangdang.com/30045822.html",
+    "price": "¥49.30",
+    "source": "当当"
+  },
+  {
+    "title": "洛天依纪念插画集VOL.1",
+    "author": "VSINGER",
+    "category": "人文",
+    "rating": null,
+    "cover": "http://img3m5.ddimg.cn/79/21/30034105-1_l_1778837240.jpg",
+    "url": "http://product.dangdang.com/30034105.html",
+    "price": "¥148.00",
+    "source": "当当"
   }
 ]

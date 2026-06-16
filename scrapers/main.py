@@ -1,0 +1,91 @@
+"""
+调度入口
+- 跑所有数据源抓取器
+- 失败时用上次成功的数据兜底（不会让网站突然空白）
+- 输出 books.json / news.json / meta.json
+- 后续 insights 模块会读这些文件再写 insights.json
+"""
+from __future__ import annotations
+
+import sys
+import traceback
+
+from .common import get_logger, load_json, save_json, now_iso
+
+log = get_logger("main")
+
+
+def _safe_run(name: str, fn) -> tuple[list, str]:
+    """
+    跑一个抓取器，返回 (结果列表, 状态码)。
+    状态码: 'ok' / 'partial' / 'failed'
+    """
+    try:
+        items = fn()
+        if not items:
+            log.warning("✗ %s 返回空 → 视为失败", name)
+            return [], "failed"
+        log.info("✓ %s: %d 条", name, len(items))
+        return items, "ok"
+    except Exception:
+        log.error("✗ %s 抛异常:\n%s", name, traceback.format_exc())
+        return [], "failed"
+
+
+def main() -> int:
+    log.info("═══ 开始抓取 (%s) ═══", now_iso())
+
+    # 各源的状态记录（用于在 meta.json 里告诉前端哪些源失败了）
+    sources_status: dict[str, str] = {}
+
+    # ============ 抓书 ============
+    from . import dangdang
+    books, status = _safe_run("dangdang", lambda: dangdang.fetch(per_category=4))
+    sources_status["dangdang"] = status
+
+    # 失败兜底：用上次的 books.json
+    if not books:
+        log.warning("⚠ 所有图书源失败，使用上次数据兜底")
+        books = load_json("books.json", default=[])
+
+    # ============ 抓新闻 ============
+    from . import baidu_news
+    news, status = _safe_run("baidu_news", baidu_news.fetch)
+    sources_status["baidu_news"] = status
+
+    if not news:
+        log.warning("⚠ 所有新闻源失败，使用上次数据兜底")
+        news = load_json("news.json", default=[])
+
+    # ============ 写文件 ============
+    save_json("books.json", books)
+    save_json("news.json", news)
+
+    # ============ meta.json ============
+    # 简单的"本周新书数 + 环比"统计：
+    # 由于我们目前只抓单日数据，环比拿不到精确值 — 用上次 meta 里的值做参照
+    prev_meta = load_json("meta.json", default={}) or {}
+    prev_count = prev_meta.get("new_books_week", len(books))
+    if prev_count > 0:
+        trend_pct = round((len(books) - prev_count) / prev_count * 100, 1)
+    else:
+        trend_pct = 0
+
+    meta = {
+        "updated_at": now_iso(),
+        "new_books_week": len(books),
+        "new_books_trend_pct": trend_pct,
+        "news_count": len(news),
+        "sources_status": sources_status,
+    }
+    save_json("meta.json", meta)
+
+    log.info("═══ 完成 books=%d news=%d ═══", len(books), len(news))
+    log.info("数据源状态: %s", sources_status)
+
+    # 任一源失败就退出码非 0（让 GitHub Actions 告警，但不阻断 commit）
+    return 0 if all(s == "ok" for s in sources_status.values()) else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
