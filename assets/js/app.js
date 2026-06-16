@@ -447,9 +447,9 @@ function renderBookFilters() {
 // ========== 渲染：当当 vs 京东 权益对标 ==========
 
 const GAP_LABELS = {
-  'no_jd':    { label: '京东未在售',        icon: '❌', tone: 'rose',    desc: '京东根本不卖这本书' },
-  'perk_gap': { label: '京东权益缺失',      icon: '🎯', tone: 'violet',  desc: '京东在售但当当独有权益更多' },
-  'none':     { label: '权益已对齐',        icon: '✅', tone: 'emerald', desc: '京东也有同等权益' },
+  'no_jd':    { label: '京东未在售',        icon: '❌',  tone: 'rose',    desc: '京东根本不卖这本书' },
+  'perk_gap': { label: '京东权益缺失',      icon: '⚠️', tone: 'rose',    desc: '京东在售但当当独有权益更多，需重点关注' },
+  'none':     { label: '权益已对齐',        icon: '✅',  tone: 'emerald', desc: '京东也有同等权益' },
 };
 
 function renderDangdangBenchmark() {
@@ -623,6 +623,7 @@ function renderBenchmarkRow(r) {
       <div class="flex-1 p-4 bg-slate-50/40 rounded-r-2xl border-l-2 border-slate-200">
         <div class="flex items-center gap-2 mb-1.5 flex-wrap">
           <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">📘 京东在售</span>
+          ${best.category ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">📂 ${escapeHtml(best.category)}</span>` : ''}
           ${best.price ? `<span class="text-sm font-semibold text-rose-600">${best.price}</span>` : ''}
         </div>
         <a href="${best.detail_url || '#'}" target="_blank" rel="noopener"

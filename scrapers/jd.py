@@ -251,6 +251,53 @@ DETAIL_PATTERNS = {
 }
 
 
+# 从京东商品页"上榜信息"提取细分品类（京东详情页里散布的榜单字段）
+# - "name":"家教方法图书热卖榜第3名"  → 家教方法
+# - "longTitle":"文学动漫金榜"        → 文学动漫
+# - "shortTitle":"中国当代小说"       → 中国当代小说
+_CAT_RANK_RE = re.compile(r'"(?:name|longTitle|shortTitle|channelEntryTitle)"\s*:\s*"([^"]+)"')
+_CAT_TRIM_RE = re.compile(r'(?:图书)?(?:热卖)?(?:总)?榜(?:第\d+名)?$|^榜单|金榜?$')
+
+# 太宽泛的品类标签，过滤掉
+_CAT_BLACKLIST = {"图书", "热卖", "京东", "新书", "总榜", "畅销榜", "新书榜",
+                  "热卖榜", "图书热卖榜", "图书榜", "畅销", "新品"}
+
+
+def _extract_jd_category(text: str) -> str | None:
+    """
+    从京东商品 HTML 里抽取细分品类。
+
+    京东商品页里的"榜单"字段是细分品类的最稳信号：
+      "name":"家教方法图书热卖榜第3名"     → 家教方法
+      "longTitle":"中国当代小说图书榜"      → 中国当代小说
+      "channelEntryTitle":"心理学图书热卖榜"→ 心理学
+
+    严格只抓"X榜"模式，避免误抓售后承诺/书名。
+    """
+    cats: list[tuple[str, int]] = []  # (品类名, 优先级)
+
+    # 优先级 1: "name":"X图书热卖榜第N名" — 最稳，只在榜单字段出现
+    for m in re.finditer(r'"name"\s*:\s*"([^"]+?(?:图书|童书)?(?:热卖)?榜(?:第\d+名)?)"', text):
+        s = m.group(1)
+        cleaned = re.sub(r'(?:图书|童书)?(?:热卖)?榜(?:第\d+名)?$', '', s).strip()
+        if cleaned and cleaned not in _CAT_BLACKLIST and 2 <= len(cleaned) <= 12:
+            cats.append((cleaned, 1))
+
+    # 优先级 2: "longTitle":"XXX图书榜" / "channelEntryTitle":"XXX图书热卖榜"
+    for key in ["longTitle", "channelEntryTitle", "shortTitle"]:
+        for m in re.finditer(rf'"{key}"\s*:\s*"([^"]+?)(?:图书|童书)?(?:热卖)?(?:金)?榜"', text):
+            cleaned = m.group(1).strip()
+            if cleaned and cleaned not in _CAT_BLACKLIST and 2 <= len(cleaned) <= 12:
+                cats.append((cleaned, 2))
+
+    if not cats:
+        return None
+
+    # 选优先级最高 + 最频繁出现的
+    cats.sort(key=lambda x: x[1])
+    return cats[0][0]
+
+
 def fetch_detail(sku: str) -> dict | None:
     """抓单个 SKU 的移动版详情页，返回结构化数据。"""
     url = DETAIL_M_URL.format(sku=sku)
@@ -302,6 +349,9 @@ def fetch_detail(sku: str) -> dict | None:
     out["is_self"] = bool(
         shop and ("京东自营" in shop or "自营旗舰店" in shop)
     )
+
+    # 提取细分品类（前端展示用）
+    out["category"] = _extract_jd_category(text)
 
     return out
 
