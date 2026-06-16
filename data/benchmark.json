@@ -20,24 +20,124 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "14464859",
-        "url": "https://item.m.jd.com/product/14464859.html",
-        "detail_url": "https://item.jd.com/14464859.html",
+        "sku": "14516547",
+        "url": "https://item.m.jd.com/product/14516547.html",
+        "detail_url": "https://item.jd.com/14516547.html",
         "author": "刘楚昕",
         "publisher": "漓江出版社",
         "vender_id": "1000089765",
         "shop_name": "漓江出版社京东自营旗舰店",
-        "title": "【自营现货】泥潭 刘楚昕2025新书 漓江文学奖获奖作品",
+        "title": "【刘楚昕亲签】泥潭 刘楚昕2025新书 漓江文学奖获奖作品",
         "sku_status": "1",
         "is_self": true,
         "show_count": 200,
         "show_count_str": "200+",
         "comment_count_str": "2万+",
-        "perks": []
+        "perks": [
+          "亲签"
+        ]
       },
-      "all_skus_count": 4
+      "all_perks": [
+        "亲签",
+        "礼盒",
+        "限量",
+        "首发"
+      ],
+      "all_versions": [
+        {
+          "sku": "14516547",
+          "title": "【刘楚昕亲签】泥潭 刘楚昕2025新书 漓江文学奖获奖作品",
+          "shop_name": "漓江出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "200+",
+          "comment_count_str": "2万+",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/14516547.html"
+        },
+        {
+          "sku": "14464859",
+          "title": "【自营现货】泥潭 刘楚昕2025新书 漓江文学奖获奖作品",
+          "shop_name": "漓江出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "200+",
+          "comment_count_str": "2万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14464859.html"
+        },
+        {
+          "sku": "10161203412796",
+          "title": "【首发限量藏书票 】泥潭 刘楚昕2025新书 专享作者印签寄语 漓江文学奖获奖作品 泥潭小说书籍 当当正版 泥潭 刘楚昕新书【限量藏书票+印签寄语】",
+          "shop_name": "当当图书专营店",
+          "is_self": false,
+          "show_count_str": "100+",
+          "comment_count_str": "5000+",
+          "perks": [
+            "限量",
+            "首发",
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10161203412796.html"
+        },
+        {
+          "sku": "10166155073751",
+          "title": "【亲签版】泥潭 刘楚昕2025新书 第二届漓江文学奖虚构类获奖作品 图书",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "30",
+          "comment_count_str": "2000+",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/10166155073751.html"
+        },
+        {
+          "sku": "10208018754185",
+          "title": "【亲签】泥潭 刘楚昕2025新书 第二届漓江文学奖虚构类获奖作品 图书",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "14",
+          "comment_count_str": "1000+",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/10208018754185.html"
+        },
+        {
+          "sku": "10177945569923",
+          "title": "【正版新书 送货上门】泥潭 刘楚昕2025新书 漓江文学奖获奖作品刘楚昕|漓江",
+          "shop_name": "辽版文化图书旗舰店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10177945569923.html"
+        },
+        {
+          "sku": "10165442190462",
+          "title": "泥潭 刘楚昕2025新书 漓江文学奖获奖作品 预售",
+          "shop_name": "杭州新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "10",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10165442190462.html"
+        },
+        {
+          "sku": "10217872526419",
+          "title": "泥潭 刘楚昕第二届漓江文学奖虚构类获奖作品泥潭书籍刘楚昕长篇小说2025新书刘楚欣当代文学正版书籍组套 活着 余华 百年孤独 无删减精装纪念版 泥潭",
+          "shop_name": "阅读新干线图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10217872526419.html"
+        }
+      ],
+      "all_skus_count": 8
     },
-    "gap_level": "perk_gap"
+    "gap_level": "none"
   },
   {
     "dangdang": {
@@ -58,21 +158,83 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10221977685195",
-        "url": "https://item.m.jd.com/product/10221977685195.html",
-        "detail_url": "https://item.jd.com/10221977685195.html",
-        "publisher": "全网热销",
-        "vender_id": "61708053",
-        "shop_name": "尚知序图书专营店",
-        "title": "我是你的遗物 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言 张嘉佳小说四部曲终章 我是你的遗物 无规格",
+        "sku": "10220672048098",
+        "url": "https://item.m.jd.com/product/10220672048098.html",
+        "detail_url": "https://item.jd.com/10220672048098.html",
+        "publisher": "湖南文艺出版社",
+        "vender_id": "14691198",
+        "shop_name": "京喜自营官方店",
+        "title": "【首发新书现货】我是你的遗物 张嘉佳新书籍2026全新小说 从你的全世界路过张嘉佳张嘉佳四部曲文学青春畅销书籍 我是你的遗物",
         "sku_status": "1",
         "is_self": false,
-        "show_count": 1,
-        "show_count_str": "1",
-        "comment_count_str": "29",
-        "perks": []
+        "show_count": 19,
+        "show_count_str": "19",
+        "comment_count_str": "2000+",
+        "perks": [
+          "首发"
+        ]
       },
-      "all_skus_count": 1
+      "all_perks": [
+        "礼盒",
+        "首发"
+      ],
+      "all_versions": [
+        {
+          "sku": "10220672048098",
+          "title": "【首发新书现货】我是你的遗物 张嘉佳新书籍2026全新小说 从你的全世界路过张嘉佳张嘉佳四部曲文学青春畅销书籍 我是你的遗物",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "19",
+          "comment_count_str": "2000+",
+          "perks": [
+            "首发"
+          ],
+          "detail_url": "https://item.jd.com/10220672048098.html"
+        },
+        {
+          "sku": "10220661749100",
+          "title": "【当当礼盒版 现货速发】我是你的遗物 张嘉佳新书 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "15",
+          "comment_count_str": "1000+",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10220661749100.html"
+        },
+        {
+          "sku": "10220818174416",
+          "title": "【官方正版】我是你的遗物 张嘉佳新书 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言 我是你的遗物 张嘉佳新书",
+          "shop_name": "同球图书专营店",
+          "is_self": false,
+          "show_count_str": "13",
+          "comment_count_str": "2000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10220818174416.html"
+        },
+        {
+          "sku": "10220813409313",
+          "title": "【官方正版】我是你的遗物 张嘉佳 2026新书 你是我的遗物 张嘉佳小说四部曲终章 云边有个小卖部天堂旅行团让我留在你身边从你的全世界路过作者张嘉佳新书 【张嘉佳2026新书】我是你的遗物",
+          "shop_name": "初心图书专营店",
+          "is_self": false,
+          "show_count_str": "9",
+          "comment_count_str": "1000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10220813409313.html"
+        },
+        {
+          "sku": "10221977685195",
+          "title": "我是你的遗物 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言 张嘉佳小说四部曲终章 我是你的遗物 无规格",
+          "shop_name": "尚知序图书专营店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "29",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221977685195.html"
+        }
+      ],
+      "all_skus_count": 5
     },
     "gap_level": "perk_gap"
   },
@@ -94,13 +256,13 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10223486127299",
-        "url": "https://item.m.jd.com/product/10223486127299.html",
-        "detail_url": "https://item.jd.com/10223486127299.html",
+        "sku": "10223322291022",
+        "url": "https://item.m.jd.com/product/10223322291022.html",
+        "detail_url": "https://item.jd.com/10223322291022.html",
         "publisher": "中信出版社",
         "vender_id": "12571469",
         "shop_name": "央视网官方旗舰店",
-        "title": "央视网（CCTVCOM）泉州寻宝记 孙家裕 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生科普百科WX 福建+泉州寻宝记",
+        "title": "央视网（CCTVCOM）泉州寻宝记 孙家裕 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生科普百科WX 泉州寻宝记",
         "sku_status": "1",
         "is_self": false,
         "show_count": 3,
@@ -108,9 +270,76 @@
         "comment_count_str": "200+",
         "perks": []
       },
-      "all_skus_count": 2
+      "all_perks": [
+        "限量"
+      ],
+      "all_versions": [
+        {
+          "sku": "10223322291022",
+          "title": "央视网（CCTVCOM）泉州寻宝记 孙家裕 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生科普百科WX 泉州寻宝记",
+          "shop_name": "央视网官方旗舰店",
+          "is_self": false,
+          "show_count_str": "3",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223322291022.html"
+        },
+        {
+          "sku": "10225287052164",
+          "title": "【官方正版】泉州寻宝记 赠吧唧 孙家裕 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生科普百科 随机掉落限量吧唧 泉州寻宝记",
+          "shop_name": "观书图书专营店",
+          "is_self": false,
+          "show_count_str": "2",
+          "comment_count_str": "5000+",
+          "perks": [
+            "限量"
+          ],
+          "detail_url": "https://item.jd.com/10225287052164.html"
+        },
+        {
+          "sku": "10225198199683",
+          "title": "【新华书店正版新书】泉州寻宝记 大中华寻宝记城市系列最新版宁夏福建寻宝记漫画6-12岁小学生儿童科普百科上海北京天津四川重庆寻宝记 中信9787521734898包邮",
+          "shop_name": "温州市新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225198199683.html"
+        },
+        {
+          "sku": "10223420774061",
+          "title": "【六一儿童节礼物】2026新书泉州寻宝记 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生三四五年级科普百科 【2026新书】泉州寻宝记",
+          "shop_name": "阳悦初品图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223420774061.html"
+        },
+        {
+          "sku": "10223431996924",
+          "title": "正版2026新书泉州寻宝记大中华寻宝记城市系列孙家裕科普百科漫画书适合6-12岁男孩女孩小学生二三四五六年级看的阅读课外书中信出版社 泉州寻宝记",
+          "shop_name": "悦读鹅图书官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223431996924.html"
+        },
+        {
+          "sku": "10224198082164",
+          "title": "大中华寻宝记城市系列（第1卷）：泉州寻宝记 （孙家裕,京鼎动漫 中信社）",
+          "shop_name": "青苑图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224198082164.html"
+        }
+      ],
+      "all_skus_count": 6
     },
-    "gap_level": "perk_gap"
+    "gap_level": "none"
   },
   {
     "dangdang": {
@@ -130,23 +359,49 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10222764501132",
-        "url": "https://item.m.jd.com/product/10222764501132.html",
-        "detail_url": "https://item.jd.com/10222764501132.html",
+        "sku": "14671295",
+        "url": "https://item.m.jd.com/product/14671295.html",
+        "detail_url": "https://item.jd.com/14671295.html",
+        "author": "安东尼",
         "publisher": "湖南文艺出版社",
-        "vender_id": "12765762",
-        "shop_name": "当当官方旗舰店",
-        "title": "【当当亲签版】紫：陪安东尼度过漫长岁月Ⅶ （安东尼“陪安”系列的终章，一段跨越20年时光记录的完结）",
+        "vender_id": "1000088122",
+        "shop_name": "中南天使京东自营旗舰店",
+        "title": "紫：陪安东尼度过漫长岁月Ⅶ 青春文学爱情情感治愈温暖小说 一段跨越20年时光记录的完结",
         "sku_status": "1",
-        "is_self": false,
-        "show_count": 3,
-        "show_count_str": "3",
-        "comment_count_str": "76",
-        "perks": [
-          "亲签"
-        ]
+        "is_self": true,
+        "show_count": 100,
+        "show_count_str": "100+",
+        "comment_count_str": "1万+",
+        "perks": []
       },
-      "all_skus_count": 1
+      "all_perks": [
+        "亲签"
+      ],
+      "all_versions": [
+        {
+          "sku": "14671295",
+          "title": "紫：陪安东尼度过漫长岁月Ⅶ 青春文学爱情情感治愈温暖小说 一段跨越20年时光记录的完结",
+          "shop_name": "中南天使京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "100+",
+          "comment_count_str": "1万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14671295.html"
+        },
+        {
+          "sku": "10222764501132",
+          "title": "【当当亲签版】紫：陪安东尼度过漫长岁月Ⅶ （安东尼“陪安”系列的终章，一段跨越20年时光记录的完结）",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "3",
+          "comment_count_str": "76",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/10222764501132.html"
+        }
+      ],
+      "all_skus_count": 2
     },
     "gap_level": "none"
   },
@@ -163,29 +418,158 @@
       ],
       "rank": 8,
       "category": "人文",
-      "rating": null,
+      "rating": 5.0,
       "url": "http://product.dangdang.com/30065590.html",
       "cover": "http://img3m0.ddimg.cn/82/19/30065590-1_l_1780300625.jpg"
     },
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "12710635",
-        "url": "https://item.m.jd.com/product/12710635.html",
-        "detail_url": "https://item.jd.com/12710635.html",
+        "sku": "12816007",
+        "url": "https://item.m.jd.com/product/12816007.html",
+        "detail_url": "https://item.jd.com/12816007.html",
         "author": "朱东润",
-        "publisher": "北京联合出版公司",
-        "vender_id": "1000085469",
-        "shop_name": "联合天畅京东自营旗舰店",
-        "title": "张居正大传 朱东润 中国古代官场政治人物研究 同曾国藩司马懿左宗棠曹操朱元璋朱棣忽必烈李宗仁历史名人物传记图书籍",
+        "publisher": "长江文艺出版社",
+        "vender_id": "1000007121",
+        "shop_name": "长江文艺出版社京东自营旗舰店",
+        "title": "张居正大传（长江人文馆）",
         "sku_status": "1",
         "is_self": true,
-        "show_count": 500,
-        "show_count_str": "500+",
-        "comment_count_str": "2万+",
+        "show_count": 36,
+        "show_count_str": "36",
+        "comment_count_str": "2000+",
         "perks": []
       },
-      "all_skus_count": 6
+      "all_perks": [
+        "礼盒",
+        "赠品"
+      ],
+      "all_versions": [
+        {
+          "sku": "12816007",
+          "title": "张居正大传（长江人文馆）",
+          "shop_name": "长江文艺出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "36",
+          "comment_count_str": "2000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/12816007.html"
+        },
+        {
+          "sku": "10184311832775",
+          "title": "张居正大传+陆游传+杜甫传 朱东润传记典藏 精装 刷边版 朱东润经典力作 二十世纪中国四大传记之一我国传记文学家朱东润开创之作 还原明代中兴首辅的传奇一生 张居正大传 精装典藏版",
+          "shop_name": "北京时代华文书局有限公司官方旗舰店",
+          "is_self": false,
+          "show_count_str": "7",
+          "comment_count_str": "500+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10184311832775.html"
+        },
+        {
+          "sku": "10074783333993",
+          "title": "张居正大传 朱东润 中国传记文学经典作品",
+          "shop_name": "浙江新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "7",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10074783333993.html"
+        },
+        {
+          "sku": "10022274743041",
+          "title": "正版包邮 张居正大传 朱东润著 赠张居正狠人语录书签 历史人物中国古代官场政治人物研究现当代名人传记",
+          "shop_name": "联合天畅图书旗舰店",
+          "is_self": false,
+          "show_count_str": "4",
+          "comment_count_str": "100+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10022274743041.html"
+        },
+        {
+          "sku": "1792068293",
+          "title": "张居正大传",
+          "shop_name": "中图网旗舰店",
+          "is_self": false,
+          "show_count_str": "4",
+          "comment_count_str": "73",
+          "perks": [],
+          "detail_url": "https://item.jd.com/1792068293.html"
+        },
+        {
+          "sku": "14539327",
+          "title": "张居正大传",
+          "shop_name": "京东图书自营旗舰店",
+          "is_self": true,
+          "show_count_str": "4",
+          "comment_count_str": "500+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14539327.html"
+        },
+        {
+          "sku": "10135015741292",
+          "title": "【全新正版明日达秒开发票】张居正大传（长江人文馆）",
+          "shop_name": "优宫图书专营店",
+          "is_self": false,
+          "show_count_str": "2",
+          "comment_count_str": "37",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10135015741292.html"
+        },
+        {
+          "sku": "10224244837937",
+          "title": "张居正大传 朱东润传记典藏 当当独家特装版 绒布精装 三面专属刷边 飞机盒+珍珠棉发货 赠《嘉靖二十六年进士登科录》亚克力挂牌、藏书票 张居正大传",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "5",
+          "perks": [
+            "礼盒",
+            "赠品"
+          ],
+          "detail_url": "https://item.jd.com/10224244837937.html"
+        },
+        {
+          "sku": "10211227413100",
+          "title": "张居正大传（长江人文馆） 朱东润 /正版",
+          "shop_name": "学美图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10211227413100.html"
+        },
+        {
+          "sku": "10208924568265",
+          "title": "朱东润作品：张居正大传//大明王朝万历皇帝老师宰相首辅张居正传人物传记张居正传书籍 张居正大传",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "49",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10208924568265.html"
+        },
+        {
+          "sku": "10202835087622",
+          "title": "张居正大传 精装典藏版 正版现货 朱东润经典力作 二十世纪中国四大传记之一张居正传 传记文学家朱东润开创之作 还原明代中兴首辅的传奇一生 张居正大传",
+          "shop_name": "阳悦初品图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10202835087622.html"
+        },
+        {
+          "sku": "10211201586647",
+          "title": "张居正大传 朱东润 现代出版社 [正版书]",
+          "shop_name": "泽霖文化专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10211201586647.html"
+        }
+      ],
+      "all_skus_count": 12
     },
     "gap_level": "perk_gap"
   },
@@ -222,7 +606,100 @@
         "comment_count_str": "200+",
         "perks": []
       },
-      "all_skus_count": 4
+      "all_perks": [],
+      "all_versions": [
+        {
+          "sku": "10209818970257",
+          "title": "【新华正版包邮】万历传 樊树志著 读懂万历十五年先读万历传 明朝历史万历帝人物传记万历帝与张居正历史史料 中华书局 【推荐阅读】崇祯传",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "11",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10209818970257.html"
+        },
+        {
+          "sku": "10080068061034",
+          "title": "樊树志作品 国史十六讲/江南市镇的早期城市化/崇祯传/万历传/图文中国史/明史十二讲/张居正与万历皇帝/重写晚明史系列/人世事，几完缺 中华书局 樊树志全集【套装12册】",
+          "shop_name": "启读图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "20",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10080068061034.html"
+        },
+        {
+          "sku": "10223820684737",
+          "title": "崇祯传 中华帝王传记 当当独家特装版 中华书局出版",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223820684737.html"
+        },
+        {
+          "sku": "10164630930061",
+          "title": "崇祯传 精装 新版",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "4",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10164630930061.html"
+        },
+        {
+          "sku": "10225133170720",
+          "title": "崇祯传9787010024936樊树志 著 人民出版社",
+          "shop_name": "汉墨韵书香专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225133170720.html"
+        },
+        {
+          "sku": "10165147872826",
+          "title": "崇祯传 中华书局 樊树志 著 新华正版书籍包邮 图书",
+          "shop_name": "文轩网专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "6",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10165147872826.html"
+        },
+        {
+          "sku": "10067520925997",
+          "title": "崇祯传 zb 湖北新华书店正版 中华书局",
+          "shop_name": "湖北新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10067520925997.html"
+        },
+        {
+          "sku": "10194719695662",
+          "title": "崇祯传 陈梧桐 河南文艺出版社",
+          "shop_name": "博仕文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10194719695662.html"
+        },
+        {
+          "sku": "10224398008893",
+          "title": "《崇祯传》9787555914808陈梧桐河南文艺出版社",
+          "shop_name": "鑫旺图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224398008893.html"
+        }
+      ],
+      "all_skus_count": 9
     },
     "gap_level": "perk_gap"
   },
@@ -244,21 +721,64 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10066959377556",
-        "url": "https://item.m.jd.com/product/10066959377556.html",
-        "detail_url": "https://item.jd.com/10066959377556.html",
-        "publisher": "花城出版社",
-        "vender_id": "772533",
-        "shop_name": "晟贤图书专营店",
-        "title": "2022新版 刘震云作品选全6册 一日三秋+一句顶一万句+我不是潘金莲+一地鸡毛+温故一九四二+我叫刘跃进中国现当代文学小说 刘震云作品",
+        "sku": "10222761823316",
+        "url": "https://item.m.jd.com/product/10222761823316.html",
+        "detail_url": "https://item.jd.com/10222761823316.html",
+        "publisher": "广东花城出版社",
+        "vender_id": "12765762",
+        "shop_name": "当当官方旗舰店",
+        "title": "【当当 正版包邮】咸的玩笑 刘震云新书现货速发 刘震云作品集 一句顶一万句 一日三秋 一地鸡毛等 刘震云作品选全6册【印签+布面+刷边】",
         "sku_status": "1",
         "is_self": false,
-        "show_count": 0,
-        "show_count_str": "0",
-        "comment_count_str": "1",
+        "show_count": 1000,
+        "show_count_str": "1000+",
+        "comment_count_str": "5万+",
         "perks": []
       },
-      "all_skus_count": 3
+      "all_perks": [],
+      "all_versions": [
+        {
+          "sku": "10222761823316",
+          "title": "【当当 正版包邮】咸的玩笑 刘震云新书现货速发 刘震云作品集 一句顶一万句 一日三秋 一地鸡毛等 刘震云作品选全6册【印签+布面+刷边】",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222761823316.html"
+        },
+        {
+          "sku": "10218929751534",
+          "title": "【二手9成新】刘震云作品选全6册 /刘震云 花城出版社",
+          "shop_name": "冠柏二手图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10218929751534.html"
+        },
+        {
+          "sku": "10175034610497",
+          "title": "【印签版】一句顶一万句 精装典藏版 第八届茅盾文学奖获奖作品 刘震云作品书籍一日三秋一地鸡毛我不是潘金莲我叫刘跃进 刘震云作品选全6册",
+          "shop_name": "北京悦读图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10175034610497.html"
+        },
+        {
+          "sku": "10066959377556",
+          "title": "2022新版 刘震云作品选全6册 一日三秋+一句顶一万句+我不是潘金莲+一地鸡毛+温故一九四二+我叫刘跃进中国现当代文学小说 刘震云作品",
+          "shop_name": "晟贤图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10066959377556.html"
+        }
+      ],
+      "all_skus_count": 4
     },
     "gap_level": "none"
   },
@@ -280,22 +800,145 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "12501395",
-        "url": "https://item.m.jd.com/product/12501395.html",
-        "detail_url": "https://item.jd.com/12501395.html",
+        "sku": "15372704",
+        "url": "https://item.m.jd.com/product/15372704.html",
+        "detail_url": "https://item.jd.com/15372704.html",
         "author": "陈忠实",
-        "publisher": "作家出版社",
-        "vender_id": "1000004801",
-        "shop_name": "作家出版社京东自营旗舰店",
-        "title": "白鹿原（陈忠实茅奖作品樊登推荐）小说",
+        "publisher": "人民文学出版社",
+        "vender_id": "1000005720",
+        "shop_name": "人民文学出版社京东自营旗舰店",
+        "title": "【京东自营包邮】白鹿原 初版复刻 陈忠实逝世十周年纪念版 93版 平装 内外双封（初版典藏本） 陈忠实 茅盾文学奖 当代 小说 人民文学出版社",
         "sku_status": "1",
         "is_self": true,
         "show_count": 2000,
         "show_count_str": "2000+",
-        "comment_count_str": "20万+",
+        "comment_count_str": "10万+",
         "perks": []
       },
-      "all_skus_count": 6
+      "all_perks": [],
+      "all_versions": [
+        {
+          "sku": "15372704",
+          "title": "【京东自营包邮】白鹿原 初版复刻 陈忠实逝世十周年纪念版 93版 平装 内外双封（初版典藏本） 陈忠实 茅盾文学奖 当代 小说 人民文学出版社",
+          "shop_name": "人民文学出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "2000+",
+          "comment_count_str": "10万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/15372704.html"
+        },
+        {
+          "sku": "12501395",
+          "title": "白鹿原（陈忠实茅奖作品樊登推荐）小说",
+          "shop_name": "作家出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "2000+",
+          "comment_count_str": "20万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/12501395.html"
+        },
+        {
+          "sku": "12128057",
+          "title": "白鹿原 陈忠实（精装典藏搭配精美插图，人民文学出版社专有版权，茅盾文学奖获奖作品） 小说",
+          "shop_name": "人民文学出版社京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "2000+",
+          "comment_count_str": "10万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/12128057.html"
+        },
+        {
+          "sku": "43394753150",
+          "title": "白鹿原 陈忠实小说作品 未删减版 原著1993人民出版 第四届茅盾文学奖获奖作品 作家出版社",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "200+",
+          "comment_count_str": "2万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/43394753150.html"
+        },
+        {
+          "sku": "10027738233799",
+          "title": "白鹿原正版无删减完整版陈忠实著原版原本原著未删减版1993版一版一印茅盾文学奖无删节版1993年电视剧经典文学小说书籍作家出版社",
+          "shop_name": "二月花图书专营店",
+          "is_self": false,
+          "show_count_str": "51",
+          "comment_count_str": "2000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10027738233799.html"
+        },
+        {
+          "sku": "67088512685",
+          "title": "【官方正版】白鹿原完整版 陈忠实著 无删减版新版 茅盾文学奖得者得主纪念出版20周年爱情现当代农村青春文学小说中国文学书籍 白鹿原（精装）",
+          "shop_name": "安徽新华书店图书旗舰店",
+          "is_self": false,
+          "show_count_str": "10",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/67088512685.html"
+        },
+        {
+          "sku": "10219750459350",
+          "title": "白鹿原 初版复刻 一版一刻 陈忠实小说作品 非未删减版 原著1993人民出版 第四届茅盾文学奖获奖作品 人民文学出版社 图书",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "7",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10219750459350.html"
+        },
+        {
+          "sku": "10217023678518",
+          "title": "白鹿原无删减完整版陈忠实著原版原本原著未删减版1993版一版一印茅盾文学奖无删节版1993年电视剧经典文学小说书籍作家 精装典藏",
+          "shop_name": "海之屋图书专营店",
+          "is_self": false,
+          "show_count_str": "3",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10217023678518.html"
+        },
+        {
+          "sku": "10217023678519",
+          "title": "白鹿原无删减完整版陈忠实著原版原本原著未删减版1993版一版一印茅盾文学奖无删节版1993年电视剧经典文学小说书籍作家 影视珍藏版",
+          "shop_name": "海之屋图书专营店",
+          "is_self": false,
+          "show_count_str": "3",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10217023678519.html"
+        },
+        {
+          "sku": "10221616874073",
+          "title": "93版 白鹿原 陈忠实逝世十周年纪念版 未姗 680页 1993年第一版",
+          "shop_name": "乾一图书专营店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "5",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221616874073.html"
+        },
+        {
+          "sku": "10224369789089",
+          "title": "正版【完整新版】平凡的世界 全三册 路遥作品 正版原著 书籍茅盾文学奖获奖作品正版书籍小说畅销书激励亿万青年命运的不朽经典 白鹿原 正版速发",
+          "shop_name": "三稻图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224369789089.html"
+        },
+        {
+          "sku": "10116677106571",
+          "title": "【新华书店 官方正版】白鹿原(茅盾文学奖获奖作家作品集) 陈忠实经典代表作正版 文学小说畅销书籍纪念出版",
+          "shop_name": "新华书店（安吉）图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "6",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10116677106571.html"
+        }
+      ],
+      "all_skus_count": 12
     },
     "gap_level": "perk_gap"
   },
@@ -317,22 +960,162 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "14665871",
-        "url": "https://item.m.jd.com/product/14665871.html",
-        "detail_url": "https://item.jd.com/14665871.html",
+        "sku": "10221544303120",
+        "url": "https://item.m.jd.com/product/10221544303120.html",
+        "detail_url": "https://item.jd.com/10221544303120.html",
         "author": "汪曾祺",
         "publisher": "北京联合出版公司",
-        "vender_id": "1000004821",
-        "shop_name": "时代华语京东自营旗舰店",
-        "title": "请和我门外的花坐一会儿（套装3册）：出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上",
+        "vender_id": "14691198",
+        "shop_name": "京喜自营官方店",
+        "title": "请和我门外的花坐一会儿 汪曾祺诞辰106周年 祝福礼盒面包袋 愿你春和景明 夏日生花 好景常在 软fufu的治愈系读物 抚平焦虑 过松软的日子 请和我门外的花坐一会儿",
         "sku_status": "1",
-        "is_self": true,
+        "is_self": false,
         "show_count": 2,
         "show_count_str": "2",
-        "comment_count_str": "200+",
-        "perks": []
+        "comment_count_str": "44",
+        "perks": [
+          "礼盒"
+        ]
       },
-      "all_skus_count": 6
+      "all_perks": [
+        "礼盒",
+        "赠品"
+      ],
+      "all_versions": [
+        {
+          "sku": "10221544303120",
+          "title": "请和我门外的花坐一会儿 汪曾祺诞辰106周年 祝福礼盒面包袋 愿你春和景明 夏日生花 好景常在 软fufu的治愈系读物 抚平焦虑 过松软的日子 请和我门外的花坐一会儿",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "2",
+          "comment_count_str": "44",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10221544303120.html"
+        },
+        {
+          "sku": "14665871",
+          "title": "请和我门外的花坐一会儿（套装3册）：出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上",
+          "shop_name": "时代华语京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "2",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14665871.html"
+        },
+        {
+          "sku": "10224745744287",
+          "title": "【新华正版】请和我门外的花坐一会儿(共3册) 汪曾祺 中国文学-散文 北京联合出版公司",
+          "shop_name": "浦江新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224745744287.html"
+        },
+        {
+          "sku": "10095354422171",
+          "title": "【任选】请和我门外的花坐一会儿 出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上 汪曾祺散文 充满烟火气的文字 人间滋味 夏日生花 好景常在 时代华语 请和我门外的花坐一会儿 3册",
+          "shop_name": "时代出版少儿图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "16",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10095354422171.html"
+        },
+        {
+          "sku": "10223051357060",
+          "title": "请和我门外的花坐一会儿 正版书籍手账本+明信片+书签+祝福卡 汪曾祺诞辰106周年 祝福礼盒面包袋 春和景明 夏日生花 好景常在 和门外的花坐一会儿",
+          "shop_name": "卓创图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10223051357060.html"
+        },
+        {
+          "sku": "10220547676918",
+          "title": "请和我门外的花坐一会儿 祝福礼盒面包袋 出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上 汪曾祺散文集 图书",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "2",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10220547676918.html"
+        },
+        {
+          "sku": "10223700116757",
+          "title": "【出版社直发】请和我门外的花坐一会儿 汪曾祺诞辰106周年祝福礼盒 当代文学散文集 治愈系随笔散文 青春成长感悟 文艺青年课外阅读畅销书 请和我门外的花坐一会儿",
+          "shop_name": "北京泓文远博图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10223700116757.html"
+        },
+        {
+          "sku": "10223405201553",
+          "title": "【全新正版】 请和我门外的花坐一会儿 2026-04-01 北京联合 汪曾祺",
+          "shop_name": "学有所成专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223405201553.html"
+        },
+        {
+          "sku": "14728073",
+          "title": "请和我门外的花坐一会儿（套装3册）赠 透明DIY压花书签",
+          "shop_name": "时代华语京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "赠品"
+          ],
+          "detail_url": "https://item.jd.com/14728073.html"
+        },
+        {
+          "sku": "10224466731313",
+          "title": "请和我门外的花坐一会儿(共3册)",
+          "shop_name": "桐乡新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224466731313.html"
+        },
+        {
+          "sku": "10223476657287",
+          "title": "【新华书店正版】请和我门外的花坐一会儿(共3册) 汪曾祺 著 北京联合出版公司 2026-4",
+          "shop_name": "浙江苍南县新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223476657287.html"
+        },
+        {
+          "sku": "10222421047867",
+          "title": "请和我门外的花坐一会儿 汪曾祺诞辰106周年祝福礼盒面包袋 出门去逛菜市场/太阳照在我手上/野鸭子飞得高高的 抚平焦虑治愈系读物 时代华语 【全3册】请和我门外的花坐一会儿",
+          "shop_name": "半小书官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "16",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10222421047867.html"
+        }
+      ],
+      "all_skus_count": 12
     },
     "gap_level": "none"
   },
@@ -370,7 +1153,120 @@
         "comment_count_str": "2万+",
         "perks": []
       },
-      "all_skus_count": 4
+      "all_perks": [],
+      "all_versions": [
+        {
+          "sku": "14720705",
+          "title": "人间小满3：茶要细细品，日子慢慢过 高人气作者姑苏阿焦全新漫画随笔集 现象级畅销书",
+          "shop_name": "文通天下京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "200+",
+          "comment_count_str": "2万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14720705.html"
+        },
+        {
+          "sku": "10059021096661",
+          "title": "人间小满 1 2 【单本套装可自选】姑苏阿焦 写给当代人的哲思录国风漫画阿焦画册收录父亲写给女儿的深情寄语中国近代随笔正版 人间小满1 新华书店",
+          "shop_name": "凤凰新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "36",
+          "comment_count_str": "2000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10059021096661.html"
+        },
+        {
+          "sku": "10224196457881",
+          "title": "【现货速发】人间小满3+2+1全套三册 姑苏阿焦2026新书 最抚人心的烟火气治愈心灵的小欢喜中国现当代文学畅销书正版书 印签寄语版+赠品】人间小满3 茶要细细品日子慢慢过",
+          "shop_name": "博库网旗舰店",
+          "is_self": false,
+          "show_count_str": "9",
+          "comment_count_str": "200+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224196457881.html"
+        },
+        {
+          "sku": "10096082455268",
+          "title": "【赠人间小满定制帆布袋】人间小满1+人间小满2 套装2册 姑苏阿焦Shou部作品 最抚人心的烟火气治愈心灵的小欢喜 当当 正版书籍",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "8",
+          "comment_count_str": "100+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10096082455268.html"
+        },
+        {
+          "sku": "10223851688793",
+          "title": "【官方正版】人间小满3：茶要细细品，日子慢慢过 姑苏阿焦 人间小满3",
+          "shop_name": "观山文华图书官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223851688793.html"
+        },
+        {
+          "sku": "10225706599216",
+          "title": "人间小满(3)-茶要细细品.日子慢慢过姑苏阿焦散文/随笔/书信光明日报出版社新华书店正版",
+          "shop_name": "江阴新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225706599216.html"
+        },
+        {
+          "sku": "10225706932560",
+          "title": "人间小满(3)-茶要细细品.日子慢慢过姑苏阿焦散文/随笔/书信光明日报出版社新华书店正版",
+          "shop_name": "武进新华图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225706932560.html"
+        },
+        {
+          "sku": "10224790636647",
+          "title": "姑苏阿焦作品 任选 人间小满1-3心有花田万事香 写给你我人生态度之书 漫画散文随笔集 人间小满.3,茶要细细品,日子慢慢过",
+          "shop_name": "杭州新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "2",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224790636647.html"
+        },
+        {
+          "sku": "10091967711104",
+          "title": "姑苏阿焦作品 任选 人间小满1-3心有花田万事香 写给你我人生态度之书 漫画散文随笔集 人间小满",
+          "shop_name": "杭州新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "2",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10091967711104.html"
+        },
+        {
+          "sku": "10206569270325",
+          "title": "[二手9成新] 人间小满：（三册价格） 姑苏阿焦 水利水电出版社",
+          "shop_name": "汇创二手书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10206569270325.html"
+        },
+        {
+          "sku": "10225320674108",
+          "title": "【王府井新华书店】人间小满3 茶要细细品 日子慢慢过 1 2姑苏阿焦 漫画集中国人生活哲学阿焦画册当代人哲思录国风漫画最抚人心烟火气心灵 治愈心灵散文学畅销书籍 人间小满",
+          "shop_name": "王府井书店旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225320674108.html"
+        }
+      ],
+      "all_skus_count": 11
     },
     "gap_level": "perk_gap"
   },
@@ -392,23 +1288,149 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10221221287885",
-        "url": "https://item.m.jd.com/product/10221221287885.html",
-        "detail_url": "https://item.jd.com/10221221287885.html",
-        "publisher": "科学技术文献出版社",
-        "vender_id": "14691198",
-        "shop_name": "京喜自营官方店",
-        "title": "【新书】万物有光 救命24小时指南 卢骁 急诊医生科普专家卢骁给中国家庭的救命指南 科学应对方案 真实案例教你保命 万物有光：救命24小时指南",
+        "sku": "10221202390336",
+        "url": "https://item.m.jd.com/product/10221202390336.html",
+        "detail_url": "https://item.jd.com/10221202390336.html",
+        "vender_id": "12765762",
+        "shop_name": "当当官方旗舰店",
+        "title": "万物有光 救命24小时指南 全网800万喜爱的专业医生 教你正确呵护生命",
         "sku_status": "1",
         "is_self": false,
-        "show_count": 0,
-        "show_count_str": "0",
-        "comment_count_str": "100+",
+        "show_count": 2,
+        "show_count_str": "2",
+        "comment_count_str": "13",
         "perks": []
       },
-      "all_skus_count": 6
+      "all_perks": [
+        "亲签"
+      ],
+      "all_versions": [
+        {
+          "sku": "10221202390336",
+          "title": "万物有光 救命24小时指南 全网800万喜爱的专业医生 教你正确呵护生命",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "2",
+          "comment_count_str": "13",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221202390336.html"
+        },
+        {
+          "sku": "10222557474172",
+          "title": "【新华书店官方正版图书】现货 万物有光:救命24小时指南 全书分为两大部分，涵盖30余种生活中高发、急发、重大的疾病问题 2026新版",
+          "shop_name": "长兴新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "1",
+          "comment_count_str": "45",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222557474172.html"
+        },
+        {
+          "sku": "10222615480564",
+          "title": "央视网（CCTVCOM）万物有光 救命24小时指南 亲签版赠贴纸 卢骁给中国家庭的救命指南 30余种危急重症的科学应对方案 自救常识科普书籍DD 万物有光：救命24小时指南",
+          "shop_name": "央视网官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "3",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/10222615480564.html"
+        },
+        {
+          "sku": "10137245773578",
+          "title": "心有明月，万物有光：崔立百篇小小说自选集",
+          "shop_name": "艺之卓文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10137245773578.html"
+        },
+        {
+          "sku": "10221221287885",
+          "title": "【新书】万物有光 救命24小时指南 卢骁 急诊医生科普专家卢骁给中国家庭的救命指南 科学应对方案 真实案例教你保命 万物有光：救命24小时指南",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "100+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221221287885.html"
+        },
+        {
+          "sku": "10199166619243",
+          "title": "现货【新华书店全新正版】万物有光:给孩子的手绘观星指南",
+          "shop_name": "德清县新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10199166619243.html"
+        },
+        {
+          "sku": "10214137377304",
+          "title": "【京仓直发+京东物流次日达】万物有光 给孩子的手绘观星指南 乐乐趣5岁+儿童科普绘本",
+          "shop_name": "官笙图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10214137377304.html"
+        },
+        {
+          "sku": "10220800058618",
+          "title": "万物有光:救命24小时指南 卢骁 著 急诊医学科 健康知识 急诊日记 以亲身经历讲述急诊故事 磨铁",
+          "shop_name": "温州市新华书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10220800058618.html"
+        },
+        {
+          "sku": "10223447841425",
+          "title": "【新书】万物有光 救命24小时指南 卢骁 急诊医生科普专家卢骁给中国家庭的救命指南 科学应对方案 真实案例教你保命 【共2册】万物有光：救命24小时指南+生命有星光",
+          "shop_name": "京喜自营官方店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "14",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223447841425.html"
+        },
+        {
+          "sku": "10223833673485",
+          "title": "万物有光 救命24小时指南 卢骁著 全网800万粉丝喜爱的专业医生 万物有光",
+          "shop_name": "尚知序图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "4",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223833673485.html"
+        },
+        {
+          "sku": "10219977783603",
+          "title": "万物有光 给孩子的手绘观星指南 乐乐趣5岁+儿童科普绘本",
+          "shop_name": "舒荣国学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10219977783603.html"
+        },
+        {
+          "sku": "10223877861411",
+          "title": "万物有光 救命24小时指南 卢骁著 800万粉丝喜爱的专业医生 全新塑封 万物有光：救命24小时指南",
+          "shop_name": "希锐图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223877861411.html"
+        }
+      ],
+      "all_skus_count": 12
     },
-    "gap_level": "perk_gap"
+    "gap_level": "none"
   },
   {
     "dangdang": {
@@ -428,23 +1450,153 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10225468206672",
-        "url": "https://item.m.jd.com/product/10225468206672.html",
-        "detail_url": "https://item.jd.com/10225468206672.html",
+        "sku": "15149662",
+        "url": "https://item.m.jd.com/product/15149662.html",
+        "detail_url": "https://item.jd.com/15149662.html",
+        "author": "肥志",
         "publisher": "广东旅游出版社",
-        "vender_id": "12765762",
-        "shop_name": "当当官方旗舰店",
-        "title": "【特典版包邮】肥志百科1-18 全新肥志百科1-4+5-8+9-18 全套18册套装单册自选 如果历史是一群喵作者肥志全新力作 大陆动漫漫画动物植物科普百科图画书 【特典版】全新肥志百科17-18",
+        "vender_id": "1000005842",
+        "shop_name": "漫友文化京东自营旗舰店",
+        "title": "肥志百科16原来你是这样的动物F篇 6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
         "sku_status": "1",
-        "is_self": false,
-        "show_count": 100,
-        "show_count_str": "100+",
-        "comment_count_str": "5000+",
+        "is_self": true,
+        "show_count": 1000,
+        "show_count_str": "1000+",
+        "comment_count_str": "5万+",
         "perks": []
       },
-      "all_skus_count": 6
+      "all_perks": [
+        "限量"
+      ],
+      "all_versions": [
+        {
+          "sku": "15149662",
+          "title": "肥志百科16原来你是这样的动物F篇 6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/15149662.html"
+        },
+        {
+          "sku": "13189201",
+          "title": "肥志百科1 原来你是这样的植物 A篇 （植物A）6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/13189201.html"
+        },
+        {
+          "sku": "14559386",
+          "title": "肥志百科12原来你是这样的动物E篇 6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14559386.html"
+        },
+        {
+          "sku": "14522395",
+          "title": "肥志百科14原来你是这样的美食D篇 6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14522395.html"
+        },
+        {
+          "sku": "13189277",
+          "title": "全新肥志百科1-4（套装共4册）6-12岁儿童趣味百科漫画书小学生课外书少儿百科知识漫画正版 如果历史是一群喵姐妹篇作者力作 B站百万UP主肥志团队爆笑创作",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/13189277.html"
+        },
+        {
+          "sku": "14031869",
+          "title": "【现货速发】肥志百科全套1-12册 历史喵作者肥志全新力作 百科全书 如果历史是一群喵15·大清风云篇",
+          "shop_name": "漫友文化京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "1000+",
+          "comment_count_str": "5万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14031869.html"
+        },
+        {
+          "sku": "10225468206672",
+          "title": "【特典版包邮】肥志百科1-18 全新肥志百科1-4+5-8+9-18 全套18册套装单册自选 如果历史是一群喵作者肥志全新力作 大陆动漫漫画动物植物科普百科图画书 【特典版】全新肥志百科17-18",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "100+",
+          "comment_count_str": "5000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225468206672.html"
+        },
+        {
+          "sku": "10189897380655",
+          "title": "【现货速发】全新肥志百科17-18卷特典版 全套18册1-18 如果历史是一群喵作者肥志全新力作 肥志百科18肥志百科肥志百科17原来你是这样的发明A篇18原来你是这样的美食E篇 【全新4册】肥志百科",
+          "shop_name": "弘文图书专营店",
+          "is_self": false,
+          "show_count_str": "6",
+          "comment_count_str": "500+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10189897380655.html"
+        },
+        {
+          "sku": "10225477309975",
+          "title": "【特典版 限定闪卡】肥志百科17-18 如果历史是一群喵作者肥志全新力作 新时代的漫画版百科全书 让您的孩子从此迷上阅读",
+          "shop_name": "当当图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "限量"
+          ],
+          "detail_url": "https://item.jd.com/10225477309975.html"
+        },
+        {
+          "sku": "10225567214304",
+          "title": "肥志百科17原来你是这样的发明A篇",
+          "shop_name": "当当图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225567214304.html"
+        },
+        {
+          "sku": "10225470045126",
+          "title": "【当当特典版】全新肥志百科17-18 赠限定闪卡 如果历史是一群喵作者肥志全新力作 大陆动漫漫画动物植物科普百科图画书",
+          "shop_name": "当当官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "限量"
+          ],
+          "detail_url": "https://item.jd.com/10225470045126.html"
+        },
+        {
+          "sku": "10225568720249",
+          "title": "肥志百科17+18 共二册 正版正货 新华书店",
+          "shop_name": "凤凰新华书店旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225568720249.html"
+        }
+      ],
+      "all_skus_count": 12
     },
-    "gap_level": "perk_gap"
+    "gap_level": "none"
   },
   {
     "dangdang": {
@@ -465,14 +1617,13 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10208834557187",
-        "url": "https://item.m.jd.com/product/10208834557187.html",
-        "detail_url": "https://item.jd.com/10208834557187.html",
-        "author": "瓶子 编绘",
-        "publisher": "文化发展出版",
-        "vender_id": "18111230",
-        "shop_name": "嘉芸图书专营店",
-        "title": "正版灵契瓶子 编绘文化发展出版",
+        "sku": "10221506164319",
+        "url": "https://item.m.jd.com/product/10221506164319.html",
+        "detail_url": "https://item.jd.com/10221506164319.html",
+        "publisher": "文化发展出版社",
+        "vender_id": "10096377",
+        "shop_name": "尚汇轩图书专营店",
+        "title": "正版包邮 灵契 瓶子编绘 天才阳冥司废柴除妖师 玄幻搞笑悬疑的人气国漫书中收录未公开番外玄幻搞笑 悬疑国漫小说书",
         "sku_status": "1",
         "is_self": false,
         "show_count": 0,
@@ -480,8 +1631,137 @@
         "comment_count_str": "0",
         "perks": []
       },
-      "all_skus_count": 6
+      "all_perks": [
+        "亲签",
+        "礼盒",
+        "赠品",
+        "限量"
+      ],
+      "all_versions": [
+        {
+          "sku": "10221506164319",
+          "title": "正版包邮 灵契 瓶子编绘 天才阳冥司废柴除妖师 玄幻搞笑悬疑的人气国漫书中收录未公开番外玄幻搞笑 悬疑国漫小说书",
+          "shop_name": "尚汇轩图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221506164319.html"
+        },
+        {
+          "sku": "10213650772343",
+          "title": "签名版】灵契 瓶子编绘 腾讯动漫65亿人气 206万收藏 书中收录未公开番外 人气漫画家瓶子口碑之作 玄幻 搞笑 悬疑的人气畅销国漫小说书 灵契",
+          "shop_name": "酷威图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "7",
+          "perks": [
+            "亲签"
+          ],
+          "detail_url": "https://item.jd.com/10213650772343.html"
+        },
+        {
+          "sku": "10219126346228",
+          "title": "【正版现货】灵契瓶子 绘文化发展出版社9787514232936",
+          "shop_name": "颖之文图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10219126346228.html"
+        },
+        {
+          "sku": "10224232442520",
+          "title": "王者荣耀游戏周边公孙离高颜值亚克力双面双层钥匙扣创意精美挂件 孙尚香-异界灵契-QD408",
+          "shop_name": null,
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224232442520.html"
+        },
+        {
+          "sku": "10224313988889",
+          "title": "【官方正版 限量签名版】灵契 人气漫画家瓶子口碑之作 瓶子编绘 腾讯动漫65亿人气206万收藏 书中收录未公开番外 【签名版+随书赠品】灵契",
+          "shop_name": "凤凰空间图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "亲签",
+            "限量",
+            "赠品"
+          ],
+          "detail_url": "https://item.jd.com/10224313988889.html"
+        },
+        {
+          "sku": "10163068660910",
+          "title": "[绝版旧书]灵契",
+          "shop_name": "青简图书图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10163068660910.html"
+        },
+        {
+          "sku": "10224947949566",
+          "title": "正版图书 灵契 瓶子 绘 文化发展出版社 9787514232936",
+          "shop_name": "邦桦源文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224947949566.html"
+        },
+        {
+          "sku": "10214691941821",
+          "title": "灵契2*涅槃 百花洲文艺出版社【正版书】",
+          "shop_name": "庆波图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10214691941821.html"
+        },
+        {
+          "sku": "10218161175982",
+          "title": "超自然行动组兑换码6480金砖灵契愿望币赞萌露比卡皮巴拉礼包cdk网吧电竞 豪华版 简体中文",
+          "shop_name": "佳华亚专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "3",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10218161175982.html"
+        },
+        {
+          "sku": "10224314267176",
+          "title": "【官方正版 限量签名版】灵契 人气漫画家瓶子口碑之作 瓶子编绘 腾讯动漫65亿人气206万收藏 书中收录未公开番外 【签名版+定制赠品】灵契",
+          "shop_name": "代羽空间图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "亲签",
+            "限量"
+          ],
+          "detail_url": "https://item.jd.com/10224314267176.html"
+        },
+        {
+          "sku": "10213670424760",
+          "title": "灵契 瓶子编绘 腾讯动漫65亿人气 206万收藏 书中收录未公开番外 人气漫画家瓶子口碑之作 玄幻 搞笑 悬疑的人气国漫小说书 灵契",
+          "shop_name": "海之岭图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10213670424760.html"
+        }
+      ],
+      "all_skus_count": 11
     },
-    "gap_level": "perk_gap"
+    "gap_level": "none"
   }
 ]

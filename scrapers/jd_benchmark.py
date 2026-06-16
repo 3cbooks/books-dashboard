@@ -50,18 +50,24 @@ def detect_jd_perks(text: str) -> list[str]:
     return perks
 
 
-def query_jd_for_book(dangdang_book: dict, max_results: int = 6,
+def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
                      delay: float = 0.6) -> dict:
     """
     用一本当当书的核心标题，去京东搜索找对标版本。
 
+    关键改进（v2）：
+    - 不再只取"前一个匹配的 SKU"
+    - 遍历所有候选 SKU，把所有版本的权益合并成"京东侧总权益"
+      （比如京东可能有平装版无权益 + 亲签套装版有亲签礼盒，应合并）
+    - best_match 仍然取销量最高的版本
+
     返回：
     {
-      'available': True/False,           # 京东是否在售（含自营/POP 任一）
-      'best_match': {...},               # 最匹配的 SKU 详情（优先自营，其次销量最高的 POP）
-      'all_skus_count': int,             # 京东搜出的全部相关 SKU 数
-      'self_count': int,                 # 其中自营 SKU 数
-      'pop_count':  int,
+      'available':       True/False,
+      'best_match':      {...},          # 销量最高的同款版本
+      'all_perks':       ['亲签','礼盒'], # 京东所有版本权益的并集
+      'all_versions':    [{...}, ...],   # 所有同款版本的简要信息
+      'all_skus_count':  int,
     }
     """
     title = dangdang_book.get("title", "")
@@ -72,65 +78,102 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 6,
 
     pop_core_normalized = normalize_title(core)
 
-    # 作者名清洗（去掉特殊字符避免精度过窄）
     author_clean = re.sub(r"[·・\.\(\)（）\[\]【】]", "", author).strip()
     author_short = author_clean[:6] if author_clean else ""
 
-    # 搜索策略：先用"书名+作者"，没有结果再降级用纯书名
+    # 搜索关键词扩展：
+    # 1. "书名核心+作者"（精确）
+    # 2. "书名核心"（兜底）
+    # 3. "书名去尾数"（《人间小满3》→ "人间小满"，能搜到套装版）
     queries = []
     if author_short:
         queries.append(f"{core} {author_short}")
     queries.append(core)
+    # 去掉书名末尾的数字（套装版通常不带"3""5"这种序号）
+    core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
+    if core_stripped and core_stripped != core and len(core_stripped) >= 2:
+        queries.append(core_stripped)
 
-    found_skus: list[str] = []
+    # 收集所有 query 命中的 SKU 并集（之前只取第一个有结果的 query）
+    all_found_skus: set[str] = set()
     for keyword in queries:
         url = f"https://so.m.jd.com/ware/search.action?keyword={quote(keyword)}&book=y"
         resp = http_get(url, timeout=15, extra_headers={"User-Agent": MOBILE_UA})
         if resp is None:
             continue
-
         skus = set(re.findall(r'item\.m\.jd\.com/product/(\d{6,14})\.html', resp.text))
         skus2 = set(re.findall(r'"sku(?:Id)?":\s*"?(\d{6,14})"?', resp.text))
-        all_skus = list((skus | skus2))[:max_results]
-        if all_skus:
-            found_skus = all_skus
-            break
+        all_found_skus.update(skus | skus2)
+
+    found_skus = list(all_found_skus)[:max_results]
 
     if not found_skus:
         return {"available": False, "reason": "no_search_result"}
 
-    # 拿销量数据（一次 API 拿所有候选 SKU 的评价数）
+    # 拿销量数据
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
-    # 抓详情，过滤出"和当当书是同一本"的（不再区分自营/POP）
+    # 抓详情，过滤出"和当当书是同一本"的所有版本
+    # 匹配规则：京东标题包含"核心书名"或"核心书名去尾数后的版本"
+    pop_core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
     candidates: list[dict] = []
     for sku in found_skus:
         info = fetch_detail(sku)
         if not info:
             time.sleep(delay)
             continue
-        # 名字必须重叠
         self_t = normalize_title(info.get("title", ""))
-        if not self_t or pop_core_normalized not in self_t:
+        if not self_t:
             time.sleep(delay)
             continue
-        # 把销量并入
+        # 严格匹配（含完整核心）OR 宽松匹配（含去尾数后的核心 + 必须含作者）
+        match_strict = pop_core_normalized in self_t
+        match_loose = (
+            len(pop_core_stripped) >= 3
+            and pop_core_stripped in self_t
+            and (not author_short or author_short in self_t)
+        )
+        if not (match_strict or match_loose):
+            time.sleep(delay)
+            continue
         sd = sales.get(sku, {})
         info["show_count"] = sd.get("show_count", 0)
         info["show_count_str"] = sd.get("show_count_str", "")
         info["comment_count_str"] = sd.get("comment_count_str", "")
-        # 识别京东侧权益
         info["perks"] = detect_jd_perks(info.get("title", ""))
         candidates.append(info)
         time.sleep(delay)
 
-    # 选最佳匹配：按销量排
+    if not candidates:
+        return {"available": False, "reason": "no_match_after_detail"}
+
+    # 销量降序
     candidates.sort(key=lambda b: b.get("show_count", 0), reverse=True)
-    best_match = candidates[0] if candidates else None
+    best_match = candidates[0]
+
+    # 关键：合并所有版本的权益（京东可能在不同 SKU 里分散提供权益）
+    all_perks = sorted(set(p for c in candidates for p in (c.get("perks") or [])))
+
+    # 简化版的版本列表（前端可展开看"京东其他版本"）
+    all_versions = [
+        {
+            "sku":              c.get("sku"),
+            "title":            c.get("title"),
+            "shop_name":        c.get("shop_name"),
+            "is_self":          c.get("is_self"),
+            "show_count_str":   c.get("show_count_str"),
+            "comment_count_str": c.get("comment_count_str"),
+            "perks":            c.get("perks", []),
+            "detail_url":       c.get("detail_url"),
+        }
+        for c in candidates
+    ]
 
     return {
-        "available": best_match is not None,
-        "best_match": best_match,
+        "available":      True,
+        "best_match":     best_match,
+        "all_perks":      all_perks,
+        "all_versions":   all_versions,
         "all_skus_count": len(candidates),
     }
 
@@ -199,18 +242,21 @@ def benchmark_books(dangdang_books: list[dict],
 
 def _assess_gap(dd: dict, jd: dict) -> str:
     """
-    评估对标缺口（不再区分自营/POP — 只看京东这本书在没在售 + 权益对比）：
+    评估对标缺口：
       - no_jd     京东未在售
-      - perk_gap  京东在售但当当独有权益更多
+      - perk_gap  京东在售但当当独有权益更多（用京东所有版本的权益并集判断）
       - none      权益已对齐
+
+    重要修复：用 jd['all_perks']（所有版本权益的并集）而不是 best_match.perks
+    避免出现"京东其实有亲签套装版，只是销量最好的是平装版"导致漏判
     """
     if not jd.get("available"):
         return "no_jd"
-    best = jd.get("best_match") or {}
     dd_perks = set(dd.get("perks", []))
-    jd_perks = set(best.get("perks", []))
+    # 优先用 all_perks（所有 SKU 版本权益的并集），向后兼容老数据用 best_match.perks
+    jd_perks = set(jd.get("all_perks") or
+                   (jd.get("best_match") or {}).get("perks", []))
     distinctive = dd_perks - jd_perks
-    # 排除"礼盒""赠品""首发"这种通用权益（对标信号弱）
     distinctive_strong = distinctive - {"礼盒", "赠品", "首发"}
     if distinctive_strong:
         return "perk_gap"
