@@ -550,6 +550,87 @@ function renderDangdangBenchmark() {
   }
 }
 
+// ========== 渲染：京东 POP 有自营无 ==========
+
+function renderJdPop() {
+  const grid = $('#jdpop-grid');
+  const summary = $('#jdpop-summary');
+  if (!grid) return;
+
+  const items = STATE.jdPopOnly || [];
+  if (!items.length) {
+    summary.textContent = '暂无数据 — 数据源建设中或当日未抓到 POP 独家书';
+    grid.innerHTML = `<div class="col-span-full bg-white rounded-2xl border border-dashed
+                              border-mint-200 p-8 text-center">
+      <div class="text-4xl mb-3 opacity-60">🚧</div>
+      <h3 class="font-medium text-slate-700 mb-1.5">数据源建设中</h3>
+      <p class="text-xs text-slate-500 leading-relaxed max-w-md mx-auto">
+        京东商品页采用前端动态渲染，需 Playwright 抓取。每日凌晨自动比对 POP × 自营，找出"自营缺口"。
+      </p>
+    </div>`;
+    return;
+  }
+
+  summary.innerHTML = `
+    <span class="font-semibold text-slate-900">${items.length}</span> 本
+    京东 POP 商家在售、自营未上架
+    <span class="text-slate-400 mx-2">·</span>
+    自营选品的潜在缺口
+  `;
+
+  const DEFAULT_LIMIT = 5;
+  const expanded = STATE._jdpopExpanded === true;
+  const shown = expanded ? items : items.slice(0, DEFAULT_LIMIT);
+
+  const cardsHtml = shown.map(b => {
+    const safeTitle = (b.title || '').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+    const [c1, c2] = COVER_GRADIENTS[hashStr(b.title || '') % COVER_GRADIENTS.length];
+    return `
+      <a href="${b.detail_url || '#'}" target="_blank" rel="noopener"
+         class="card-hover bg-white rounded-2xl border border-mint-100 overflow-hidden flex flex-col">
+        <div class="aspect-[3/4] overflow-hidden bg-mint-50 relative">
+          <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold
+                       px-1.5 py-0.5 rounded shadow-sm z-10">POP</span>
+          <div class="cover-placeholder w-full h-full"
+               style="--c1:${c1};--c2:${c2}">
+            <span>${safeTitle}</span>
+          </div>
+        </div>
+        <div class="p-3 flex-1 flex flex-col">
+          <h3 class="font-medium text-sm text-slate-900 leading-snug line-clamp-2">
+            ${b.title || '(无书名)'}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1 line-clamp-1">${b.author || '—'}</p>
+          ${b.publisher ? `<p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">${b.publisher}</p>` : ''}
+          <div class="mt-auto pt-2 flex items-center justify-between gap-2">
+            ${b.pubdate ? `<span class="text-[10px] text-slate-500">${b.pubdate}</span>` : '<span></span>'}
+            ${b.price ? `<span class="text-xs font-semibold text-amber-600">${b.price}</span>` : ''}
+          </div>
+        </div>
+      </a>
+    `;
+  }).join('');
+
+  let toggleHtml = '';
+  if (items.length > DEFAULT_LIMIT) {
+    toggleHtml = `<button id="jdpop-toggle"
+      class="col-span-full mt-2 py-2.5 text-sm ${expanded ? 'text-slate-500' : 'text-mint-700'} font-medium
+             border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50 transition">
+      ${expanded ? '收起 ↑' : `展开更多 (+${items.length - DEFAULT_LIMIT}) ↓`}
+    </button>`;
+  }
+
+  grid.innerHTML = cardsHtml + toggleHtml;
+
+  const tg = document.getElementById('jdpop-toggle');
+  if (tg) {
+    tg.onclick = () => {
+      STATE._jdpopExpanded = !expanded;
+      renderJdPop();
+    };
+  }
+}
+
 // ========== 渲染：上游预售信号 ==========
 
 function renderUpcoming() {
@@ -730,19 +811,21 @@ function renderCategoryChart() {
 
 async function init() {
   // 并行加载所有数据
-  const [meta, books, newBooks, news, insights] = await Promise.all([
+  const [meta, books, newBooks, news, insights, jdPopOnly] = await Promise.all([
     loadJSON('data/meta.json'),
     loadJSON('data/books.json'),
     loadJSON('data/books_new.json'),
     loadJSON('data/news.json'),
     loadJSON('data/insights.json'),
+    loadJSON('data/jd_pop_only.json'),
   ]);
 
-  STATE.meta     = meta     || {};
-  STATE.books    = books    || [];
-  STATE.newBooks = newBooks || [];
-  STATE.news     = news     || [];
-  STATE.insights = insights || [];
+  STATE.meta      = meta      || {};
+  STATE.books     = books     || [];
+  STATE.newBooks  = newBooks  || [];
+  STATE.news      = news      || [];
+  STATE.insights  = insights  || [];
+  STATE.jdPopOnly = jdPopOnly || [];
 
   // Header 更新时间
   if (STATE.meta.updated_at) {
@@ -754,7 +837,8 @@ async function init() {
   // 渲染各模块
   renderInsights();
   renderDangdangBenchmark();
-  renderUpcoming();             // 新增：上游预售信号
+  renderJdPop();              // 新增：京东 POP 有自营无
+  renderUpcoming();
   renderNewsFilters();
   renderNews();
   renderBookFilters();

@@ -60,6 +60,23 @@ def main() -> int:
         new_books = load_json("books_new.json", default=[])
     save_json("books_new.json", new_books)
 
+    # ============ 抓京东 POP 自营对比（Playwright）============
+    # 用真浏览器浏览京东搜索，区分自营/POP，找出 POP 独有的书
+    try:
+        from . import jd as jd_mod, jd_compare
+        jd_data = jd_mod.fetch()
+        save_json("jd_self.json", jd_data["self"])
+        save_json("jd_pop.json", jd_data["pop"])
+        sources_status["jd"] = "ok" if jd_data["pop"] else "partial"
+
+        # 比对：POP 独有
+        pop_only = jd_compare.find_pop_only(jd_data["self"], jd_data["pop"])
+        save_json("jd_pop_only.json", pop_only)
+        log.info("✓ 京东 POP 独家（自营无）: %d 本", len(pop_only))
+    except Exception:
+        log.error("✗ 京东抓取/比对抛异常:\n%s", traceback.format_exc())
+        sources_status["jd"] = "failed"
+
     # ============ 豆瓣校验（限流敏感，量要节制）============
     # 豆瓣对单 IP 反爬严，每次大概只能跑 5-10 次就被封
     # 策略：优先校验"看起来最像新书的"

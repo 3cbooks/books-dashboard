@@ -138,35 +138,18 @@
           <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
             <span>🛒</span> 京东 POP 有自营无
           </h2>
-          <p class="text-sm text-slate-500 mt-1">
-            京东 POP 商家在售、京东自营尚未上架的图书 — 自营选品的内部缺口
+          <p class="text-sm text-slate-500 mt-1" id="jdpop-summary">
+            加载中...
           </p>
         </div>
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                     bg-amber-50 border border-amber-200 text-amber-700 text-xs font-medium">
-          <span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
-          稍后更新
-        </span>
       </div>
-      <div class="bg-white rounded-2xl border border-dashed border-mint-200 p-8
-                  text-center">
-        <div class="text-4xl mb-3 opacity-60">🚧</div>
-        <h3 class="font-medium text-slate-700 mb-1.5">数据源建设中</h3>
-        <p class="text-xs text-slate-500 leading-relaxed max-w-md mx-auto">
-          京东商品页采用前端动态渲染，需用 Playwright 浏览器自动化抓取。<br>
-          后端工作管线已规划，预计接入后将自动比对：
-        </p>
-        <div class="mt-4 inline-flex items-center gap-3 text-xs">
-          <span class="px-2.5 py-1 rounded bg-mint-50 text-mint-700">京东 POP 在售</span>
-          <span class="text-slate-400">−</span>
-          <span class="px-2.5 py-1 rounded bg-rose-50 text-rose-700">京东自营在售</span>
-          <span class="text-slate-400">=</span>
-          <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-medium">自营缺口</span>
-        </div>
-        <p class="text-[11px] text-slate-400 mt-4 italic">
-          匹配方式：京东 ISBN 直接比对 + 书名模糊匹配兜底
-        </p>
+      <div id="jdpop-grid"
+           class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- 由 JS 动态填充 -->
       </div>
+      <p class="text-xs text-slate-400 mt-3 italic">
+        💡 京东 POP 商家在售但自营尚未上架的书 — 自营选品的内部缺口。匹配方式：书名清洗后核心字串比对（不依赖经常错乱的 ISBN）。
+      </p>
     </section>
 
     <!-- ============ 2.5 上游预售信号 ============ -->

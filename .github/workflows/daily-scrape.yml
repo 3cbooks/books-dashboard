@@ -16,7 +16,7 @@ jobs:
   scrape-and-commit:
     name: 抓取数据 → 提交 JSON
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # 安全网：超过 10 分钟就杀掉
+    timeout-minutes: 20  # 加了 Playwright + 京东抓取 + 豆瓣校验后变长
 
     steps:
       # ① 把仓库代码拉下来
@@ -38,6 +38,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      # ③.5 装 Playwright 的 Chromium 浏览器（用于京东抓取）
+      - name: 🌐 安装 Playwright + Chromium
+        run: |
+          python -m playwright install --with-deps chromium
 
       # ④ 跑抓取脚本
       - name: 🔍 跑数据抓取
