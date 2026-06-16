@@ -45,26 +45,34 @@ def _strip_em(s: str) -> str:
     return _EM_RE.sub("", s).strip() if s else ""
 
 
+def _strip_prefix(s: str, prefixes: list[str]) -> str:
+    """剥掉字符串开头的固定前缀（'发布于：xxx' → 'xxx'）。"""
+    if not s:
+        return ""
+    for p in prefixes:
+        if s.startswith(p):
+            return s[len(p):].strip()
+    return s.strip()
+
+
 def _parse_relative_time(s: str) -> str | None:
     """
-    把 '5小时前' / '2天前' / '2026-06-14 10:30' 转 ISO8601。
-    解析失败返回 None（让上游决定是否兜底用'当前时间'）。
+    把百度返回的发布时间字符串转 ISO8601。支持的格式：
+      'X分钟前' / 'X小时前' / 'X天前'   → 计算相对时间
+      '刚刚'                             → 现在
+      '昨天14:14' / '昨天'               → 昨天
+      '前天09:33'                        → 前天
+      '2024年5月23日' / '2024-05-23'    → 那一天
+      '2024年5月23日 10:30'              → 带时分
+    解析失败返回 None。
     """
     if not s:
         return None
     s = s.strip()
     tz = timezone(timedelta(hours=8))
-
-    # 形如 2026-06-14 10:30:00
-    m = re.match(r"(\d{4})-(\d{1,2})-(\d{1,2})[ T](\d{1,2}):(\d{1,2})", s)
-    if m:
-        try:
-            dt = datetime(*[int(x) for x in m.groups()], tzinfo=tz)
-            return dt.isoformat(timespec="seconds")
-        except ValueError:
-            return None
-
     now = datetime.now(tz)
+
+    # 1. 'X分钟前' / 'X小时前' / 'X天前' / '刚刚'
     m = re.match(r"(\d+)\s*分钟前", s)
     if m:
         return (now - timedelta(minutes=int(m.group(1)))).isoformat(timespec="seconds")
@@ -74,8 +82,55 @@ def _parse_relative_time(s: str) -> str | None:
     m = re.match(r"(\d+)\s*天前", s)
     if m:
         return (now - timedelta(days=int(m.group(1)))).isoformat(timespec="seconds")
-    if "刚刚" in s:
+    if s == "刚刚":
         return now.isoformat(timespec="seconds")
+
+    # 2. '昨天HH:MM' / '昨天'
+    m = re.match(r"昨天(?:\s*(\d{1,2})[:：](\d{1,2}))?", s)
+    if m:
+        d = (now - timedelta(days=1))
+        hh = int(m.group(1)) if m.group(1) else d.hour
+        mm = int(m.group(2)) if m.group(2) else d.minute
+        return d.replace(hour=hh, minute=mm, second=0, microsecond=0).isoformat(timespec="seconds")
+
+    # 3. '前天HH:MM' / '前天'
+    m = re.match(r"前天(?:\s*(\d{1,2})[:：](\d{1,2}))?", s)
+    if m:
+        d = (now - timedelta(days=2))
+        hh = int(m.group(1)) if m.group(1) else d.hour
+        mm = int(m.group(2)) if m.group(2) else d.minute
+        return d.replace(hour=hh, minute=mm, second=0, microsecond=0).isoformat(timespec="seconds")
+
+    # 4. 完整日期：2024年5月23日 / 2024-5-23 / 2024/5/23 / (可选 时分)
+    m = re.match(
+        r"(\d{4})\s*[-/年]\s*(\d{1,2})\s*[-/月]\s*(\d{1,2})\s*日?"
+        r"(?:[\sT]+(\d{1,2})[:：](\d{1,2}))?",
+        s,
+    )
+    if m:
+        try:
+            y, mn, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+            hh = int(m.group(4)) if m.group(4) else 0
+            mm = int(m.group(5)) if m.group(5) else 0
+            return datetime(y, mn, d, hh, mm, tzinfo=tz).isoformat(timespec="seconds")
+        except ValueError:
+            return None
+
+    # 5. 无年份的"5月23日 10:30" / "5-23"（默认本年；若 > 今天则视为去年）
+    m = re.match(r"(\d{1,2})\s*[-/月]\s*(\d{1,2})\s*日?(?:[\s]+(\d{1,2})[:：](\d{1,2}))?", s)
+    if m:
+        try:
+            mn, d = int(m.group(1)), int(m.group(2))
+            hh = int(m.group(3)) if m.group(3) else 0
+            mm = int(m.group(4)) if m.group(4) else 0
+            year = now.year
+            dt = datetime(year, mn, d, hh, mm, tzinfo=tz)
+            if dt > now:
+                dt = dt.replace(year=year - 1)
+            return dt.isoformat(timespec="seconds")
+        except ValueError:
+            return None
+
     return None
 
 
@@ -135,10 +190,19 @@ def _extract_one_keyword(keyword: str, limit: int = 20) -> list[dict]:
         if _is_blacklisted(source, url):
             continue
 
-        # 时间字段不一定有 — 解析失败就用当前时间兜底（标记为"今日抓取"）
-        published = _parse_relative_time(
-            data.get("newsTime") or data.get("time") or ""
+        # 时间字段：百度新闻把发布日期放在多个字段里，按优先级取
+        # - dispTime: '2024年5月23日'（最稳定，绝大多数新闻都有）
+        # - accessibilityData.timeAriaLabel: '发布于：2024年5月23日'（兜底）
+        # - newsTime / time: 旧字段（基本不存在）
+        time_str = (
+            data.get("dispTime")
+            or _strip_prefix(((data.get("accessibilityData") or {}).get("timeAriaLabel") or ""),
+                             ["发布于：", "发布于:"])
+            or data.get("newsTime")
+            or data.get("time")
+            or ""
         )
+        published = _parse_relative_time(time_str)
 
         results.append({
             "title": title,
@@ -168,14 +232,13 @@ def fetch() -> list[dict]:
             new_count += 1
         log.info("  └─ +%d 条（去重前 %d）", new_count, len(items))
 
-    # 用兜底时间（北京时间 now）填充无时间数据，再按时间倒序
-    from .common import now_iso
-    fallback_time = now_iso()
-    for n in all_news:
-        if not n["published_at"]:
-            n["published_at"] = fallback_time
-
-    all_news.sort(key=lambda x: x["published_at"], reverse=True)
+    # 不再用"当前时间"兜底 — 这会让所有新闻显示成"刚刚"，误导用户
+    # 没有日期的新闻保持 published_at = None，前端展示成 '—'
+    # 然后按时间倒序（无时间的排到最后）
+    all_news.sort(
+        key=lambda x: x["published_at"] or "",
+        reverse=True,
+    )
 
     # 移除内部字段
     for n in all_news:

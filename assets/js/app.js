@@ -77,15 +77,18 @@ function catClass(category) {
 }
 
 function fmtRelative(iso) {
-  // 简单的"几小时前/几天前"
-  if (!iso) return '';
+  // 显示新闻的"发布日期" — 7 天内用相对时间，更早的用 'YYYY-MM-DD'
+  if (!iso) return '—';
   const d = new Date(iso);
+  if (isNaN(d.getTime())) return '—';
   const diffMs = Date.now() - d.getTime();
   const diffH  = Math.floor(diffMs / 3600_000);
-  if (diffH < 1)   return '刚刚';
-  if (diffH < 24)  return `${diffH} 小时前`;
+  if (diffH < 0)    return d.toISOString().slice(0, 10);  // 未来日期，按字面显示
+  if (diffH < 1)    return '刚刚';
+  if (diffH < 24)   return `${diffH} 小时前`;
   const diffD = Math.floor(diffH / 24);
-  if (diffD < 30)  return `${diffD} 天前`;
+  if (diffD < 7)    return `${diffD} 天前`;
+  // 7 天以上 — 直接显示日期，不再用"N 天前"误导用户
   return d.toISOString().slice(0, 10);
 }
 
