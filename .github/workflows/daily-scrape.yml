@@ -1,0 +1,79 @@
+name: 📚 每日抓取并更新数据
+
+# 触发条件
+on:
+  # 北京时间每天凌晨 3:00 跑一次（GitHub 服务器是 UTC 时间，所以是 19:00 UTC）
+  schedule:
+    - cron: '0 19 * * *'
+  # 允许在 GitHub 网页上手动触发（调试 / 立即更新）
+  workflow_dispatch:
+
+# 给这个 workflow 写仓库的权限（默认是只读）
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-commit:
+    name: 抓取数据 → 提交 JSON
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # 安全网：超过 10 分钟就杀掉
+
+    steps:
+      # ① 把仓库代码拉下来
+      - name: 📥 检出仓库
+        uses: actions/checkout@v4
+        with:
+          # 用 GITHUB_TOKEN 而不是 ssh-key，能直接 push
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ② 装 Python
+      - name: 🐍 装 Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'  # 缓存依赖，加速
+
+      # ③ 装抓取依赖
+      - name: 📦 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 lxml
+
+      # ④ 跑抓取脚本
+      - name: 🔍 跑数据抓取
+        run: |
+          python -m scrapers.main
+        env:
+          PYTHONIOENCODING: utf-8
+
+      # ⑤ 看看生成了哪些文件（日志可见）
+      - name: 📊 查看生成的数据
+        run: |
+          ls -la data/
+          echo "===== meta.json ====="
+          cat data/meta.json
+          echo ""
+          echo "===== insights.json (前 3 条) ====="
+          python -c "import json; [print(f'{i+1}. {x[\"icon\"]} {x[\"title\"]}') for i,x in enumerate(json.load(open('data/insights.json')))]"
+
+      # ⑥ 把新数据 commit + push 回仓库
+      #    GitHub Actions Bot 作为 commit author
+      - name: 💾 提交数据更新
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # 只把 data/ 目录的变化加进 commit
+          git add data/
+
+          # 如果没变化（比如所有源都失败拿到一样的兜底数据），就不提交
+          if git diff --staged --quiet; then
+            echo "ℹ️ 数据无变化，跳过提交"
+            exit 0
+          fi
+
+          # 提交信息里带上日期，便于回溯
+          DATE=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M')
+          git commit -m "data: 每日数据更新 $DATE"
+          git push
+          echo "✅ 已提交"
