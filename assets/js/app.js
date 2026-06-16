@@ -160,8 +160,8 @@ function renderNews() {
     items = items.filter(n => classifyNewsTheme(n) === STATE.activeNewsTheme);
   }
 
-  // 默认展示 10 条，"展开更多"后展示前 30
-  const DEFAULT_LIMIT = 10;
+  // 默认展示 5 条，"展开更多"后展示前 30
+  const DEFAULT_LIMIT = 5;
   const EXPANDED_LIMIT = 30;
   const expanded = STATE._newsExpanded === true;
   const showCount = expanded ? EXPANDED_LIMIT : DEFAULT_LIMIT;
@@ -979,15 +979,13 @@ async function init() {
     $('#last-update').textContent = '—';
   }
 
-  // 渲染各模块
+  // 渲染各模块（顺序就是页面顺序）
   renderInsights();
-  renderDangdangBenchmark();
   renderNewsFilters();
   renderNews();
+  renderDangdangBenchmark();
   renderBookFilters();
   renderBooks();
-  renderStats();
-  renderCategoryChart();
 }
 
 document.addEventListener('DOMContentLoaded', init);

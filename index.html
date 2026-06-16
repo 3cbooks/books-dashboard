@@ -112,7 +112,23 @@
       </div>
     </section>
 
-    <!-- ============ 2. 当当对标专区 ============ -->
+    <!-- ============ 2. 行业动态（独立板块，宽屏） ============ -->
+    <section id="news-section" class="scroll-mt-24">
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+        <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+          <span>📰</span> 行业动态
+        </h2>
+        <span id="news-meta" class="text-xs text-slate-400">—</span>
+      </div>
+      <div id="news-filters" class="flex flex-wrap items-center gap-1.5 mb-3">
+        <!-- 由 JS 动态填充 -->
+      </div>
+      <div id="news-list" class="bg-white rounded-2xl border border-mint-100 divide-y divide-mint-50/80">
+        <!-- 由 JS 动态填充 -->
+      </div>
+    </section>
+
+    <!-- ============ 3. 当当差异化权益 vs 京东对标 ============ -->
     <section id="benchmark-section" class="scroll-mt-24">
       <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
         <div>
@@ -131,58 +147,11 @@
         <!-- 由 JS 动态填充：每行一个对比卡，左当当右京东 -->
       </div>
       <p class="text-xs text-slate-400 mt-3 italic">
-        💡 用当当带权益的热销书去京东主动搜索同款，对比是否在售、自营/POP 身份、
-        价格、销量、京东侧权益。<strong>"权益差距"</strong>= 京东自营有但权益少；
-        <strong>"自营空白"</strong>= 京东只 POP 在售；<strong>"完全缺口"</strong>= 京东根本没有。
+        💡 用当当带权益的热销书去京东主动搜索同款，对比双方的差异化权益。
+        <strong>"京东未在售"</strong>= 京东根本没卖；
+        <strong>"京东权益缺失"</strong>= 京东在售但当当独有权益更多；
+        <strong>"权益已对齐"</strong>= 京东也有同等权益。
       </p>
-    </section>
-
-    <!-- ============ 3. 行业新闻 + 数据图表 ============ -->
-    <section id="news-section" class="grid grid-cols-1 lg:grid-cols-3 gap-6 scroll-mt-24">
-
-      <!-- 新闻列表（占 2 列） -->
-      <div class="lg:col-span-2">
-        <div class="flex items-end justify-between mb-3">
-          <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <span>📰</span> 行业动态
-          </h2>
-          <span id="news-meta" class="text-xs text-slate-400">—</span>
-        </div>
-        <!-- 主题标签栏：胶囊 + 紧凑 + 折叠 -->
-        <div id="news-filters" class="flex flex-wrap items-center gap-1.5 mb-3">
-          <!-- 由 JS 动态填充 -->
-        </div>
-        <div id="news-list" class="bg-white rounded-2xl border border-mint-100 divide-y divide-mint-50/80">
-          <!-- 由 JS 动态填充 -->
-        </div>
-      </div>
-
-      <!-- 数据小卡（占 1 列） -->
-      <div class="space-y-4">
-        <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <span>📊</span> 数据快照
-        </h2>
-
-        <div class="bg-gradient-to-br from-mint-500 to-mint-600 rounded-2xl p-5 text-white shadow-sm">
-          <div class="text-xs opacity-90 mb-1">当当近 7 日热卖</div>
-          <div class="text-3xl font-bold" id="stat-new-books">--</div>
-          <div class="text-xs mt-2 flex items-center gap-1">
-            <span id="stat-new-books-trend">--</span>
-            <span class="opacity-75">环比上次</span>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-mint-100 p-5">
-          <div class="text-xs text-slate-500 mb-1">今日新闻</div>
-          <div class="text-3xl font-bold text-slate-900" id="stat-news-count">--</div>
-          <div class="text-xs mt-2 text-slate-500">条行业资讯</div>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-mint-100 p-5">
-          <div class="text-xs text-slate-500 mb-3">品类分布（当当热卖榜）</div>
-          <canvas id="category-chart" height="180"></canvas>
-        </div>
-      </div>
     </section>
 
     <!-- ============ 4. 当当热卖榜（全量） ============ -->
