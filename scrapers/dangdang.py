@@ -24,6 +24,38 @@ from bs4 import BeautifulSoup, Tag
 from .common import http_get, get_logger, normalize_category
 
 
+# ============================================================
+# 权益标签识别（核心：识别当当差异化权益，是京东自营对标的关键）
+# ============================================================
+
+# 标签 → 触发关键词（按优先级排序，先命中的优先）
+PERK_PATTERNS = [
+    # 亲签类 — 最高价值的当当差异化权益
+    ("亲签",   ("亲签", "签名版", "作者签名", "亲签版")),
+    # 限量类 — 稀缺感驱动
+    ("限量",   ("限量", "限定", "编号版", "编码限量", "首版限量", "签编版")),
+    # 独家类 — 渠道独占
+    ("独家",   ("当当独家", "当当专属", "当当首发", "当当定制", "独家发售")),
+    # 首发类
+    ("首发",   ("首发", "首版", "新书首发", "全新首发")),
+    # 礼盒/装帧
+    ("礼盒",   ("礼盒", "豪华版", "精装刷边", "刷边", "藏书票")),
+    # 周边赠品
+    ("赠品",   ("赠送", "赠《", "随书赠", "附赠", "附送")),
+]
+
+
+def detect_perks(text: str) -> list[str]:
+    """从书名/营销文案中识别权益标签。返回去重后的列表，按优先级排序。"""
+    if not text:
+        return []
+    perks: list[str] = []
+    for label, keywords in PERK_PATTERNS:
+        if any(k in text for k in keywords):
+            perks.append(label)
+    return perks
+
+
 def _clean_title(raw: str) -> str:
     """
     去掉书名里的营销文案噪音：
@@ -72,7 +104,7 @@ URL_TMPL = (
 )
 
 
-def _parse_item(li: Tag, fallback_category: str) -> dict | None:
+def _parse_item(li: Tag, fallback_category: str, rank: int) -> dict | None:
     """从单个 <li> 元素提取一本书的信息。"""
     try:
         # 书名 + 详情链接（在 .name > a）
@@ -83,6 +115,9 @@ def _parse_item(li: Tag, fallback_category: str) -> dict | None:
         raw_title = name_a.get("title", "").strip() or name_a.get_text(strip=True)
         title = _clean_title(raw_title)
         url = name_a.get("href", "")
+
+        # 权益识别（用原始未清洗的书名 — 营销词正是权益线索的来源）
+        perks = detect_perks(raw_title)
 
         # 封面图
         img = li.select_one("div.pic img")
@@ -122,12 +157,15 @@ def _parse_item(li: Tag, fallback_category: str) -> dict | None:
 
         return {
             "title": title,
+            "raw_title": raw_title,        # 完整原始书名（含营销词，用于洞察分析）
             "author": author,
             "category": fallback_category,
             "rating": rating,
             "cover": cover,
             "url": url,
             "price": price,
+            "rank": rank,                  # 在所属榜单的排名
+            "perks": perks,                # 权益标签列表（亲签/限量/独家等）
             "source": "当当",
         }
     except Exception as e:
@@ -148,8 +186,8 @@ def _fetch_category(code: str, std_category: str) -> Iterator[dict]:
         log.warning("分类 %s 未找到榜单列表", std_category)
         return
 
-    for li in ul.find_all("li", recursive=False):
-        item = _parse_item(li, std_category)
+    for rank, li in enumerate(ul.find_all("li", recursive=False), start=1):
+        item = _parse_item(li, std_category, rank)
         if item:
             # "全部"分类的书没有原始分类，用书名 + 作者 + URL 做智能归类
             if item["category"] == "全部":
@@ -195,7 +233,17 @@ if __name__ == "__main__":
     import json
     books = fetch(per_category=3)
     print(f"\n=== 抓到 {len(books)} 本书 ===\n")
-    for i, b in enumerate(books[:5], 1):
-        print(f"{i}. [{b['category']}] {b['title'][:40]}")
-        print(f"   作者: {b['author']} | 评分: {b['rating']} | 价格: {b['price']}")
-    print(f"\n... 还有 {max(0, len(books)-5)} 本")
+    for i, b in enumerate(books[:8], 1):
+        perk_str = " ".join(f"[{p}]" for p in b.get("perks", [])) or "(无权益)"
+        print(f"{i}. [{b['category']}] #{b['rank']} {b['title'][:40]}")
+        print(f"   {perk_str}  作者: {b['author']} | 评分: {b['rating']} | 价格: {b['price']}")
+    print(f"\n... 还有 {max(0, len(books)-8)} 本")
+
+    # 简单统计：有权益标签的书 vs 没有
+    with_perks = [b for b in books if b.get("perks")]
+    print(f"\n=== 权益统计 ===")
+    print(f"  有权益标签: {len(with_perks)} / {len(books)} 本 ({len(with_perks)/len(books)*100:.0f}%)")
+    from collections import Counter
+    perk_counter = Counter(p for b in books for p in b.get("perks", []))
+    for perk, cnt in perk_counter.most_common():
+        print(f"    [{perk}]: {cnt}")

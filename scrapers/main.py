@@ -61,6 +61,15 @@ def main() -> int:
     save_json("books.json", books)
     save_json("news.json", news)
 
+    # ============ 生成洞察 ============
+    from . import insights as insights_mod
+    try:
+        insights_list = insights_mod.generate(books, news)
+        save_json("insights.json", insights_list)
+        log.info("✓ insights: %d 条", len(insights_list))
+    except Exception:
+        log.error("✗ insights 抛异常:\n%s", traceback.format_exc())
+
     # ============ meta.json ============
     # 简单的"本周新书数 + 环比"统计：
     # 由于我们目前只抓单日数据，环比拿不到精确值 — 用上次 meta 里的值做参照

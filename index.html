@@ -103,7 +103,31 @@
       </div>
     </section>
 
-    <!-- ============ 2. 行业新闻 + 数据图表 ============ -->
+    <!-- ============ 2. 当当对标专区 ============ -->
+    <section>
+      <div class="flex items-end justify-between mb-4">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span>🎯</span> 当当对标专区
+          </h2>
+          <p class="text-sm text-slate-500 mt-1" id="benchmark-summary">
+            加载中...
+          </p>
+        </div>
+      </div>
+      <div id="benchmark-filters" class="flex flex-wrap gap-2 mb-4 text-xs">
+        <!-- 由 JS 动态填充 -->
+      </div>
+      <div id="benchmark-grid"
+           class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- 由 JS 动态填充：仅显示当当带权益的图书 -->
+      </div>
+      <p class="text-xs text-slate-400 mt-3 italic">
+        💡 这些权益版图书多数为当当独有，京东自营对应品同款多无该权益。
+      </p>
+    </section>
+
+    <!-- ============ 3. 行业新闻 + 数据图表 ============ -->
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
       <!-- 新闻列表（占 2 列） -->
@@ -128,11 +152,11 @@
         </h2>
 
         <div class="bg-gradient-to-br from-mint-500 to-mint-600 rounded-2xl p-5 text-white shadow-sm">
-          <div class="text-xs opacity-90 mb-1">本周新书数</div>
+          <div class="text-xs opacity-90 mb-1">当当本周新书</div>
           <div class="text-3xl font-bold" id="stat-new-books">--</div>
           <div class="text-xs mt-2 flex items-center gap-1">
             <span id="stat-new-books-trend">--</span>
-            <span class="opacity-75">环比上周</span>
+            <span class="opacity-75">环比上次</span>
           </div>
         </div>
 
@@ -149,11 +173,11 @@
       </div>
     </section>
 
-    <!-- ============ 3. 本周新书（彩色卡片） ============ -->
+    <!-- ============ 4. 当当热卖榜（全量） ============ -->
     <section>
       <div class="flex items-end justify-between mb-4">
         <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <span>🔥</span> 本周新书
+          <span>🔥</span> 当当热卖榜
         </h2>
         <div id="book-filters" class="flex flex-wrap gap-2 text-xs">
           <!-- 由 JS 动态填充 -->

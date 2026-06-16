@@ -11,6 +11,7 @@ const STATE = {
   meta: {},
   activeBookCategory: 'all',
   activeNewsSource: 'all',
+  activePerk: 'all',  // 当当对标专区的权益标签筛选
 };
 
 // 品类 → CSS class 映射
@@ -25,6 +26,16 @@ const CAT_CLASS = {
   '科普': 'tag-sci',
   '童书': 'tag-kid',
   '少儿': 'tag-kid',
+};
+
+// 权益标签的颜色（视觉上要醒目，因为是核心对标信息）
+const PERK_STYLES = {
+  '亲签': 'bg-rose-100 text-rose-700 border-rose-200',
+  '限量': 'bg-amber-100 text-amber-700 border-amber-200',
+  '独家': 'bg-violet-100 text-violet-700 border-violet-200',
+  '首发': 'bg-sky-100 text-sky-700 border-sky-200',
+  '礼盒': 'bg-emerald-100 text-emerald-700 border-emerald-200',
+  '赠品': 'bg-slate-100 text-slate-600 border-slate-200',
 };
 
 // 5 组占位封面渐变（无封面时按 hash 选）
@@ -152,6 +163,71 @@ function renderNewsFilters() {
 
 // ========== 渲染：本周新书 ==========
 
+function renderBookCard(b) {
+  // 渐变占位封面
+  const [c1, c2] = COVER_GRADIENTS[hashStr(b.title) % COVER_GRADIENTS.length];
+  const safeTitle = b.title.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+  const cover = b.cover
+    ? `<img src="${b.cover}" alt="${safeTitle}"
+            class="w-full h-full object-cover"
+            referrerpolicy="no-referrer"
+            onerror="this.replaceWith(Object.assign(document.createElement('div'),{
+              className:'cover-placeholder w-full h-full',
+              style:'--c1:${c1};--c2:${c2}',
+              innerHTML:'<span>${safeTitle}</span>'
+            }))">`
+    : `<div class="cover-placeholder w-full h-full"
+            style="--c1:${c1};--c2:${c2}">
+          <span>${b.title}</span>
+       </div>`;
+
+  // 权益标签
+  const perks = (b.perks || [])
+    .slice(0, 3)
+    .map(p => {
+      const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
+      return `<span class="text-[9px] px-1.5 py-0.5 rounded border ${cls} font-medium">
+                ${p}
+              </span>`;
+    })
+    .join(' ');
+
+  // 排名徽章（仅当当）
+  const rankBadge = b.rank
+    ? `<span class="absolute top-2 left-2 bg-mint-600 text-white text-[10px] font-bold
+                    px-1.5 py-0.5 rounded shadow-sm z-10">#${b.rank}</span>`
+    : '';
+
+  return `
+    <a href="${b.url || '#'}" target="_blank" rel="noopener"
+       class="card-hover bg-white rounded-2xl border border-mint-100
+              overflow-hidden flex flex-col">
+      <div class="aspect-[3/4] overflow-hidden bg-mint-50 relative">
+        ${rankBadge}
+        ${cover}
+      </div>
+      <div class="p-3 flex-1 flex flex-col">
+        <h3 class="font-medium text-sm text-slate-900 leading-snug line-clamp-2">
+          ${b.title}
+        </h3>
+        <p class="text-xs text-slate-500 mt-1 line-clamp-1">${b.author || '—'}</p>
+        ${perks ? `<div class="flex flex-wrap gap-1 mt-2">${perks}</div>` : ''}
+        <div class="mt-auto pt-2 flex items-center justify-between gap-2">
+          <span class="text-[10px] px-1.5 py-0.5 rounded ${catClass(b.category)}">
+            ${b.category || '其他'}
+          </span>
+          <div class="flex items-center gap-2">
+            ${b.price ? `<span class="text-xs font-semibold text-mint-700">${b.price}</span>` : ''}
+            ${b.rating
+              ? `<span class="text-xs font-semibold text-lemon-500">★ ${b.rating}</span>`
+              : ''}
+          </div>
+        </div>
+      </div>
+    </a>
+  `;
+}
+
 function renderBooks() {
   const grid = $('#books-grid');
   const items = STATE.activeBookCategory === 'all'
@@ -164,45 +240,7 @@ function renderBooks() {
     return;
   }
 
-  grid.innerHTML = items.map(b => {
-    const [c1, c2] = COVER_GRADIENTS[hashStr(b.title) % COVER_GRADIENTS.length];
-    const cover = b.cover
-      ? `<img src="${b.cover}" alt="${b.title}"
-              class="w-full h-full object-cover"
-              onerror="this.replaceWith(Object.assign(document.createElement('div'),{
-                className:'cover-placeholder w-full h-full',
-                style:'--c1:${c1};--c2:${c2}',
-                innerHTML:'<span>${b.title.replace(/'/g, '&#39;')}</span>'
-              }))">`
-      : `<div class="cover-placeholder w-full h-full"
-              style="--c1:${c1};--c2:${c2}">
-            <span>${b.title}</span>
-         </div>`;
-
-    return `
-      <a href="${b.url || '#'}" target="_blank" rel="noopener"
-         class="card-hover bg-white rounded-2xl border border-mint-100
-                overflow-hidden flex flex-col">
-        <div class="aspect-[3/4] overflow-hidden bg-mint-50">
-          ${cover}
-        </div>
-        <div class="p-3 flex-1 flex flex-col">
-          <h3 class="font-medium text-sm text-slate-900 leading-snug line-clamp-2">
-            ${b.title}
-          </h3>
-          <p class="text-xs text-slate-500 mt-1 line-clamp-1">${b.author || '—'}</p>
-          <div class="mt-auto pt-2 flex items-center justify-between gap-2">
-            <span class="text-[10px] px-1.5 py-0.5 rounded ${catClass(b.category)}">
-              ${b.category || '其他'}
-            </span>
-            ${b.rating
-              ? `<span class="text-xs font-semibold text-lemon-500">★ ${b.rating}</span>`
-              : `<span class="text-[10px] text-slate-400">${b.source || ''}</span>`}
-          </div>
-        </div>
-      </a>
-    `;
-  }).join('');
+  grid.innerHTML = items.map(renderBookCard).join('');
 }
 
 function renderBookFilters() {
@@ -220,6 +258,73 @@ function renderBookFilters() {
       renderBooks();
     };
   });
+}
+
+// ========== 渲染：当当对标专区 ==========
+
+function renderDangdangBenchmark() {
+  const grid = $('#benchmark-grid');
+  const filterBar = $('#benchmark-filters');
+  const summary = $('#benchmark-summary');
+  if (!grid) return;
+
+  // 只看当当来源、且带权益标签的书
+  const allDD = STATE.books.filter(b => b.source === '当当');
+  const allPerk = allDD.filter(b => b.perks && b.perks.length > 0);
+
+  // 顶部摘要
+  if (allDD.length) {
+    const ratio = (allPerk.length / allDD.length * 100).toFixed(0);
+    const counter = {};
+    allPerk.forEach(b => (b.perks || []).forEach(p => counter[p] = (counter[p] || 0) + 1));
+    const breakdown = Object.entries(counter)
+      .sort((a, b) => b[1] - a[1])
+      .map(([p, c]) => `${p} ${c}`)
+      .join(' · ');
+    summary.innerHTML = `
+      <span class="font-semibold text-slate-900">${allPerk.length}/${allDD.length}</span>
+      本带差异化权益（${ratio}%）<span class="text-slate-400 mx-2">·</span>
+      <span>${breakdown || '无标签'}</span>
+    `;
+  } else {
+    summary.textContent = '暂无当当数据';
+  }
+
+  // 筛选标签 — 列出所有出现过的权益（按出现频率排序）
+  const counter = {};
+  allPerk.forEach(b => (b.perks || []).forEach(p => counter[p] = (counter[p] || 0) + 1));
+  const perkOrder = ['all', ...Object.keys(counter).sort((a, b) => counter[b] - counter[a])];
+
+  filterBar.innerHTML = perkOrder.map(p => {
+    const label = p === 'all' ? `全部 (${allPerk.length})` : `${p} (${counter[p]})`;
+    const active = STATE.activePerk === p;
+    return `<button class="filter-pill ${active ? 'active' : ''}" data-perk="${p}">${label}</button>`;
+  }).join('');
+
+  $$('#benchmark-filters .filter-pill').forEach(btn => {
+    btn.onclick = () => {
+      STATE.activePerk = btn.dataset.perk;
+      renderDangdangBenchmark();
+    };
+  });
+
+  // 渲染卡片
+  let items;
+  if (STATE.activePerk === 'all') {
+    items = allPerk;
+  } else {
+    items = allPerk.filter(b => (b.perks || []).includes(STATE.activePerk));
+  }
+  // 按榜单排名升序（排名越靠前越值得关注）
+  items = items.slice().sort((a, b) => (a.rank || 99) - (b.rank || 99));
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="col-span-full text-sm text-slate-400 py-8 text-center">
+      暂无符合条件的当当权益版图书</div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map(renderBookCard).join('');
 }
 
 // ========== 渲染：数据快照 + 图表 ==========
@@ -310,6 +415,7 @@ async function init() {
   renderInsights();
   renderNewsFilters();
   renderNews();
+  renderDangdangBenchmark();   // 新增：当当对标专区
   renderBookFilters();
   renderBooks();
   renderStats();
