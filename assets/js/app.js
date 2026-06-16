@@ -444,10 +444,9 @@ function renderBookFilters() {
 // ========== 渲染：当当 vs 京东 权益对标 ==========
 
 const GAP_LABELS = {
-  'no_jd':    { label: '完全缺口',     icon: '❌', tone: 'rose',    desc: '京东根本不卖' },
-  'no_self':  { label: '自营空白',     icon: '⚠️', tone: 'amber',   desc: '京东只 POP 在售' },
-  'perk_gap': { label: '权益差距',     icon: '🎯', tone: 'violet',  desc: '京东自营有但权益少' },
-  'none':     { label: '无明显缺口',   icon: '✅', tone: 'emerald', desc: '京东自营有同等权益' },
+  'no_jd':    { label: '京东未在售',        icon: '❌', tone: 'rose',    desc: '京东根本不卖这本书' },
+  'perk_gap': { label: '京东权益缺失',      icon: '🎯', tone: 'violet',  desc: '京东在售但当当独有权益更多' },
+  'none':     { label: '权益已对齐',        icon: '✅', tone: 'emerald', desc: '京东也有同等权益' },
 };
 
 function renderDangdangBenchmark() {
@@ -465,24 +464,29 @@ function renderDangdangBenchmark() {
     return;
   }
 
+  // 把 'no_self' 老分类归并进 'perk_gap'（不再区分自营/POP）
+  items.forEach(r => {
+    if (r.gap_level === 'no_self') r.gap_level = 'perk_gap';
+  });
+
   // 按 gap_level 统计
   const counts = {};
   items.forEach(r => counts[r.gap_level] = (counts[r.gap_level] || 0) + 1);
-  const gapKeys = ['no_jd', 'no_self', 'perk_gap', 'none'];
+  const gapKeys = ['no_jd', 'perk_gap', 'none'];
 
-  // 摘要：突出"有缺口的"
+  // 摘要
   const withGap = items.filter(r => r.gap_level !== 'none').length;
   summary.innerHTML = `
     <span class="font-semibold text-slate-900">${withGap}/${items.length}</span> 本带权益的当当书，
-    京东侧存在对标缺口
+    京东侧权益不及当当
     <span class="text-slate-400 mx-2">·</span>
-    缺口类型：${gapKeys
+    缺口分布：${gapKeys
       .filter(k => counts[k])
       .map(k => `<span class="text-${GAP_LABELS[k].tone}-700">${GAP_LABELS[k].label} ${counts[k]}</span>`)
       .join(' · ')}
   `;
 
-  // 筛选器：缺口类型
+  // 筛选器
   const activeGap = STATE.activeGap || 'all';
   const filters = [
     { key: 'all', label: '全部', count: items.length },
@@ -506,8 +510,8 @@ function renderDangdangBenchmark() {
     };
   });
 
-  // 过滤 + 按"缺口严重度"排序（no_jd → no_self → perk_gap → none），同级别按销量降序
-  const ORDER = { no_jd: 1, no_self: 2, perk_gap: 3, none: 4 };
+  // 排序：缺口严重度 → 当当排名
+  const ORDER = { no_jd: 1, perk_gap: 2, none: 3 };
   let shown = activeGap === 'all'
     ? items
     : items.filter(r => r.gap_level === activeGap);
@@ -518,14 +522,13 @@ function renderDangdangBenchmark() {
     return (a.dangdang.rank || 99) - (b.dangdang.rank || 99);
   });
 
-  // 默认 5 行，其他折叠
+  // 默认 5 行折叠
   const DEFAULT_LIMIT = 5;
   const expanded = STATE._benchmarkExpanded === true;
   const display = expanded ? shown : shown.slice(0, DEFAULT_LIMIT);
 
   grid.innerHTML = display.map(renderBenchmarkRow).join('');
 
-  // "展开更多" 按钮
   if (shown.length > DEFAULT_LIMIT) {
     const remain = shown.length - DEFAULT_LIMIT;
     grid.innerHTML += `
@@ -565,10 +568,6 @@ function renderBenchmarkRow(r) {
       </div>`;
   } else {
     const best = jd.best_match || {};
-    const isSelf = best.is_self;
-    const shopBadge = isSelf
-      ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">🟢 京东自营</span>`
-      : `<span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">🔵 京东 POP</span>`;
     const jdPerks = (best.perks || []).map(p => {
       const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
       return `<span class="text-[10px] px-1.5 py-0.5 rounded border ${cls} font-medium">${p}</span>`;
@@ -582,14 +581,13 @@ function renderBenchmarkRow(r) {
     jdSection = `
       <div class="flex-1 p-4 bg-slate-50/40 rounded-r-2xl border-l-2 border-slate-200">
         <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-          ${shopBadge}
+          <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">📘 京东在售</span>
           ${best.price ? `<span class="text-sm font-semibold text-rose-600">${best.price}</span>` : ''}
         </div>
         <a href="${best.detail_url || '#'}" target="_blank" rel="noopener"
            class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
           ${escapeHtml(best.title || '')}
         </a>
-        <p class="text-[10px] text-slate-500 line-clamp-1 mb-2">🏪 ${escapeHtml(best.shop_name || '')}</p>
         <div class="flex flex-wrap gap-1 mb-1.5">${jdPerks}</div>
         ${stats ? `<p class="text-[10px] text-slate-400">${stats}</p>` : ''}
       </div>`;
@@ -936,8 +934,6 @@ async function init() {
   // 渲染各模块
   renderInsights();
   renderDangdangBenchmark();
-  renderJdPop();              // 新增：京东 POP 有自营无
-  renderUpcoming();
   renderNewsFilters();
   renderNews();
   renderBookFilters();

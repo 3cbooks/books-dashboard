@@ -48,7 +48,7 @@ def main() -> int:
         log.warning("⚠ 所有图书源失败，使用上次数据兜底")
         books = load_json("books.json", default=[])
 
-    # ============ 抓真新书 / 预售书 ============
+    # ============ 抓真新书 / 预售书（已废弃前端展示，但保留数据用于校验日期）============
     from . import dangdang_new
     new_books, status = _safe_run(
         "dangdang_new",
@@ -59,38 +59,6 @@ def main() -> int:
         log.warning("⚠ 真新书源失败，使用上次数据兜底")
         new_books = load_json("books_new.json", default=[])
     save_json("books_new.json", new_books)
-
-    # ============ 抓京东 POP 自营对比 ============
-    # 新逻辑：广搜 POP → 销量 ≥ 100 过滤 → 主动验证自营
-    try:
-        from . import jd as jd_mod, jd_compare
-        jd_data = jd_mod.fetch(min_show_count=100, max_pop_to_check=30)
-        save_json("jd_self.json", jd_data["self"])
-        save_json("jd_pop.json", jd_data["pop"])
-        sources_status["jd"] = "ok" if (jd_data["self"] or jd_data["pop"]) else "partial"
-
-        # 主动验证：每本"销量过关"的 POP 去京东搜索看自营有没有
-        pop_only = jd_compare.find_pop_only(
-            jd_data["self"], jd_data["pop"],
-            verify_each=True, delay=1.5,
-        )
-
-        # 去重：同一本书可能有多个 SKU，按书名核心去重
-        seen_keys = set()
-        deduped = []
-        for b in pop_only:
-            from .jd_compare import extract_core_title, normalize_title
-            key = normalize_title(extract_core_title(b.get("title", "")))
-            if key and key not in seen_keys:
-                seen_keys.add(key)
-                deduped.append(b)
-        pop_only = deduped
-
-        save_json("jd_pop_only.json", pop_only)
-        log.info("✓ 京东 POP 独家（自营无）: %d 本（去重后）", len(pop_only))
-    except Exception:
-        log.error("✗ 京东抓取/比对抛异常:\n%s", traceback.format_exc())
-        sources_status["jd"] = "failed"
 
     # ============ 当当 vs 京东 权益对标 ============
     # 对当当带权益的书逐一查京东对应版本，做权益对比

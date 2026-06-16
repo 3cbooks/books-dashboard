@@ -102,9 +102,8 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 6,
     # 拿销量数据（一次 API 拿所有候选 SKU 的评价数）
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
-    # 抓详情，过滤出"和当当书是同一本"的
-    candidates_self: list[dict] = []
-    candidates_pop:  list[dict] = []
+    # 抓详情，过滤出"和当当书是同一本"的（不再区分自营/POP）
+    candidates: list[dict] = []
     for sku in found_skus:
         info = fetch_detail(sku)
         if not info:
@@ -122,25 +121,17 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 6,
         info["comment_count_str"] = sd.get("comment_count_str", "")
         # 识别京东侧权益
         info["perks"] = detect_jd_perks(info.get("title", ""))
-
-        if info.get("is_self"):
-            candidates_self.append(info)
-        else:
-            candidates_pop.append(info)
+        candidates.append(info)
         time.sleep(delay)
 
-    # 选最佳匹配：优先自营，多个时按销量排
-    candidates_self.sort(key=lambda b: b.get("show_count", 0), reverse=True)
-    candidates_pop.sort(key=lambda b: b.get("show_count", 0), reverse=True)
-    best_match = (candidates_self[0] if candidates_self else
-                  (candidates_pop[0] if candidates_pop else None))
+    # 选最佳匹配：按销量排
+    candidates.sort(key=lambda b: b.get("show_count", 0), reverse=True)
+    best_match = candidates[0] if candidates else None
 
     return {
         "available": best_match is not None,
         "best_match": best_match,
-        "all_skus_count": len(candidates_self) + len(candidates_pop),
-        "self_count": len(candidates_self),
-        "pop_count": len(candidates_pop),
+        "all_skus_count": len(candidates),
     }
 
 
@@ -197,30 +188,29 @@ def benchmark_books(dangdang_books: list[dict],
         time.sleep(delay)
 
     log.info("=== 对标完成: %d 本 ===", len(results))
-    # 统计
-    counters = {"none": 0, "perk_gap": 0, "no_self": 0, "no_jd": 0}
+    counters = {"none": 0, "perk_gap": 0, "no_jd": 0}
     for r in results:
         counters[r["gap_level"]] = counters.get(r["gap_level"], 0) + 1
-    log.info("  · 京东不卖 (no_jd):    %d 本", counters["no_jd"])
-    log.info("  · 仅 POP (no_self):    %d 本", counters["no_self"])
-    log.info("  · 权益差距 (perk_gap): %d 本", counters["perk_gap"])
-    log.info("  · 不缺 (none):         %d 本", counters["none"])
+    log.info("  · 京东未在售 (no_jd):    %d 本", counters["no_jd"])
+    log.info("  · 权益缺失 (perk_gap):   %d 本", counters["perk_gap"])
+    log.info("  · 权益已对齐 (none):     %d 本", counters["none"])
     return results
 
 
 def _assess_gap(dd: dict, jd: dict) -> str:
-    """评估对标缺口的严重程度，返回标签"""
+    """
+    评估对标缺口（不再区分自营/POP — 只看京东这本书在没在售 + 权益对比）：
+      - no_jd     京东未在售
+      - perk_gap  京东在售但当当独有权益更多
+      - none      权益已对齐
+    """
     if not jd.get("available"):
-        return "no_jd"      # 京东根本没有
+        return "no_jd"
     best = jd.get("best_match") or {}
-    if not best.get("is_self"):
-        return "no_self"    # 京东只有 POP
-    # 自营有，看权益对比
     dd_perks = set(dd.get("perks", []))
     jd_perks = set(best.get("perks", []))
-    # 当当有特殊权益，京东自营没有 → 权益差距
     distinctive = dd_perks - jd_perks
-    # 排除"礼盒""赠品"这种通用权益（自营常常没标但其实有）
+    # 排除"礼盒""赠品""首发"这种通用权益（对标信号弱）
     distinctive_strong = distinctive - {"礼盒", "赠品", "首发"}
     if distinctive_strong:
         return "perk_gap"

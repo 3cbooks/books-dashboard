@@ -408,10 +408,7 @@ def generate(books: list[dict], news: list[dict],
     jd_pop_only = jd_pop_only or []
 
     candidates: list[dict] = []
-    candidates.extend(rule_jd_pop_gap(jd_pop_only))   # 京东 POP 缺口（高优先级）
     candidates.extend(rule_dangdang_perks(books))
-    candidates.extend(rule_upcoming_books(new_books))
-    candidates.extend(rule_freshly_published(new_books))
     candidates.extend(rule_douban_verification(books, new_books))
     candidates.extend(rule_category_distribution(books))
     candidates.extend(rule_high_rated(books))
