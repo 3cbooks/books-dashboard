@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 抓取脚本临时产物
+scrapers/*.log
+scrapers/.cache/
+scrapers/raw/
+
+# Node（如果以后加打包）
+node_modules/
+dist/
+.parcel-cache/
+
+# 系统
+*.tmp
+*.bak

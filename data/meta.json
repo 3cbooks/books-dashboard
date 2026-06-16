@@ -1,0 +1,15 @@
+{
+  "updated_at": "2026-06-14T03:00:00+08:00",
+  "new_books_week": 187,
+  "new_books_trend_pct": 12,
+  "sources_status": {
+    "dangdang": "ok",
+    "jd": "ok",
+    "douban": "ok",
+    "weread": "ok",
+    "baidu_news": "ok",
+    "cptoday": "ok",
+    "publishers_weekly": "ok",
+    "isbn_registry": "stale"
+  }
+}

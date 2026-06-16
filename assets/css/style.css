@@ -1,0 +1,94 @@
+/* ============================================================
+   图书趋势看板 · 自定义样式
+   配合 Tailwind CDN 使用
+   ============================================================ */
+
+/* 全局：减少滚动条侵占感（Windows） */
+html { scrollbar-gutter: stable; }
+
+/* 卡片悬浮效果（用 class 触发） */
+.card-hover {
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(16, 185, 129, .15);
+  border-color: rgb(167, 243, 208); /* mint-200 */
+}
+
+/* 书本封面：占位渐变（无封面图时用） */
+.cover-placeholder {
+  background: linear-gradient(135deg, var(--c1, #6ee7b7), var(--c2, #fbbf24));
+  display: flex; align-items: flex-end; padding: 8px;
+}
+.cover-placeholder span {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 1px 2px rgba(0,0,0,.15);
+  word-break: break-all;
+}
+
+/* 5 种品类的彩色 token */
+.tag-fiction   { background: #fef3c7; color: #92400e; }  /* 小说-柠黄 */
+.tag-nonfic    { background: #dcfce7; color: #14532d; }  /* 社科-薄荷 */
+.tag-business  { background: #dbeafe; color: #1e3a8a; }  /* 经管-蓝 */
+.tag-sci       { background: #f3e8ff; color: #6b21a8; }  /* 科技-紫 */
+.tag-lit       { background: #ffe4e6; color: #9f1239; }  /* 文学-玫瑰 */
+.tag-kid       { background: #ffedd5; color: #9a3412; }  /* 童书-橙 */
+.tag-other     { background: #f1f5f9; color: #334155; }  /* 其他-灰 */
+
+/* 趋势箭头颜色 */
+.trend-up   { color: #ecfccb; }                          /* 在绿底卡上用浅黄绿 */
+.trend-down { color: #fecaca; }
+.trend-flat { color: #e2e8f0; }
+
+/* 新闻条目里的 source chip */
+.source-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+/* 筛选按钮（active 态） */
+.filter-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #d1fae5;
+  background: white;
+  color: #475569;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all .15s;
+}
+.filter-pill:hover { border-color: #6ee7b7; color: #047857; }
+.filter-pill.active {
+  background: #10b981; border-color: #10b981; color: white;
+}
+
+/* 洞察卡片：带左侧色条 */
+.insight-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #d1fae5;
+  padding: 16px 16px 16px 20px;
+  overflow: hidden;
+}
+.insight-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #10b981, #fbbf24);
+}
+.insight-card.warn::before {
+  background: linear-gradient(180deg, #fbbf24, #f59e0b);
+}
+.insight-card.info::before {
+  background: linear-gradient(180deg, #60a5fa, #34d399);
+}
