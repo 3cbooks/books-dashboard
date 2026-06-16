@@ -39,10 +39,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ③.5 装 Playwright 的 Chromium 浏览器（用于京东抓取）
-      - name: 🌐 安装 Playwright + Chromium
-        run: |
-          python -m playwright install --with-deps chromium
+      # ⚠️ Playwright/Chromium 暂不安装：京东对 GitHub Actions IP 反爬严重，
+      #    抓取效果为 0。如果将来切换到国内云端，再启用以下步骤：
+      # - name: 🌐 安装 Playwright + Chromium
+      #   run: python -m playwright install --with-deps chromium
 
       # ④ 跑抓取脚本
       - name: 🔍 跑数据抓取

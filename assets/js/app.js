@@ -559,14 +559,23 @@ function renderJdPop() {
 
   const items = STATE.jdPopOnly || [];
   if (!items.length) {
-    summary.textContent = '暂无数据 — 数据源建设中或当日未抓到 POP 独家书';
+    summary.textContent = '京东对云端 IP 反爬，需本地或国内云服务器运行';
     grid.innerHTML = `<div class="col-span-full bg-white rounded-2xl border border-dashed
                               border-mint-200 p-8 text-center">
       <div class="text-4xl mb-3 opacity-60">🚧</div>
       <h3 class="font-medium text-slate-700 mb-1.5">数据源建设中</h3>
       <p class="text-xs text-slate-500 leading-relaxed max-w-md mx-auto">
-        京东商品页采用前端动态渲染，需 Playwright 抓取。每日凌晨自动比对 POP × 自营，找出"自营缺口"。
+        抓取代码已就绪（Playwright + 反检测），但京东对 GitHub Actions 的云端 IP 段
+        系统性反爬，云端跑出来 0 条。<br>
+        后续方案：本地手动跑 → 推数据，或部署到国内云服务器。
       </p>
+      <div class="mt-4 inline-flex items-center gap-3 text-xs">
+        <span class="px-2.5 py-1 rounded bg-mint-50 text-mint-700">京东 POP 在售</span>
+        <span class="text-slate-400">−</span>
+        <span class="px-2.5 py-1 rounded bg-rose-50 text-rose-700">京东自营在售</span>
+        <span class="text-slate-400">=</span>
+        <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-medium">自营缺口</span>
+      </div>
     </div>`;
     return;
   }
