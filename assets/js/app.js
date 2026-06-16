@@ -344,7 +344,44 @@ function renderBooks() {
     return;
   }
 
-  grid.innerHTML = items.map(renderBookCard).join('');
+  // 默认展示 10 本（两排），其他折叠
+  const DEFAULT_LIMIT = 10;
+  const expanded = STATE._booksExpanded === true;
+  const shown = expanded ? items : items.slice(0, DEFAULT_LIMIT);
+  const hiddenCount = items.length - shown.length;
+
+  const cardsHtml = shown.map(renderBookCard).join('');
+
+  let toggleHtml = '';
+  if (items.length > DEFAULT_LIMIT) {
+    if (!expanded) {
+      toggleHtml = `
+        <button id="books-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-mint-700 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          展开更多 (+${hiddenCount}) ↓
+        </button>`;
+    } else {
+      toggleHtml = `
+        <button id="books-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-slate-500 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          收起 ↑
+        </button>`;
+    }
+  }
+
+  grid.innerHTML = cardsHtml + toggleHtml;
+
+  const tg = document.getElementById('books-toggle');
+  if (tg) {
+    tg.onclick = () => {
+      STATE._booksExpanded = !expanded;
+      renderBooks();
+    };
+  }
 }
 
 function renderBookFilters() {
@@ -440,7 +477,45 @@ function renderDangdangBenchmark() {
     return;
   }
 
-  grid.innerHTML = items.map(renderBookCard).join('');
+  // 默认展示 5 本（一排），剩余的折叠起来
+  const DEFAULT_LIMIT = 5;
+  const expanded = STATE._benchmarkExpanded === true;
+  const shown = expanded ? items : items.slice(0, DEFAULT_LIMIT);
+  const hiddenCount = items.length - shown.length;
+
+  const cardsHtml = shown.map(renderBookCard).join('');
+
+  // 折叠/展开按钮（只在有更多时显示）
+  let toggleHtml = '';
+  if (items.length > DEFAULT_LIMIT) {
+    if (!expanded) {
+      toggleHtml = `
+        <button id="benchmark-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-mint-700 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          展开更多 (+${hiddenCount}) ↓
+        </button>`;
+    } else {
+      toggleHtml = `
+        <button id="benchmark-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-slate-500 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          收起 ↑
+        </button>`;
+    }
+  }
+
+  grid.innerHTML = cardsHtml + toggleHtml;
+
+  const tg = document.getElementById('benchmark-toggle');
+  if (tg) {
+    tg.onclick = () => {
+      STATE._benchmarkExpanded = !expanded;
+      renderDangdangBenchmark();
+    };
+  }
 }
 
 // ========== 渲染：上游预售信号 ==========
@@ -512,7 +587,44 @@ function renderUpcoming() {
     return (a.days_since_pub || 0) - (b.days_since_pub || 0);
   });
 
-  grid.innerHTML = items.map(renderBookCard).join('');
+  // 默认展示 5 本（一排），其他折叠起来
+  const DEFAULT_LIMIT = 5;
+  const expanded = STATE._upcomingExpanded === true;
+  const shown = expanded ? items : items.slice(0, DEFAULT_LIMIT);
+  const hiddenCount = items.length - shown.length;
+
+  const cardsHtml = shown.map(renderBookCard).join('');
+
+  let toggleHtml = '';
+  if (items.length > DEFAULT_LIMIT) {
+    if (!expanded) {
+      toggleHtml = `
+        <button id="upcoming-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-mint-700 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          展开更多 (+${hiddenCount}) ↓
+        </button>`;
+    } else {
+      toggleHtml = `
+        <button id="upcoming-toggle"
+                class="col-span-full mt-2 py-2.5 text-sm text-slate-500 font-medium
+                       border border-mint-100 rounded-xl bg-white hover:bg-mint-50/50
+                       transition">
+          收起 ↑
+        </button>`;
+    }
+  }
+
+  grid.innerHTML = cardsHtml + toggleHtml;
+
+  const tg = document.getElementById('upcoming-toggle');
+  if (tg) {
+    tg.onclick = () => {
+      STATE._upcomingExpanded = !expanded;
+      renderUpcoming();
+    };
+  }
 }
 
 function renderStats() {
