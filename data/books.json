@@ -42,7 +42,16 @@
       "礼盒"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "我是你的遗物",
+    "douban_pubdate": "2026-05-28",
+    "douban_publisher": "湖南文艺出版社",
+    "douban_rating": 9.5,
+    "douban_id": 38401309,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "recent",
+    "days_since_pub": 19,
+    "pubdate_verified": "2026-05-28"
   },
   {
     "title": "大中华寻宝记城市系列 泉州寻宝记",
@@ -116,7 +125,7 @@
     "rank": 7,
     "perks": [],
     "source": "当当",
-    "verify_status": "skipped"
+    "verify_status": "unverified"
   },
   {
     "title": "张居正大传 朱东润传记典藏",
