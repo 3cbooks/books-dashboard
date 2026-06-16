@@ -16,16 +16,7 @@
       "赠品"
     ],
     "source": "当当",
-    "douban_title": "泥潭",
-    "douban_pubdate": "2025-06-01",
-    "douban_publisher": "漓江出版社",
-    "douban_rating": 6.6,
-    "douban_id": 37386531,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 380,
-    "pubdate_verified": "2025-06-01"
+    "verify_status": "unverified"
   },
   {
     "title": "张嘉佳新书 我是你的遗物",
@@ -42,16 +33,7 @@
       "礼盒"
     ],
     "source": "当当",
-    "douban_title": "我是你的遗物",
-    "douban_pubdate": "2026-05-28",
-    "douban_publisher": "湖南文艺出版社",
-    "douban_rating": 9.5,
-    "douban_id": 38401309,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "recent",
-    "days_since_pub": 19,
-    "pubdate_verified": "2026-05-28"
+    "verify_status": "unverified"
   },
   {
     "title": "大中华寻宝记城市系列 泉州寻宝记",
@@ -67,16 +49,7 @@
       "限量"
     ],
     "source": "当当",
-    "douban_title": "泉州寻宝记 : 大中华寻宝记·城市系列1",
-    "douban_pubdate": "2026-06-01",
-    "douban_publisher": "中信出版集团",
-    "douban_rating": null,
-    "douban_id": 38479362,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "recent",
-    "days_since_pub": 15,
-    "pubdate_verified": "2026-06-01"
+    "verify_status": "unverified"
   },
   {
     "title": "财之道丛书・经营十二条",
@@ -90,16 +63,7 @@
     "rank": 4,
     "perks": [],
     "source": "当当",
-    "douban_title": "图解稻盛和夫经营之道 : 全面解读稻盛和夫的传奇经营；季羡林、马云、孙正义、张瑞敏、张勇鼎",
-    "douban_pubdate": "2015-12-28",
-    "douban_publisher": "南方出版社",
-    "douban_rating": null,
-    "douban_id": 26671951,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 3823,
-    "pubdate_verified": "2015-12-28"
+    "verify_status": "unverified"
   },
   {
     "title": "紫：陪安东尼度过漫长岁月Ⅶ",
@@ -129,7 +93,7 @@
     "rank": 6,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "我大于一切 把人生的主位，还给自己",
@@ -143,7 +107,7 @@
     "rank": 7,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "张居正大传 朱东润传记典藏",
@@ -161,7 +125,7 @@
       "赠品"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
