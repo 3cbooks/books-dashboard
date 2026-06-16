@@ -19,9 +19,13 @@ from .common import get_logger, load_json, save_json, normalize_category
 log = get_logger("insights")
 
 
-def _insight(icon: str, title: str, body: str, tag: str, tone: str = "") -> dict:
-    """构造一条洞察的标准结构。"""
-    return {"icon": icon, "title": title, "body": body, "tag": tag, "tone": tone}
+def _insight(icon: str, title: str, body: str, tag: str,
+             tone: str = "", anchor: str | None = None) -> dict:
+    """构造一条洞察的标准结构。anchor 是页面内跳转目标的 section id。"""
+    item = {"icon": icon, "title": title, "body": body, "tag": tag, "tone": tone}
+    if anchor:
+        item["anchor"] = anchor
+    return item
 
 
 # ============================================================
@@ -56,6 +60,7 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
             f"这些权益版京东自营多数缺货 — 是当当用户黏性的核心抓手。",
             "当当对标",
             "warn",
+            anchor="benchmark-section",
         ))
 
     # 亲签上榜书：单独拎出来，因为是最直接的"作者×渠道"绑定
@@ -70,6 +75,7 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
             f"亲签是作者×渠道的强绑定，京东自营对标空白。",
             "亲签机会",
             "warn",
+            anchor="benchmark-section",
         ))
 
     # 限量版分析：稀缺感对销量的拉动
@@ -88,6 +94,7 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
                 f"限量版平均 #{avg_rank_limit:.1f}，普通版平均 #{avg_rank_normal:.1f}。"
                 f"稀缺感对销量的拉动作用清晰，可在自营侧复用'编号限量'机制。",
                 "限量策略",
+                anchor="benchmark-section",
             ))
 
     return out
@@ -114,6 +121,7 @@ def rule_category_distribution(books: list[dict]) -> list[dict]:
             f"{top1[1]} 本上榜书属此品类，远超其他品类。"
             f"建议在选品/陈列侧加强对应栏目权重。",
             "品类信号",
+            anchor="books-section",
         ))
     return out
 
@@ -154,6 +162,7 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
             f"建议关联选题或营销叙事时同步把握热度。",
             "新闻热点",
             "info",
+            anchor="news-section",
         ))
     return out
 
@@ -170,6 +179,7 @@ def rule_high_rated(books: list[dict]) -> list[dict]:
             f"包含 {names}。读者口碑端正反馈强烈，可作为大客户/会员推荐重点。",
             "口碑信号",
             "info",
+            anchor="books-section",
         ))
     return out
 
@@ -196,6 +206,7 @@ def rule_no_perk_top(books: list[dict]) -> list[dict]:
             f"占无权益版上榜书的 {ratio:.0f}%，含 {names}。"
             f"这类书靠纯内容力出圈，是京东自营对标销售的高优先级候选。",
             "纯内容信号",
+            anchor="books-section",
         ))
     return out
 
@@ -228,6 +239,7 @@ def rule_upcoming_books(new_books: list[dict]) -> list[dict]:
         f"这是销量榜的 1-3 个月先行指标，可提前规划自营选品。",
         "上游信号",
         "info",
+        anchor="upcoming-section",
     ))
 
     # 找出预售书里有权益的（出版社+渠道双押注）
@@ -241,6 +253,7 @@ def rule_upcoming_books(new_books: list[dict]) -> list[dict]:
             f"重点候选：尽早判断是否能跟进自营版本。",
             "渠道前哨",
             "warn",
+            anchor="upcoming-section",
         ))
 
     return out
@@ -268,6 +281,7 @@ def rule_freshly_published(new_books: list[dict]) -> list[dict]:
         f"区别于销量榜上的长红畅销书。",
         "新出版",
         "info",
+        anchor="upcoming-section",
     ))
     return out
 

@@ -114,6 +114,10 @@ html { scrollbar-gutter: stable; }
   border: 1px solid #d1fae5;
   padding: 16px 16px 16px 20px;
   overflow: hidden;
+  text-decoration: none;     /* 链接版别有下划线 */
+  color: inherit;            /* 链接版别有蓝色字 */
+  transition: transform .2s ease, box-shadow .2s ease,
+              border-color .2s ease;
 }
 .insight-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;

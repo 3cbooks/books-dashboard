@@ -109,18 +109,34 @@ function renderInsights() {
       今日尚未生成洞察 — 数据更新后会自动填充。</div>`;
     return;
   }
-  grid.innerHTML = STATE.insights.map(it => `
-    <div class="insight-card ${it.tone || ''}">
+  grid.innerHTML = STATE.insights.map(it => {
+    const inner = `
       <div class="flex items-start gap-2 mb-1.5">
         <span class="text-lg leading-none">${it.icon || '✨'}</span>
         <h3 class="font-semibold text-slate-900 leading-snug">${it.title}</h3>
       </div>
       <p class="text-sm text-slate-600 leading-relaxed">${it.body}</p>
-      ${it.tag ? `<span class="inline-block mt-3 text-[11px] px-2 py-0.5
-                                rounded-full bg-mint-50 text-mint-700">
-                    ${it.tag}</span>` : ''}
-    </div>
-  `).join('');
+      <div class="flex items-center justify-between mt-3">
+        ${it.tag ? `<span class="text-[11px] px-2 py-0.5
+                                  rounded-full bg-mint-50 text-mint-700">
+                      ${it.tag}</span>` : '<span></span>'}
+        ${it.anchor ? `<span class="text-[11px] text-mint-600 font-medium
+                                    opacity-0 group-hover:opacity-100 transition">
+                         查看详情 →
+                       </span>` : ''}
+      </div>
+    `;
+    // 有 anchor 的用 <a> 渲染（可跳转 + hover 浮起），没有的用 <div>
+    if (it.anchor) {
+      return `<a href="#${it.anchor}"
+                 class="insight-card group cursor-pointer hover:shadow-md
+                        hover:-translate-y-0.5 hover:border-mint-300 ${it.tone || ''}
+                        block transition">
+                ${inner}
+              </a>`;
+    }
+    return `<div class="insight-card ${it.tone || ''}">${inner}</div>`;
+  }).join('');
 }
 
 // ========== 渲染：行业新闻 ==========
