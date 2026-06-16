@@ -67,7 +67,16 @@
       "限量"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "泉州寻宝记 : 大中华寻宝记·城市系列1",
+    "douban_pubdate": "2026-06-01",
+    "douban_publisher": "中信出版集团",
+    "douban_rating": null,
+    "douban_id": 38479362,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "recent",
+    "days_since_pub": 15,
+    "pubdate_verified": "2026-06-01"
   },
   {
     "title": "财之道丛书・经营十二条",
@@ -81,7 +90,16 @@
     "rank": 4,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "图解稻盛和夫经营之道 : 全面解读稻盛和夫的传奇经营；季羡林、马云、孙正义、张瑞敏、张勇鼎",
+    "douban_pubdate": "2015-12-28",
+    "douban_publisher": "南方出版社",
+    "douban_rating": null,
+    "douban_id": 26671951,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 3823,
+    "pubdate_verified": "2015-12-28"
   },
   {
     "title": "紫：陪安东尼度过漫长岁月Ⅶ",
@@ -143,7 +161,7 @@
       "赠品"
     ],
     "source": "当当",
-    "verify_status": "skipped"
+    "verify_status": "unverified"
   },
   {
     "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
@@ -156,8 +174,7 @@
     "price": "¥39.90",
     "rank": 9,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "崇祯传 中华帝王传记",
@@ -172,8 +189,7 @@
     "perks": [
       "独家"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "刘震云作品选全6册",
@@ -188,8 +204,7 @@
     "perks": [
       "礼盒"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "花海下的魔术师 特签版 黑马作者御风而行的�~子奇幻热血力作",
@@ -202,8 +217,7 @@
     "price": "¥38.80",
     "rank": 4,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "白鹿原 陈忠实先生仙逝十周年纪念 精心制作",
@@ -218,8 +232,7 @@
     "perks": [
       "限量"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "十日终焉10钟鸣 杀虫队队员新书",
@@ -232,8 +245,7 @@
     "price": "¥38.50",
     "rank": 6,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "请和我门外的花坐一会儿",
@@ -248,8 +260,7 @@
     "perks": [
       "礼盒"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作",
@@ -265,8 +276,7 @@
       "亲签",
       "限量"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事",
@@ -279,8 +289,7 @@
     "price": "¥33.80",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
@@ -293,8 +302,7 @@
     "price": "¥29.90",
     "rank": 4,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "樱花树下站谁都美",
@@ -307,8 +315,7 @@
     "price": "¥39.90",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "万物有光 救命24小时指南",
@@ -323,8 +330,7 @@
     "perks": [
       "亲签"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "不用明天，无须下次，没有以后",
@@ -337,8 +343,7 @@
     "price": "¥29.50",
     "rank": 5,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "我还想看见",
@@ -351,8 +356,7 @@
     "price": "¥40.00",
     "rank": 6,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "肥志百科17 18特典版",
@@ -367,8 +371,7 @@
     "perks": [
       "限量"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "有兽焉13 原著漫画 特别收录全新单行本专属小剧场",
@@ -381,8 +384,7 @@
     "price": "¥42.80",
     "rank": 2,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "她的山，她的海4 晋江高分作品改编漫画 治愈系校园力作 双女主救赎 原著扶华",
@@ -395,8 +397,7 @@
     "price": "¥37.50",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "灵契",
@@ -412,8 +413,7 @@
       "亲签",
       "限量"
     ],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "米吴科学漫画・奇妙万象篇 第十辑37-40册",
@@ -426,8 +426,7 @@
     "price": "¥69.80",
     "rank": 2,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "黄洞洞超级懂：超有趣的科学探索之旅",
@@ -440,8 +439,7 @@
     "price": "¥69.00",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "黄洞洞超级懂",
@@ -454,8 +452,7 @@
     "price": "¥69.00",
     "rank": 4,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "黄洞洞超级懂",
@@ -468,8 +465,7 @@
     "price": "¥69.00",
     "rank": 5,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "1929",
@@ -482,8 +478,7 @@
     "price": "¥90.90",
     "rank": 1,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "第二天：金钱进化论",
@@ -496,8 +491,7 @@
     "price": "¥53.00",
     "rank": 2,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "观念的穹顶：经济思想史二十四讲",
@@ -510,8 +504,7 @@
     "price": "¥73.40",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "OPE一人即系统：AI时代的单人创业家范式 张祺博士力作 借 AI 解锁单人创业未来",
@@ -524,8 +517,7 @@
     "price": "¥74.10",
     "rank": 4,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "《宣传画史稿》 朱海辰 著 经典画作 历史图像 一部宣传画艺术史 为当代主题美术创作提供参考 20年研究 超500幅宣传画作品 难忘的时代印记 “中国好书”作者 国家出版基金支持项目",
@@ -538,8 +530,7 @@
     "price": "¥132.00",
     "rank": 1,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "治愈系手账简笔画 零基础简笔画入门 新手简笔画从入门到精通 解压简笔画手账素材大全手账党必备简笔画教程图书籍",
@@ -552,8 +543,7 @@
     "price": "¥33.80",
     "rank": 2,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "高考音乐强化训练 视唱练耳卷",
@@ -566,8 +556,7 @@
     "price": "¥49.30",
     "rank": 3,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   },
   {
     "title": "洛天依纪念插画集VOL.1",
@@ -580,7 +569,6 @@
     "price": "¥148.00",
     "rank": 4,
     "perks": [],
-    "source": "当当",
-    "verify_status": "skipped"
+    "source": "当当"
   }
 ]
