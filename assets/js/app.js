@@ -584,7 +584,7 @@ function renderJdPop() {
     <span class="font-semibold text-slate-900">${items.length}</span> 本
     京东 POP 商家在售、自营未上架
     <span class="text-slate-400 mx-2">·</span>
-    自营选品的潜在缺口
+    销量门槛 ≥ 100 (近期评论数过滤)
   `;
 
   const DEFAULT_LIMIT = 5;
@@ -600,6 +600,9 @@ function renderJdPop() {
         <div class="aspect-[3/4] overflow-hidden bg-mint-50 relative">
           <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold
                        px-1.5 py-0.5 rounded shadow-sm z-10">POP</span>
+          ${b.show_count_str ? `<span class="absolute top-2 right-2 bg-rose-500 text-white
+                                  text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm z-10">
+                                  销量${b.show_count_str}</span>` : ''}
           <div class="cover-placeholder w-full h-full"
                style="--c1:${c1};--c2:${c2}">
             <span>${safeTitle}</span>
@@ -611,8 +614,9 @@ function renderJdPop() {
           </h3>
           <p class="text-xs text-slate-500 mt-1 line-clamp-1">${b.author || '—'}</p>
           ${b.publisher ? `<p class="text-[10px] text-slate-400 mt-0.5 line-clamp-1">${b.publisher}</p>` : ''}
+          ${b.shop_name ? `<p class="text-[10px] text-amber-600 mt-0.5 line-clamp-1">🏪 ${b.shop_name}</p>` : ''}
           <div class="mt-auto pt-2 flex items-center justify-between gap-2">
-            ${b.pubdate ? `<span class="text-[10px] text-slate-500">${b.pubdate}</span>` : '<span></span>'}
+            ${b.comment_count_str ? `<span class="text-[10px] text-slate-500">💬 ${b.comment_count_str}</span>` : '<span></span>'}
             ${b.price ? `<span class="text-xs font-semibold text-amber-600">${b.price}</span>` : ''}
           </div>
         </div>

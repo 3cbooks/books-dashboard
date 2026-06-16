@@ -35,6 +35,12 @@ CATEGORIES = [
     ("社科", "4-93-0"),
 ]
 
+# 京东 m 站搜索（用来广搜 POP 书）
+SEARCH_URL = "https://so.m.jd.com/ware/search.action"
+
+# 销量代理 API（核心）— 评价数 API 公开，1 次能查 100 个 SKU
+COMMENT_API = "https://club.jd.com/comment/productCommentSummaries.action"
+
 # 移动版详情页（带完整商品数据的 SSR 页面）
 DETAIL_M_URL = "https://item.m.jd.com/product/{sku}.html"
 MOBILE_UA = (
@@ -47,8 +53,153 @@ MOBILE_UA = (
 # 第一步：拿 SKU 列表
 # ============================================================
 
+# 用于在京东搜索找 POP 商家书的关键词集合
+# 一些"POP 商家更喜欢挂"的关键词更容易出 POP 结果
+SEARCH_KEYWORDS = [
+    "图书 正版", "新华书店", "出版社旗舰店",
+    "小说", "儿童读物", "教辅", "畅销书",
+    "经管 励志", "心理学",
+]
+
+
+def fetch_pop_skus_via_search(max_per_query: int = 20) -> set[str]:
+    """
+    通过京东 m 站搜索广搜 POP 书的 SKU。
+    POP 书 SKU 是 14 位（自营是 7-9 位）。
+    """
+    pop_skus: set[str] = set()
+    for kw in SEARCH_KEYWORDS:
+        url = SEARCH_URL
+        params = {"keyword": kw, "book": "y", "page": "1"}
+        resp = http_get(
+            url, params=params, timeout=15, max_retries=2,
+            extra_headers={
+                "User-Agent": MOBILE_UA,
+                "Referer": "https://so.m.jd.com/",
+            },
+        )
+        if resp is None:
+            continue
+        # 14+ 位 SKU = POP，过滤
+        skus = set(re.findall(r'(?:item\.m\.jd\.com/product/|"sku(?:Id)?":\s*"?)(\d{11,14})', resp.text))
+        before = len(pop_skus)
+        pop_skus.update(s for s in skus if len(s) >= 11)
+        log.info("[POP 搜] '%s': +%d (累计 %d)", kw, len(pop_skus) - before, len(pop_skus))
+        time.sleep(2)
+    return pop_skus
+
+
+def fetch_self_skus_via_search(max_per_query: int = 20) -> set[str]:
+    """
+    通过京东搜索 + 榜单页广搜京东自营图书 SKU。
+    自营 SKU 通常是 7-9 位。
+    """
+    self_skus: set[str] = set()
+
+    # 1. 榜单页（已知能拿到 SKU）
+    for label, cat in CATEGORIES:
+        url = f"{BOOKTOP_URL}?category={cat}"
+        resp = http_get(url, timeout=15, max_retries=2)
+        if resp:
+            skus = set(re.findall(r'"skuId":\s*"?(\d{6,12})"?', resp.text))
+            self_skus.update(s for s in skus if 6 <= len(s) <= 10)  # 自营特征
+        time.sleep(2)
+
+    # 2. 自营专搜 — 加 ev= 参数限定 京东图书 品牌
+    for kw in ["小说", "童书", "文学", "经管", "历史", "心理"]:
+        params = {"keyword": kw, "book": "y", "ev": "exbrand_京东图书"}
+        resp = http_get(
+            SEARCH_URL, params=params, timeout=15,
+            extra_headers={"User-Agent": MOBILE_UA, "Referer": "https://so.m.jd.com/"},
+        )
+        if resp:
+            skus = set(re.findall(r'item\.m\.jd\.com/product/(\d{6,10})\.html', resp.text))
+            self_skus.update(skus)
+        time.sleep(2)
+
+    log.info("[自营 SKU 池] 总计 %d 个", len(self_skus))
+    return self_skus
+
+
+# ============================================================
+# 销量过滤（核心：通过评价数 API 拿"近期销量"代理）
+# ============================================================
+
+def parse_show_count(s: str) -> int:
+    """
+    把京东的 ShowCountStr 转成最小销量数值：
+      "1万+" → 10000
+      "5000+" → 5000
+      "1000+" → 1000
+      "100+" → 100
+      "0" / "" / None → 0
+    """
+    if not s:
+        return 0
+    s = str(s).strip()
+    if "万+" in s:
+        m = re.match(r"(\d+)万\+", s)
+        return int(m.group(1)) * 10000 if m else 10000
+    m = re.match(r"(\d+)\+", s)
+    if m:
+        return int(m.group(1))
+    m = re.match(r"^(\d+)$", s)
+    if m:
+        return int(m.group(1))
+    return 0
+
+
+def fetch_sales_proxy(skus: list[str], batch_size: int = 50) -> dict[str, dict]:
+    """
+    批量拉评价数 API，为每个 SKU 取销量代理。
+    返回 {sku: {show_count: 100, comment_count: '1万+', avg_score: 5}}
+    每次 API 调用最多 100 个 SKU，我们每批 50 比较安全。
+    """
+    out: dict[str, dict] = {}
+    for i in range(0, len(skus), batch_size):
+        batch = skus[i:i+batch_size]
+        params = {"referenceIds": ",".join(batch)}
+        resp = http_get(COMMENT_API, params=params, timeout=15, max_retries=2)
+        if resp is None:
+            continue
+        try:
+            data = resp.json()
+        except Exception:
+            # 偶尔是 JSONP 格式
+            text = resp.text.strip()
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            if start > 0:
+                try:
+                    data = json.loads(text[start:end])
+                except json.JSONDecodeError:
+                    continue
+            else:
+                continue
+
+        for item in data.get("CommentsCount", []):
+            sku = str(item.get("SkuId") or item.get("ProductId") or "")
+            if not sku:
+                continue
+            out[sku] = {
+                "show_count_str": item.get("ShowCountStr") or "",
+                "comment_count_str": item.get("CommentCountStr") or "",
+                "show_count": parse_show_count(item.get("ShowCountStr")),
+                "comment_count": parse_show_count(item.get("CommentCountStr")),
+                "avg_score": item.get("AverageScore", 0),
+                "good_rate": item.get("GoodRateShow", 0),
+            }
+        log.info("[销量查询] %d-%d / %d", i, i+len(batch), len(skus))
+        time.sleep(1.5)
+    return out
+
+
+# ============================================================
+# 旧的 SKU 列表函数（保留以备）
+# ============================================================
+
 def fetch_sku_list() -> list[str]:
-    """从京东图书榜单页抓 SKU 列表，去重返回。"""
+    """从京东图书榜单页抓 SKU 列表，去重返回。（旧接口，保留）"""
     all_skus: set[str] = set()
     for label, cat_code in CATEGORIES:
         url = f"{BOOKTOP_URL}?category={cat_code}"
@@ -56,13 +207,11 @@ def fetch_sku_list() -> list[str]:
         if resp is None:
             log.warning("京东榜单 [%s] 失败", label)
             continue
-        # SKU 在 "skuId":"xxxxxxxxx" 字段里
         skus = set(re.findall(r'"skuId":\s*"?(\d{6,12})"?', resp.text))
         log.info("京东榜单 [%s]: +%d 个 SKU", label, len(skus))
         all_skus.update(skus)
         time.sleep(2)
 
-    # 也抓一个"新书榜"
     url = f"{BOOKTOP_URL}?orderType=1&category=4-0-0"
     resp = http_get(url, timeout=15)
     if resp:
@@ -158,38 +307,90 @@ def fetch_detail(sku: str) -> dict | None:
 # 第三步：综合
 # ============================================================
 
-def fetch(max_skus: int = 80) -> dict:
+def fetch(min_show_count: int = 100, max_pop_to_check: int = 100) -> dict:
     """
-    完整流程：抓榜单 → 抓详情 → 分组成 self / pop。
-    max_skus: 限制详情页抓取数量，避免触发反爬（每个 SKU 一次请求）。
+    新流程（按你的业务逻辑）：
+
+    1. 广搜京东 POP 书 SKU（不限榜单，14 位 SKU 特征）
+    2. 批量查询销量代理（评价数 API），过滤 ShowCount >= min_show_count
+    3. 也抓一份京东自营 SKU 池作为参考
+    4. 对每本"销量过关"的 POP 书，主动验证自营有没有同款
+
+    参数:
+      min_show_count: 销量过滤阈值，默认 100（你说的）
+      max_pop_to_check: 详情页查询上限（每个详情 1 次请求，限制成本）
     """
-    log.info("=== 京东图书抓取 (max_skus=%d) ===", max_skus)
-    skus = fetch_sku_list()
-    if not skus:
-        log.error("✗ 未拿到任何 SKU")
-        return {"self": [], "pop": []}
+    log.info("=== 京东 POP 缺口分析 (销量阈值=%d) ===", min_show_count)
 
-    # 限量
-    skus = skus[:max_skus]
-    log.info("将抓取 %d 个 SKU 的详情（每个停 1 秒）...", len(skus))
+    # ============ Step 1: 广搜 POP SKU ============
+    log.info("Step 1: 广搜 POP 书 SKU...")
+    pop_skus = fetch_pop_skus_via_search()
+    if not pop_skus:
+        log.error("✗ 未拿到任何 POP SKU")
+        return {"self": [], "pop": [], "stats": {"reason": "no_pop_skus"}}
+    log.info("  → 共抓到 %d 个 POP 候选 SKU", len(pop_skus))
 
-    self_books: list[dict] = []
+    # ============ Step 2: 销量过滤 ============
+    log.info("Step 2: 查销量代理（评价数 API）...")
+    pop_skus_list = list(pop_skus)
+    sales_data = fetch_sales_proxy(pop_skus_list)
+    log.info("  → 拿到 %d 个 SKU 的销量数据", len(sales_data))
+
+    qualified_pop_skus = [
+        sku for sku in pop_skus_list
+        if sales_data.get(sku, {}).get("show_count", 0) >= min_show_count
+    ]
+    log.info("  → 销量 ≥ %d 的 POP SKU: %d 个", min_show_count, len(qualified_pop_skus))
+    # 限量抓详情
+    qualified_pop_skus = qualified_pop_skus[:max_pop_to_check]
+
+    # ============ Step 3: 自营 SKU 池（用于快速排除） ============
+    log.info("Step 3: 抓京东自营 SKU 池...")
+    self_skus = fetch_self_skus_via_search()
+
+    # ============ Step 4: 抓详情 ============
+    log.info("Step 4: 抓 %d 本 POP 书的详情...", len(qualified_pop_skus))
     pop_books: list[dict] = []
-
-    for i, sku in enumerate(skus, 1):
+    for i, sku in enumerate(qualified_pop_skus, 1):
         info = fetch_detail(sku)
         if info:
-            (self_books if info.get("is_self") else pop_books).append(info)
+            # 把销量数据并入
+            sd = sales_data.get(sku, {})
+            info["show_count"] = sd.get("show_count", 0)
+            info["show_count_str"] = sd.get("show_count_str", "")
+            info["comment_count_str"] = sd.get("comment_count_str", "")
+            info["avg_score"] = sd.get("avg_score", 0)
+            pop_books.append(info)
         if i % 10 == 0:
-            log.info("  进度 %d/%d (自营 %d / POP %d)",
-                     i, len(skus), len(self_books), len(pop_books))
-        # 礼貌延迟（详情页比较多，慢一点稳）
+            log.info("  详情进度 %d/%d", i, len(qualified_pop_skus))
         time.sleep(1)
 
+    # 抓自营详情（少量，只用来作为快速排除池）
+    log.info("Step 5: 抓自营详情池（最多 60 个）...")
+    self_books: list[dict] = []
+    for i, sku in enumerate(list(self_skus)[:60], 1):
+        info = fetch_detail(sku)
+        if info and info.get("is_self"):
+            self_books.append(info)
+        time.sleep(1)
+        if i % 20 == 0:
+            log.info("  自营详情进度 %d", i)
+
     log.info("=== 完成 ===")
-    log.info("  自营 (jd_self): %d 本", len(self_books))
-    log.info("  POP  (jd_pop):  %d 本", len(pop_books))
-    return {"self": self_books, "pop": pop_books}
+    log.info("  POP（销量过关）: %d 本", len(pop_books))
+    log.info("  自营池: %d 本", len(self_books))
+
+    return {
+        "self": self_books,
+        "pop": pop_books,
+        "stats": {
+            "pop_skus_found": len(pop_skus),
+            "pop_with_sales": len(sales_data),
+            "pop_qualified": len([s for s in pop_skus_list
+                                  if sales_data.get(s, {}).get("show_count", 0) >= min_show_count]),
+            "min_show_count": min_show_count,
+        },
+    }
 
 
 # ============================================================
