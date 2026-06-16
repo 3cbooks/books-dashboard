@@ -90,11 +90,21 @@ def _extract_cards_from_page(page) -> list[dict]:
 
 
 def _scrape_query(playwright, query: str, max_scrolls: int = 4) -> list[dict]:
-    """用 Playwright 抓单个关键词的搜索页。"""
+    """用 Playwright 抓单个关键词的搜索页（带 stealth 反检测）。"""
     url = SEARCH_URL_TMPL.format(kw=quote(query))
     log.info("抓 [%s] → %s", query, url[:80])
 
-    browser = playwright.chromium.launch(headless=True)
+    # 启动浏览器，带反检测参数
+    browser = playwright.chromium.launch(
+        headless=True,
+        args=[
+            "--disable-blink-features=AutomationControlled",  # 隐藏 navigator.webdriver
+            "--no-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+            "--disable-features=IsolateOrigins,site-per-process",
+        ],
+    )
     try:
         ctx = browser.new_context(
             user_agent=(
@@ -103,16 +113,48 @@ def _scrape_query(playwright, query: str, max_scrolls: int = 4) -> list[dict]:
             ),
             viewport={"width": 1366, "height": 800},
             locale="zh-CN",
-            extra_http_headers={"Accept-Language": "zh-CN,zh;q=0.9"},
+            timezone_id="Asia/Shanghai",
+            extra_http_headers={
+                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+                "Accept": ("text/html,application/xhtml+xml,application/xml;q=0.9,"
+                           "image/avif,image/webp,*/*;q=0.8"),
+                "Accept-Encoding": "gzip, deflate, br",
+                "Sec-Fetch-Site": "none",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-User": "?1",
+                "Sec-Fetch-Dest": "document",
+                "Upgrade-Insecure-Requests": "1",
+            },
         )
+
+        # 启用 stealth 反检测脚本（隐藏 webdriver / 修复 chrome.runtime 等指纹）
+        try:
+            from playwright_stealth import Stealth
+            Stealth().apply_stealth_sync(ctx)
+        except ImportError:
+            log.warning("playwright-stealth 未安装，跳过 stealth 增强")
+
         page = ctx.new_page()
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            # 滚动触发懒加载
+            # 滚动触发懒加载，每次滚动后小停
             for _ in range(max_scrolls):
-                page.evaluate("window.scrollBy(0, 1000)")
-                page.wait_for_timeout(1200)
-            cards = _extract_cards_from_page(page)
+                try:
+                    page.evaluate("window.scrollBy(0, 1000)")
+                except Exception:
+                    break  # 页面可能被反爬重定向
+                page.wait_for_timeout(1500)
+
+            # 检查是否被反爬重定向
+            if "passport" in page.url or "captcha" in page.url.lower():
+                log.warning("[%s] 被重定向到验证页: %s", query, page.url[:80])
+                return []
+
+            try:
+                cards = _extract_cards_from_page(page)
+            except Exception as e:
+                log.warning("[%s] 提取失败: %s", query, e)
+                cards = []
         finally:
             ctx.close()
     finally:
