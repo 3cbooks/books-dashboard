@@ -48,6 +48,18 @@ def main() -> int:
         log.warning("⚠ 所有图书源失败，使用上次数据兜底")
         books = load_json("books.json", default=[])
 
+    # ============ 抓真新书 / 预售书 ============
+    from . import dangdang_new
+    new_books, status = _safe_run(
+        "dangdang_new",
+        lambda: dangdang_new.fetch(per_category=3, max_pages=2),
+    )
+    sources_status["dangdang_new"] = status
+    if not new_books:
+        log.warning("⚠ 真新书源失败，使用上次数据兜底")
+        new_books = load_json("books_new.json", default=[])
+    save_json("books_new.json", new_books)
+
     # ============ 抓新闻 ============
     from . import baidu_news
     news, status = _safe_run("baidu_news", baidu_news.fetch)
@@ -64,7 +76,7 @@ def main() -> int:
     # ============ 生成洞察 ============
     from . import insights as insights_mod
     try:
-        insights_list = insights_mod.generate(books, news)
+        insights_list = insights_mod.generate(books, news, new_books=new_books)
         save_json("insights.json", insights_list)
         log.info("✓ insights: %d 条", len(insights_list))
     except Exception:

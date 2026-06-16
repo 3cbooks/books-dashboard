@@ -145,7 +145,8 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
             matches.append((theme, len(hits), hits))
 
     matches.sort(key=lambda x: x[1], reverse=True)
-    for theme, cnt, _hits in matches[:2]:
+    # 只取最热的一条，避免占满洞察板块
+    for theme, cnt, _hits in matches[:1]:
         out.append(_insight(
             "📰",
             f"行业话题聚焦：{theme}（{cnt} 条）",
@@ -199,14 +200,90 @@ def rule_no_perk_top(books: list[dict]) -> list[dict]:
     return out
 
 
+def rule_upcoming_books(new_books: list[dict]) -> list[dict]:
+    """
+    上游押注信号：当当数据按"出版日倒序"显示的预售书，
+    是出版社未来 6 个月计划上市的图书。
+    它领先销量榜 1-3 个月，是商业分析师的关键先行指标。
+    """
+    out = []
+    if not new_books:
+        return out
+
+    preorder = [b for b in new_books if b.get("pub_status") == "preorder"]
+    if len(preorder) < 3:
+        return out
+
+    # 按品类分组统计
+    cat_counter = Counter(
+        b.get("category", "其他") for b in preorder
+    )
+    top_cats = cat_counter.most_common(3)
+    cats_str = "、".join(f"{c}({n})" for c, n in top_cats)
+
+    out.append(_insight(
+        "🔮",
+        f"出版社未来 6 个月将上市 {len(preorder)} 本预售书",
+        f"主投品类：{cats_str}（共 {len(preorder)} 本预售）。"
+        f"这是销量榜的 1-3 个月先行指标，可提前规划自营选品。",
+        "上游信号",
+        "info",
+    ))
+
+    # 找出预售书里有权益的（出版社+渠道双押注）
+    preorder_perks = [b for b in preorder if b.get("perks")]
+    if preorder_perks:
+        names = "、".join(f"《{b['title'][:14]}》" for b in preorder_perks[:3])
+        out.append(_insight(
+            "🎁",
+            f"{len(preorder_perks)} 本预售书已锁定权益版",
+            f"含 {names}。上市前即'独家/限量'锁定，是出版社×当当的渠道深度合作。"
+            f"重点候选：尽早判断是否能跟进自营版本。",
+            "渠道前哨",
+            "warn",
+        ))
+
+    return out
+
+
+def rule_freshly_published(new_books: list[dict]) -> list[dict]:
+    """新近出版（≤30 天）的书 — 真'新书'信号，区别于销量榜上的长红书。"""
+    out = []
+    if not new_books:
+        return out
+
+    fresh = [b for b in new_books
+             if b.get("pub_status") in ("fresh", "recent")]
+    if len(fresh) < 3:
+        return out
+
+    cat_counter = Counter(b.get("category", "其他") for b in fresh)
+    top_cats = cat_counter.most_common(3)
+    cats_str = "、".join(f"{c}({n})" for c, n in top_cats)
+
+    out.append(_insight(
+        "🆕",
+        f"近 30 日新出版 {len(fresh)} 本",
+        f"主要品类：{cats_str}。这是真正的'近期上市'图书，"
+        f"区别于销量榜上的长红畅销书。",
+        "新出版",
+        "info",
+    ))
+    return out
+
+
 # ============================================================
 # 主流程
 # ============================================================
 
-def generate(books: list[dict], news: list[dict]) -> list[dict]:
-    """跑所有规则，按"信号强度"挑出 5-8 条。"""
+def generate(books: list[dict], news: list[dict], new_books: list[dict] | None = None) -> list[dict]:
+    """跑所有规则，按"信号强度"挑出 5-10 条。"""
+    new_books = new_books or []
+
     candidates: list[dict] = []
     candidates.extend(rule_dangdang_perks(books))
+    candidates.extend(rule_upcoming_books(new_books))     # 新规则：上游预售
+    candidates.extend(rule_freshly_published(new_books))  # 新规则：近期出版
     candidates.extend(rule_category_distribution(books))
     candidates.extend(rule_high_rated(books))
     candidates.extend(rule_no_perk_top(books))
@@ -222,15 +299,16 @@ def generate(books: list[dict], news: list[dict]) -> list[dict]:
             "数据状态",
         ))
 
-    # 限制数量（前 8 条）
-    return candidates[:8]
+    # 限制数量（前 6 条 — 2 行 × 3 列正好）
+    return candidates[:6]
 
 
 def main() -> int:
     log.info("═══ 开始生成洞察 ═══")
     books = load_json("books.json", default=[]) or []
     news = load_json("news.json", default=[]) or []
-    insights = generate(books, news)
+    new_books = load_json("books_new.json", default=[]) or []
+    insights = generate(books, news, new_books=new_books)
     save_json("insights.json", insights)
     log.info("═══ 完成: 生成 %d 条洞察 ═══", len(insights))
     for it in insights:

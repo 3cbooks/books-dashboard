@@ -6,12 +6,14 @@
 // 数据缓存
 const STATE = {
   books: [],
+  newBooks: [],   // 预售书 / 真新书
   news: [],
   insights: [],
   meta: {},
   activeBookCategory: 'all',
   activeNewsTheme: 'all',  // 改为主题维度
   activePerk: 'all',
+  activeUpcomingCat: 'all',
 };
 
 // 新闻主题分类规则（关键词命中 → 归到对应主题）
@@ -139,10 +141,13 @@ function renderNews() {
     items = items.filter(n => classifyNewsTheme(n) === STATE.activeNewsTheme);
   }
 
-  // 显示前 20 条 — 太多反而看不过来
-  const SHOW_LIMIT = 20;
-  const shown = items.slice(0, SHOW_LIMIT);
-  const more = items.length - shown.length;
+  // 默认展示 10 条，"展开更多"后展示前 30
+  const DEFAULT_LIMIT = 10;
+  const EXPANDED_LIMIT = 30;
+  const expanded = STATE._newsExpanded === true;
+  const showCount = expanded ? EXPANDED_LIMIT : DEFAULT_LIMIT;
+  const shown = items.slice(0, showCount);
+  const hidden = items.length - shown.length;
 
   if (!shown.length) {
     list.innerHTML = `<div class="p-6 text-sm text-slate-400">该主题暂无相关新闻</div>`;
@@ -150,10 +155,9 @@ function renderNews() {
     return;
   }
 
-  $('#news-meta').textContent =
-    `${items.length} 条${more > 0 ? `（仅展示前 ${SHOW_LIMIT}）` : ''}`;
+  $('#news-meta').textContent = `共 ${items.length} 条`;
 
-  list.innerHTML = shown.map(n => `
+  const newsHtml = shown.map(n => `
     <a href="${n.url}" target="_blank" rel="noopener"
        class="block p-4 hover:bg-mint-50/50 transition group">
       <div class="flex items-start gap-3">
@@ -172,6 +176,34 @@ function renderNews() {
       </div>
     </a>
   `).join('');
+
+  // "展开/收起"按钮
+  let toggleBtn = '';
+  if (items.length > DEFAULT_LIMIT) {
+    if (!expanded) {
+      toggleBtn = `<button id="news-toggle"
+        class="block w-full py-3 text-sm text-mint-700 hover:bg-mint-50/50
+               transition font-medium">
+        展开更多 (+${items.length - DEFAULT_LIMIT}) ↓
+      </button>`;
+    } else {
+      toggleBtn = `<button id="news-toggle"
+        class="block w-full py-3 text-sm text-slate-500 hover:bg-mint-50/50
+               transition font-medium">
+        收起 ↑
+      </button>`;
+    }
+  }
+
+  list.innerHTML = newsHtml + toggleBtn;
+
+  const tg = document.getElementById('news-toggle');
+  if (tg) {
+    tg.onclick = () => {
+      STATE._newsExpanded = !expanded;
+      renderNews();
+    };
+  }
 }
 
 // 新闻主题筛选 — 用紧凑胶囊
@@ -252,12 +284,30 @@ function renderBookCard(b) {
                     px-1.5 py-0.5 rounded shadow-sm z-10">#${b.rank}</span>`
     : '';
 
+  // 出版状态徽章（仅 dangdang_new 来的书）
+  let pubBadge = '';
+  if (b.pub_status === 'preorder') {
+    const days = -b.days_since_pub;
+    pubBadge = `<span class="absolute top-2 right-2 bg-violet-500 text-white
+                  text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm z-10">
+                  距上市${days}天</span>`;
+  } else if (b.pub_status === 'fresh') {
+    pubBadge = `<span class="absolute top-2 right-2 bg-rose-500 text-white
+                  text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm z-10">
+                  本周新书</span>`;
+  } else if (b.pub_status === 'recent') {
+    pubBadge = `<span class="absolute top-2 right-2 bg-amber-500 text-white
+                  text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-sm z-10">
+                  近期新书</span>`;
+  }
+
   return `
     <a href="${b.url || '#'}" target="_blank" rel="noopener"
        class="card-hover bg-white rounded-2xl border border-mint-100
               overflow-hidden flex flex-col">
       <div class="aspect-[3/4] overflow-hidden bg-mint-50 relative">
         ${rankBadge}
+        ${pubBadge}
         ${cover}
       </div>
       <div class="p-3 flex-1 flex flex-col">
@@ -393,7 +443,77 @@ function renderDangdangBenchmark() {
   grid.innerHTML = items.map(renderBookCard).join('');
 }
 
-// ========== 渲染：数据快照 + 图表 ==========
+// ========== 渲染：上游预售信号 ==========
+
+function renderUpcoming() {
+  const grid = $('#upcoming-grid');
+  const summary = $('#upcoming-summary');
+  const filterBar = $('#upcoming-filters');
+  if (!grid) return;
+
+  const all = STATE.newBooks || [];
+  const preorder = all.filter(b => b.pub_status === 'preorder');
+  const fresh = all.filter(b => b.pub_status === 'fresh' || b.pub_status === 'recent');
+  // 显示池：预售在前，近期出版在后
+  const pool = [...preorder, ...fresh];
+
+  if (!pool.length) {
+    summary.textContent = '暂无预售/近期出版数据';
+    filterBar.innerHTML = '';
+    grid.innerHTML = `<div class="col-span-full text-sm text-slate-400 py-8 text-center">
+      暂无数据 — 下次抓取后会自动填充</div>`;
+    return;
+  }
+
+  // 头部摘要
+  summary.innerHTML = `
+    <span class="font-semibold text-slate-900">${preorder.length}</span> 本预售书
+    ${fresh.length ? `· <span class="font-semibold text-slate-900">${fresh.length}</span> 本近期出版` : ''}
+    <span class="text-slate-400 mx-2">·</span>
+    含权益版 <span class="font-semibold text-slate-900">${pool.filter(b => b.perks && b.perks.length).length}</span> 本
+  `;
+
+  // 品类筛选
+  const cats = ['all', ...new Set(pool.map(b => b.category).filter(Boolean))];
+  const counts = { all: pool.length };
+  pool.forEach(b => {
+    const c = b.category;
+    if (c) counts[c] = (counts[c] || 0) + 1;
+  });
+
+  filterBar.innerHTML = cats.map(c => {
+    const label = c === 'all' ? '全部' : c;
+    const active = STATE.activeUpcomingCat === c;
+    return `<button class="filter-chip ${active ? 'active' : ''}" data-cat="${c}">
+              ${label}
+              <span class="count">${counts[c] || 0}</span>
+            </button>`;
+  }).join('');
+
+  $$('#upcoming-filters .filter-chip').forEach(btn => {
+    btn.onclick = () => {
+      STATE.activeUpcomingCat = btn.dataset.cat;
+      renderUpcoming();
+    };
+  });
+
+  // 渲染卡片
+  let items = STATE.activeUpcomingCat === 'all'
+    ? pool
+    : pool.filter(b => b.category === STATE.activeUpcomingCat);
+
+  // 排序：预售在前，按距上市天数升序（越近越前），其次新出版（按已出版天数升序）
+  items = items.slice().sort((a, b) => {
+    if (a.pub_status === 'preorder' && b.pub_status !== 'preorder') return -1;
+    if (b.pub_status === 'preorder' && a.pub_status !== 'preorder') return 1;
+    if (a.pub_status === 'preorder' && b.pub_status === 'preorder') {
+      return (a.days_since_pub || 0) - (b.days_since_pub || 0);  // -10 在 -100 之前
+    }
+    return (a.days_since_pub || 0) - (b.days_since_pub || 0);
+  });
+
+  grid.innerHTML = items.map(renderBookCard).join('');
+}
 
 function renderStats() {
   $('#stat-new-books').textContent  = STATE.meta.new_books_week ?? STATE.books.length;
@@ -458,15 +578,17 @@ function renderCategoryChart() {
 
 async function init() {
   // 并行加载所有数据
-  const [meta, books, news, insights] = await Promise.all([
+  const [meta, books, newBooks, news, insights] = await Promise.all([
     loadJSON('data/meta.json'),
     loadJSON('data/books.json'),
+    loadJSON('data/books_new.json'),
     loadJSON('data/news.json'),
     loadJSON('data/insights.json'),
   ]);
 
   STATE.meta     = meta     || {};
   STATE.books    = books    || [];
+  STATE.newBooks = newBooks || [];
   STATE.news     = news     || [];
   STATE.insights = insights || [];
 
@@ -479,9 +601,10 @@ async function init() {
 
   // 渲染各模块
   renderInsights();
+  renderDangdangBenchmark();
+  renderUpcoming();             // 新增：上游预售信号
   renderNewsFilters();
   renderNews();
-  renderDangdangBenchmark();   // 新增：当当对标专区
   renderBookFilters();
   renderBooks();
   renderStats();
