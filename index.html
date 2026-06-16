@@ -69,15 +69,16 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-4 text-xs text-slate-500">
-        <span class="hidden sm:inline-flex items-center gap-1.5">
+      <div class="flex items-center gap-3 text-xs">
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
+                     bg-mint-50 border border-mint-100 text-mint-700">
           <span class="w-1.5 h-1.5 bg-mint-500 rounded-full animate-pulse"></span>
-          <span>上次更新: <span id="last-update">加载中...</span></span>
+          <span class="font-medium">数据更新于 <span id="last-update">—</span></span>
         </span>
         <a href="https://github.com/Jiang12481/books-dashboard"
            target="_blank" rel="noopener"
            class="text-slate-400 hover:text-mint-600 transition">
-          GitHub
+          GitHub →
         </a>
       </div>
     </div>
@@ -87,15 +88,18 @@
 
     <!-- ============ 1. 我的洞察 ============ -->
     <section>
-      <div class="flex items-end justify-between mb-4">
+      <div class="flex items-end justify-between mb-4 flex-wrap gap-2">
         <div>
           <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
             <span class="text-lemon-400">💡</span> 今日洞察
           </h2>
           <p class="text-sm text-slate-500 mt-1">
-            基于当天数据的 3-5 条增量机会信号
+            自动从当日数据中提炼的对标信号、口碑信号与热点议题
           </p>
         </div>
+        <span class="text-xs text-slate-400">
+          每日北京时间 03:00 自动刷新
+        </span>
       </div>
       <div id="insights-grid"
            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -105,7 +109,7 @@
 
     <!-- ============ 2. 当当对标专区 ============ -->
     <section>
-      <div class="flex items-end justify-between mb-4">
+      <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
         <div>
           <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
             <span>🎯</span> 当当对标专区
@@ -115,7 +119,7 @@
           </p>
         </div>
       </div>
-      <div id="benchmark-filters" class="flex flex-wrap gap-2 mb-4 text-xs">
+      <div id="benchmark-filters" class="flex flex-wrap items-center gap-1.5 mb-4">
         <!-- 由 JS 动态填充 -->
       </div>
       <div id="benchmark-grid"
@@ -123,7 +127,7 @@
         <!-- 由 JS 动态填充：仅显示当当带权益的图书 -->
       </div>
       <p class="text-xs text-slate-400 mt-3 italic">
-        💡 这些权益版图书多数为当当独有，京东自营对应品同款多无该权益。
+        💡 这些权益版图书多为当当独家或限定，是当当用户黏性的关键抓手；后续将与京东自营 SKU 自动比对，标出真正的"对标缺口"。
       </p>
     </section>
 
@@ -132,13 +136,15 @@
 
       <!-- 新闻列表（占 2 列） -->
       <div class="lg:col-span-2">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex items-end justify-between mb-3">
           <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
             <span>📰</span> 行业动态
           </h2>
-          <div id="news-filters" class="flex gap-2 text-xs">
-            <!-- 由 JS 动态填充 -->
-          </div>
+          <span id="news-meta" class="text-xs text-slate-400">—</span>
+        </div>
+        <!-- 主题标签栏：胶囊 + 紧凑 + 折叠 -->
+        <div id="news-filters" class="flex flex-wrap items-center gap-1.5 mb-3">
+          <!-- 由 JS 动态填充 -->
         </div>
         <div id="news-list" class="bg-white rounded-2xl border border-mint-100 divide-y divide-mint-50/80">
           <!-- 由 JS 动态填充 -->
@@ -152,7 +158,7 @@
         </h2>
 
         <div class="bg-gradient-to-br from-mint-500 to-mint-600 rounded-2xl p-5 text-white shadow-sm">
-          <div class="text-xs opacity-90 mb-1">当当本周新书</div>
+          <div class="text-xs opacity-90 mb-1">当当近 7 日热卖</div>
           <div class="text-3xl font-bold" id="stat-new-books">--</div>
           <div class="text-xs mt-2 flex items-center gap-1">
             <span id="stat-new-books-trend">--</span>
@@ -167,7 +173,7 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-mint-100 p-5">
-          <div class="text-xs text-slate-500 mb-3">品类分布（本周新书）</div>
+          <div class="text-xs text-slate-500 mb-3">品类分布（当当热卖榜）</div>
           <canvas id="category-chart" height="180"></canvas>
         </div>
       </div>
@@ -175,11 +181,16 @@
 
     <!-- ============ 4. 当当热卖榜（全量） ============ -->
     <section>
-      <div class="flex items-end justify-between mb-4">
-        <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <span>🔥</span> 当当热卖榜
-        </h2>
-        <div id="book-filters" class="flex flex-wrap gap-2 text-xs">
+      <div class="flex items-end justify-between mb-4 flex-wrap gap-2">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span>🔥</span> 当当热卖榜
+          </h2>
+          <p class="text-sm text-slate-500 mt-1">
+            近 7 日热销，含畅销长红与新书爆款
+          </p>
+        </div>
+        <div id="book-filters" class="flex flex-wrap gap-1.5 text-xs">
           <!-- 由 JS 动态填充 -->
         </div>
       </div>

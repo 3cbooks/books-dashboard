@@ -56,7 +56,7 @@ html { scrollbar-gutter: stable; }
   color: #047857;
 }
 
-/* 筛选按钮（active 态） */
+/* 筛选按钮（active 态）— 默认尺寸 */
 .filter-pill {
   padding: 4px 10px;
   border-radius: 999px;
@@ -71,6 +71,40 @@ html { scrollbar-gutter: stable; }
 .filter-pill.active {
   background: #10b981; border-color: #10b981; color: white;
 }
+
+/* 紧凑版胶囊（用于新闻主题筛选 — 量多时不挤） */
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 11.5px;
+  line-height: 1.2;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.filter-chip:hover {
+  background: #ecfdf5; color: #047857; border-color: #d1fae5;
+}
+.filter-chip.active {
+  background: #10b981; color: white; border-color: #10b981;
+  font-weight: 500;
+}
+.filter-chip .count {
+  font-size: 10px; opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+.filter-chip.active .count { opacity: 0.9; }
+
+/* "更多" 折叠按钮 */
+.filter-more {
+  font-size: 11px; color: #94a3b8;
+  cursor: pointer; padding: 3px 8px;
+}
+.filter-more:hover { color: #047857; }
 
 /* 洞察卡片：带左侧色条 */
 .insight-card {

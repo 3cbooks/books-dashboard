@@ -10,9 +10,21 @@ const STATE = {
   insights: [],
   meta: {},
   activeBookCategory: 'all',
-  activeNewsSource: 'all',
-  activePerk: 'all',  // 当当对标专区的权益标签筛选
+  activeNewsTheme: 'all',  // 改为主题维度
+  activePerk: 'all',
 };
+
+// 新闻主题分类规则（关键词命中 → 归到对应主题）
+// 顺序很重要 — 先命中的优先
+const NEWS_THEMES = [
+  { key: 'ai',         label: 'AI 与出版',  kws: ['AI', '人工智能', '大模型', '智能创作'] },
+  { key: 'ecom',       label: '电商博弈',   kws: ['618', '抵制', '京东', '拼多多', '电商', '促销', '当当', '直播带书'] },
+  { key: 'transform',  label: '产业转型',   kws: ['转型', '破局', '洗牌', '数字化', '数字出版', '高质量发展'] },
+  { key: 'store',      label: '实体书店',   kws: ['实体书店', '独立书店', '书店'] },
+  { key: 'kids',       label: '少儿/童书',  kws: ['少儿', '童书', '儿童阅读', '绘本', '亲子'] },
+  { key: 'policy',     label: '政策监管',   kws: ['政府奖', '新闻出版署', '条例', '监管', '政策', '促进条例'] },
+  { key: 'newbook',    label: '新书发布',   kws: ['新书', '首发', '发布', '上市', '问世'] },
+];
 
 // 品类 → CSS class 映射
 const CAT_CLASS = {
@@ -111,18 +123,37 @@ function renderInsights() {
 
 // ========== 渲染：行业新闻 ==========
 
+// 给一条新闻打主题标签（取第一个命中的主题；都不命中归为 'other'）
+function classifyNewsTheme(n) {
+  const text = (n.title || '') + ' ' + (n.summary || '');
+  for (const t of NEWS_THEMES) {
+    if (t.kws.some(k => text.includes(k))) return t.key;
+  }
+  return 'other';
+}
+
 function renderNews() {
   const list = $('#news-list');
-  const items = STATE.activeNewsSource === 'all'
-    ? STATE.news
-    : STATE.news.filter(n => n.source === STATE.activeNewsSource);
+  let items = STATE.news;
+  if (STATE.activeNewsTheme !== 'all') {
+    items = items.filter(n => classifyNewsTheme(n) === STATE.activeNewsTheme);
+  }
 
-  if (!items.length) {
-    list.innerHTML = `<div class="p-6 text-sm text-slate-400">暂无相关新闻</div>`;
+  // 显示前 20 条 — 太多反而看不过来
+  const SHOW_LIMIT = 20;
+  const shown = items.slice(0, SHOW_LIMIT);
+  const more = items.length - shown.length;
+
+  if (!shown.length) {
+    list.innerHTML = `<div class="p-6 text-sm text-slate-400">该主题暂无相关新闻</div>`;
+    $('#news-meta').textContent = '0 条';
     return;
   }
 
-  list.innerHTML = items.map(n => `
+  $('#news-meta').textContent =
+    `${items.length} 条${more > 0 ? `（仅展示前 ${SHOW_LIMIT}）` : ''}`;
+
+  list.innerHTML = shown.map(n => `
     <a href="${n.url}" target="_blank" rel="noopener"
        class="block p-4 hover:bg-mint-50/50 transition group">
       <div class="flex items-start gap-3">
@@ -143,18 +174,41 @@ function renderNews() {
   `).join('');
 }
 
-// 新闻来源筛选
+// 新闻主题筛选 — 用紧凑胶囊
 function renderNewsFilters() {
-  const sources = ['all', ...new Set(STATE.news.map(n => n.source))];
-  $('#news-filters').innerHTML = sources.map(s => `
-    <button class="filter-pill ${STATE.activeNewsSource === s ? 'active' : ''}"
-            data-source="${s}">
-      ${s === 'all' ? '全部' : s}
+  // 算每个主题的命中数
+  const counts = { all: STATE.news.length };
+  STATE.news.forEach(n => {
+    const k = classifyNewsTheme(n);
+    counts[k] = (counts[k] || 0) + 1;
+  });
+
+  // 按命中数排序，0 命中的主题不显示
+  const themes = NEWS_THEMES
+    .filter(t => (counts[t.key] || 0) > 0)
+    .sort((a, b) => (counts[b.key] || 0) - (counts[a.key] || 0));
+
+  // 头部"全部"
+  const otherCount = counts.other || 0;
+  const buttons = [
+    { key: 'all', label: '全部', count: counts.all },
+    ...themes.map(t => ({ key: t.key, label: t.label, count: counts[t.key] })),
+  ];
+  if (otherCount > 0) {
+    buttons.push({ key: 'other', label: '其他', count: otherCount });
+  }
+
+  $('#news-filters').innerHTML = buttons.map(b => `
+    <button class="filter-chip ${STATE.activeNewsTheme === b.key ? 'active' : ''}"
+            data-theme="${b.key}">
+      ${b.label}
+      <span class="count">${b.count}</span>
     </button>
   `).join('');
-  $$('#news-filters .filter-pill').forEach(btn => {
+
+  $$('#news-filters .filter-chip').forEach(btn => {
     btn.onclick = () => {
-      STATE.activeNewsSource = btn.dataset.source;
+      STATE.activeNewsTheme = btn.dataset.theme;
       renderNewsFilters();
       renderNews();
     };
@@ -245,13 +299,21 @@ function renderBooks() {
 
 function renderBookFilters() {
   const cats = ['all', ...new Set(STATE.books.map(b => b.category).filter(Boolean))];
+  // 算每个分类的数量
+  const counts = { all: STATE.books.length };
+  STATE.books.forEach(b => {
+    const c = b.category;
+    if (c) counts[c] = (counts[c] || 0) + 1;
+  });
+
   $('#book-filters').innerHTML = cats.map(c => `
-    <button class="filter-pill ${STATE.activeBookCategory === c ? 'active' : ''}"
+    <button class="filter-chip ${STATE.activeBookCategory === c ? 'active' : ''}"
             data-cat="${c}">
       ${c === 'all' ? '全部' : c}
+      <span class="count">${counts[c] || 0}</span>
     </button>
   `).join('');
-  $$('#book-filters .filter-pill').forEach(btn => {
+  $$('#book-filters .filter-chip').forEach(btn => {
     btn.onclick = () => {
       STATE.activeBookCategory = btn.dataset.cat;
       renderBookFilters();
@@ -296,12 +358,16 @@ function renderDangdangBenchmark() {
   const perkOrder = ['all', ...Object.keys(counter).sort((a, b) => counter[b] - counter[a])];
 
   filterBar.innerHTML = perkOrder.map(p => {
-    const label = p === 'all' ? `全部 (${allPerk.length})` : `${p} (${counter[p]})`;
+    const label = p === 'all' ? '全部' : p;
+    const count = p === 'all' ? allPerk.length : counter[p];
     const active = STATE.activePerk === p;
-    return `<button class="filter-pill ${active ? 'active' : ''}" data-perk="${p}">${label}</button>`;
+    return `<button class="filter-chip ${active ? 'active' : ''}" data-perk="${p}">
+              ${label}
+              <span class="count">${count}</span>
+            </button>`;
   }).join('');
 
-  $$('#benchmark-filters .filter-pill').forEach(btn => {
+  $$('#benchmark-filters .filter-chip').forEach(btn => {
     btn.onclick = () => {
       STATE.activePerk = btn.dataset.perk;
       renderDangdangBenchmark();
