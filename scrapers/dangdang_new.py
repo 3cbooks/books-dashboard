@@ -21,6 +21,7 @@ from bs4 import BeautifulSoup, Tag
 
 from .common import http_get, get_logger, normalize_category
 from .dangdang import detect_perks, _clean_title
+from . import douban_verify
 
 log = get_logger("dangdang_new")
 
@@ -86,17 +87,22 @@ def _parse_list_item(li: Tag, fallback_category: str) -> dict | None:
         price_el = li.select_one("span.search_now_price")
         price = price_el.get_text(strip=True) if price_el else ""
 
-        # 出版社（藏在 .search_book_author 的 a 标签里）
+        # 出版社 + 作者：用 dd_name 属性区分（最可靠）
         publisher = ""
-        for sel in (".search_book_author a", "p.search_book_author a"):
-            els = li.select(sel)
-            for el in els:
-                href = el.get("href", "")
-                if "publish_id=" in href or "出版社" in (el.get_text() or ""):
-                    publisher = el.get_text(strip=True)
-                    break
-            if publisher:
-                break
+        authors = []
+        author_root = li.select_one("p.search_book_author") or li.select_one("div.search_book_author")
+        if author_root:
+            for el in author_root.find_all("a"):
+                dd_name = el.get("dd_name", "")
+                text = el.get_text(strip=True)
+                if not text:
+                    continue
+                if dd_name == "单品作者":
+                    authors.append(text)
+                elif dd_name == "单品出版社" or "出版社" in text:
+                    publisher = publisher or text
+        # 作者可能有多个（合著），用 / 拼起来；豆瓣搜索用第一作者就够
+        author = " ".join(authors[:3])  # 最多 3 个，避免 query 过长
 
         # 评分
         rating = None
@@ -116,6 +122,7 @@ def _parse_list_item(li: Tag, fallback_category: str) -> dict | None:
             "cover": cover,
             "price": price,
             "publisher": publisher,
+            "author": author,
             "rating": rating,
             "category": fallback_category,
             "perks": detect_perks(raw_title),
@@ -201,12 +208,7 @@ def fetch(per_category: int = 4, max_pages: int = 3) -> list[dict]:
     # 按出版日期倒序（未来日期排最前 — 它们是预售/待上市的上游信号）
     books.sort(key=lambda x: x.get("pubdate") or "", reverse=True)
 
-    # 给每本书打 status 标签
-    # - 'preorder' → 出版日期在未来（即将上市）
-    # - 'fresh'    → 已出版且 ≤ 7 天
-    # - 'recent'   → 已出版且 ≤ 30 天
-    # - 'older'    → 已出版超过 30 天
-    # - 'unknown'  → 无出版日期
+    # 先按当当的出版日期临时打个 status（校验阶段会修正）
     for b in books:
         days = b.get("days_since_pub")
         if days is None:
@@ -219,6 +221,11 @@ def fetch(per_category: int = 4, max_pages: int = 3) -> list[dict]:
             b["pub_status"] = "recent"
         else:
             b["pub_status"] = "older"
+
+    # ============ 豆瓣校验 ============
+    # 当当的"出版时间"和 ISBN 经常错乱（再版日期、占位数据），
+    # 用豆瓣按"书名+作者"二次校准 → 修正 pub_status，避免把已出版的书误判为预售
+    books = douban_verify.cross_check_books(books, today)
 
     # 统计
     stats = {

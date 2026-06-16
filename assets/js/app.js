@@ -317,6 +317,21 @@ function renderBookCard(b) {
                   近期新书</span>`;
   }
 
+  // 豆瓣校验徽章（左下角）
+  let verifyBadge = '';
+  if (b.verify_status === 'verified' && b.douban_pubdate) {
+    const year = b.douban_pubdate.slice(0, 4);
+    verifyBadge = `<span class="absolute bottom-2 left-2 bg-white/95 text-mint-700
+                    text-[9px] font-medium px-1.5 py-0.5 rounded border border-mint-200 z-10"
+                    title="豆瓣记录的真实出版日期：${b.douban_pubdate}">
+                    豆瓣✓ ${year}</span>`;
+  } else if (b.verify_status === 'unverified') {
+    verifyBadge = `<span class="absolute bottom-2 left-2 bg-white/90 text-slate-400
+                    text-[9px] px-1.5 py-0.5 rounded border border-slate-200 z-10"
+                    title="豆瓣未找到该书，出版日期未经独立校验">
+                    豆瓣?</span>`;
+  }
+
   return `
     <a href="${b.url || '#'}" target="_blank" rel="noopener"
        class="card-hover bg-white rounded-2xl border border-mint-100
@@ -324,6 +339,7 @@ function renderBookCard(b) {
       <div class="aspect-[3/4] overflow-hidden bg-mint-50 relative">
         ${rankBadge}
         ${pubBadge}
+        ${verifyBadge}
         ${cover}
       </div>
       <div class="p-3 flex-1 flex flex-col">
@@ -557,11 +573,19 @@ function renderUpcoming() {
   }
 
   // 头部摘要
+  const verifiedCount = pool.filter(b => b.verify_status === 'verified').length;
+  const verifiedPreorder = preorder.filter(b => b.verify_status === 'verified').length;
   summary.innerHTML = `
     <span class="font-semibold text-slate-900">${preorder.length}</span> 本预售书
     ${fresh.length ? `· <span class="font-semibold text-slate-900">${fresh.length}</span> 本近期出版` : ''}
     <span class="text-slate-400 mx-2">·</span>
     含权益版 <span class="font-semibold text-slate-900">${pool.filter(b => b.perks && b.perks.length).length}</span> 本
+    <br>
+    <span class="text-xs text-slate-400">
+      豆瓣校验通过 ${verifiedCount}/${pool.length} 本
+      ${verifiedPreorder > 0 ? `（其中 ${verifiedPreorder} 本预售已被豆瓣确认）`
+                              : '（预售书多数豆瓣未收录，疑为占位数据）'}
+    </span>
   `;
 
   // 品类筛选

@@ -60,6 +60,19 @@ def main() -> int:
         new_books = load_json("books_new.json", default=[])
     save_json("books_new.json", new_books)
 
+    # ============ 豆瓣校验热卖榜（修正长红书的"虚假新书"嫌疑）============
+    # 热卖榜里有很多畅销长红书（如《泥潭》），它们的当当详情页有"再版日期"，
+    # 但豆瓣记录的是首版日期，能让前端展示更可信的出版年份。
+    from datetime import datetime, timedelta, timezone
+    from . import douban_verify
+    today = datetime.now(timezone(timedelta(hours=8)))
+    if books:
+        try:
+            log.info("=== 豆瓣校验热卖榜 ===")
+            douban_verify.cross_check_books(books, today)
+        except Exception:
+            log.error("豆瓣校验热卖榜抛异常:\n%s", traceback.format_exc())
+
     # ============ 抓新闻 ============
     from . import baidu_news
     news, status = _safe_run("baidu_news", baidu_news.fetch)
