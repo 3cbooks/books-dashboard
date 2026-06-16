@@ -260,6 +260,89 @@ def rule_upcoming_books(new_books: list[dict]) -> list[dict]:
 
 
 def rule_freshly_published(new_books: list[dict]) -> list[dict]:
+    """近期出版的书：fresh + recent"""
+    out = []
+    if not new_books:
+        return out
+
+    fresh = [b for b in new_books
+             if b.get("pub_status") in ("fresh", "recent")]
+    if len(fresh) < 3:
+        return out
+
+    cat_counter = Counter(b.get("category", "其他") for b in fresh)
+    top_cats = cat_counter.most_common(3)
+    cats_str = "、".join(f"{c}({n})" for c, n in top_cats)
+
+    out.append(_insight(
+        "🆕",
+        f"近 30 日新出版 {len(fresh)} 本",
+        f"主要品类：{cats_str}。这是真正的'近期上市'图书，"
+        f"区别于销量榜上的长红畅销书。",
+        "新出版",
+        "info",
+        anchor="upcoming-section",
+    ))
+    return out
+
+
+def rule_douban_verification(books: list[dict], new_books: list[dict]) -> list[dict]:
+    """
+    豆瓣校验相关洞察：
+    - 当当热卖榜里被豆瓣确认是"5 年以上老书"的，是常销长红信号
+    - 豆瓣查不到的书，往往是当当独家版（信号偏弱但有意义）
+    - 当当判定为预售但豆瓣无记录的，提示"占位数据嫌疑"
+    """
+    out = []
+    today_year = 2026
+
+    # ① 老书重热（豆瓣校验显示出版于 5 年前但仍在热卖榜前 10）
+    old_hot = []
+    for b in books:
+        if b.get("verify_status") != "verified":
+            continue
+        douban_pubdate = b.get("douban_pubdate")
+        if not douban_pubdate:
+            continue
+        try:
+            pub_year = int(douban_pubdate[:4])
+            age = today_year - pub_year
+            if age >= 5 and (b.get("rank") or 99) <= 10:
+                old_hot.append((b, age))
+        except (ValueError, TypeError):
+            pass
+
+    if old_hot:
+        names_ages = "、".join(
+            f"《{b['title'][:14]}》({age}年前)" for b, age in old_hot[:3]
+        )
+        out.append(_insight(
+            "📜",
+            f"{len(old_hot)} 本'老书重热'入榜前 10",
+            f"豆瓣校验显示这些书出版 ≥5 年仍在热卖榜：{names_ages}。"
+            f"长尾内容力强，是经典常销 / 新版重发的典型，自营若有同款值得长期备货。",
+            "常销信号",
+            anchor="books-section",
+        ))
+
+    # ② 当当判定预售但豆瓣无记录（占位数据嫌疑）
+    if new_books:
+        preorder = [b for b in new_books if b.get("pub_status") == "preorder"]
+        unverified_preorder = [b for b in preorder
+                               if b.get("verify_status") == "unverified"]
+        if preorder and len(unverified_preorder) / len(preorder) >= 0.7:
+            out.append(_insight(
+                "🚧",
+                f"{len(unverified_preorder)}/{len(preorder)} 本预售书豆瓣未收录",
+                f"占比 {len(unverified_preorder)/len(preorder)*100:.0f}%，"
+                f"豆瓣无对应条目 — 这些'预售书'可能是当当后台占位 / 长尾再版数据，"
+                f"建议谨慎当作真实'上游信号'解读。",
+                "数据质量",
+                "warn",
+                anchor="upcoming-section",
+            ))
+
+    return out
     """新近出版（≤30 天）的书 — 真'新书'信号，区别于销量榜上的长红书。"""
     out = []
     if not new_books:
@@ -296,8 +379,9 @@ def generate(books: list[dict], news: list[dict], new_books: list[dict] | None =
 
     candidates: list[dict] = []
     candidates.extend(rule_dangdang_perks(books))
-    candidates.extend(rule_upcoming_books(new_books))     # 新规则：上游预售
-    candidates.extend(rule_freshly_published(new_books))  # 新规则：近期出版
+    candidates.extend(rule_upcoming_books(new_books))     # 上游预售
+    candidates.extend(rule_freshly_published(new_books))  # 近期出版
+    candidates.extend(rule_douban_verification(books, new_books))  # 豆瓣校验信号
     candidates.extend(rule_category_distribution(books))
     candidates.extend(rule_high_rated(books))
     candidates.extend(rule_no_perk_top(books))
