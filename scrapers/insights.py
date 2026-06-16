@@ -373,15 +373,46 @@ def rule_douban_verification(books: list[dict], new_books: list[dict]) -> list[d
 # 主流程
 # ============================================================
 
-def generate(books: list[dict], news: list[dict], new_books: list[dict] | None = None) -> list[dict]:
+def rule_jd_pop_gap(jd_pop_only: list[dict]) -> list[dict]:
+    """京东 POP 在卖、自营没卖 → 自营选品的内部缺口洞察"""
+    out = []
+    if len(jd_pop_only) < 2:
+        return out
+
+    # 统计是哪些出版社 / 店铺类型在 POP 卖但自营没
+    publishers = Counter(
+        b.get("publisher", "未知") for b in jd_pop_only if b.get("publisher")
+    )
+    top_pubs = publishers.most_common(3)
+    pubs_str = "、".join(f"{p}" for p, _ in top_pubs)
+
+    names = "、".join(f"《{b.get('title','?')[:14]}》" for b in jd_pop_only[:3])
+
+    out.append(_insight(
+        "🛒",
+        f"京东 POP 在售 {len(jd_pop_only)} 本，自营未上架",
+        f"含 {names}。出版社方包括 {pubs_str}。"
+        f"自营选品的潜在缺口，建议优先评估上架。",
+        "POP 缺口",
+        "warn",
+        anchor="jd-pop-section",
+    ))
+    return out
+
+
+def generate(books: list[dict], news: list[dict],
+             new_books: list[dict] | None = None,
+             jd_pop_only: list[dict] | None = None) -> list[dict]:
     """跑所有规则，按"信号强度"挑出 5-10 条。"""
     new_books = new_books or []
+    jd_pop_only = jd_pop_only or []
 
     candidates: list[dict] = []
+    candidates.extend(rule_jd_pop_gap(jd_pop_only))   # 京东 POP 缺口（高优先级）
     candidates.extend(rule_dangdang_perks(books))
-    candidates.extend(rule_upcoming_books(new_books))     # 上游预售
-    candidates.extend(rule_freshly_published(new_books))  # 近期出版
-    candidates.extend(rule_douban_verification(books, new_books))  # 豆瓣校验信号
+    candidates.extend(rule_upcoming_books(new_books))
+    candidates.extend(rule_freshly_published(new_books))
+    candidates.extend(rule_douban_verification(books, new_books))
     candidates.extend(rule_category_distribution(books))
     candidates.extend(rule_high_rated(books))
     candidates.extend(rule_no_perk_top(books))

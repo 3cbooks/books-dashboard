@@ -60,23 +60,23 @@ def main() -> int:
         new_books = load_json("books_new.json", default=[])
     save_json("books_new.json", new_books)
 
-    # ============ 抓京东 POP 自营对比（Playwright）============
-    # ⚠️ 京东对 GitHub Actions 的云端 IP 反爬严重 → 拿不到商品列表
-    # 解决方案：本地运行此抓取，或部署到国内云服务器后取消下面的注释
-    #
-    # try:
-    #     from . import jd as jd_mod, jd_compare
-    #     jd_data = jd_mod.fetch()
-    #     save_json("jd_self.json", jd_data["self"])
-    #     save_json("jd_pop.json", jd_data["pop"])
-    #     sources_status["jd"] = "ok" if jd_data["pop"] else "partial"
-    #     pop_only = jd_compare.find_pop_only(jd_data["self"], jd_data["pop"])
-    #     save_json("jd_pop_only.json", pop_only)
-    #     log.info("✓ 京东 POP 独家（自营无）: %d 本", len(pop_only))
-    # except Exception:
-    #     log.error("✗ 京东抓取/比对抛异常:\n%s", traceback.format_exc())
-    #     sources_status["jd"] = "failed"
-    sources_status["jd"] = "blocked_by_jd_anticrawl"
+    # ============ 抓京东 POP 自营对比 ============
+    # 用 requests 抓京东榜单页拿 SKU + 移动版详情页拿字段
+    # （之前 Playwright 方案被反爬屏蔽，这版用 SSR 友好的入口绕开了）
+    try:
+        from . import jd as jd_mod, jd_compare
+        jd_data = jd_mod.fetch(max_skus=80)  # 80 个 SKU 是配额节制
+        save_json("jd_self.json", jd_data["self"])
+        save_json("jd_pop.json", jd_data["pop"])
+        sources_status["jd"] = "ok" if (jd_data["self"] or jd_data["pop"]) else "partial"
+
+        # 比对：找 POP 在卖、自营没卖
+        pop_only = jd_compare.find_pop_only(jd_data["self"], jd_data["pop"])
+        save_json("jd_pop_only.json", pop_only)
+        log.info("✓ 京东 POP 独家（自营无）: %d 本", len(pop_only))
+    except Exception:
+        log.error("✗ 京东抓取/比对抛异常:\n%s", traceback.format_exc())
+        sources_status["jd"] = "failed"
 
     # ============ 豆瓣校验（限流敏感，量要节制）============
     # 豆瓣对单 IP 反爬严，每次大概只能跑 5-10 次就被封
@@ -124,7 +124,12 @@ def main() -> int:
     # ============ 生成洞察 ============
     from . import insights as insights_mod
     try:
-        insights_list = insights_mod.generate(books, news, new_books=new_books)
+        jd_pop_only_data = load_json("jd_pop_only.json", default=[]) or []
+        insights_list = insights_mod.generate(
+            books, news,
+            new_books=new_books,
+            jd_pop_only=jd_pop_only_data,
+        )
         save_json("insights.json", insights_list)
         log.info("✓ insights: %d 条", len(insights_list))
     except Exception:
