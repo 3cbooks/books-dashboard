@@ -31,7 +31,7 @@ def _insight(icon: str, title: str, body: str, tag: str, tone: str = "") -> dict
 def rule_dangdang_perks(books: list[dict]) -> list[dict]:
     """
     当当权益专题：识别亲签/限量/独家/首发等差异化权益，
-    评估它们在新书榜里的占比和排名表现 —— 直接对标京东自营的潜在缺口。
+    评估它们在热卖榜里的占比和排名表现 —— 直接对标京东自营的潜在缺口。
     """
     out = []
     dd = [b for b in books if b.get("source") == "当当"]
@@ -58,14 +58,14 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
             "warn",
         ))
 
-    # 亲签新书：单独拎出来，因为是最直接的"作者×渠道"绑定
+    # 亲签上榜书：单独拎出来，因为是最直接的"作者×渠道"绑定
     qianqian_books = [b for b in dd if "亲签" in b.get("perks", [])]
     if qianqian_books:
         avg_rank = sum(b.get("rank", 99) for b in qianqian_books) / len(qianqian_books)
         names = "、".join(f"《{b['title'][:14]}》" for b in qianqian_books[:3])
         out.append(_insight(
             "✍️",
-            f"当当本周 {len(qianqian_books)} 本亲签新书在售",
+            f"当当近 7 日 {len(qianqian_books)} 本亲签版上榜",
             f"平均榜位 #{avg_rank:.1f}，含 {names}。"
             f"亲签是作者×渠道的强绑定，京东自营对标空白。",
             "亲签机会",
@@ -111,7 +111,7 @@ def rule_category_distribution(books: list[dict]) -> list[dict]:
         out.append(_insight(
             "📚",
             f"{top1[0]}品类本周强势，占比 {top1[1]/total*100:.0f}%",
-            f"{top1[1]} 本新书入榜，远超其他品类。"
+            f"{top1[1]} 本上榜书属此品类，远超其他品类。"
             f"建议在选品/陈列侧加强对应栏目权重。",
             "品类信号",
         ))
@@ -158,14 +158,14 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
 
 
 def rule_high_rated(books: list[dict]) -> list[dict]:
-    """高分新书：评分 ≥ 4.7 的书单独拎出来，作为"质量信号"。"""
+    """高分上榜书：评分 ≥ 4.7 的书单独拎出来，作为"质量信号"。"""
     out = []
     high = [b for b in books if (b.get("rating") or 0) >= 4.7]
     if len(high) >= 3:
         names = "、".join(f"《{b['title'][:12]}》" for b in high[:3])
         out.append(_insight(
             "⭐",
-            f"高分新书集中爆发：{len(high)} 本评分 ≥ 4.7",
+            f"高分上榜书集中：{len(high)} 本评分 ≥ 4.7",
             f"包含 {names}。读者口碑端正反馈强烈，可作为大客户/会员推荐重点。",
             "口碑信号",
             "info",
@@ -191,8 +191,8 @@ def rule_no_perk_top(books: list[dict]) -> list[dict]:
         ratio = len(pure_top3) / max(1, len(no_perk_total)) * 100
         out.append(_insight(
             "🔥",
-            f"{len(pure_top3)} 本无权益新书登品类前 3",
-            f"占无权益新书的 {ratio:.0f}%，含 {names}。"
+            f"{len(pure_top3)} 本无权益版上榜书登品类前 3",
+            f"占无权益版上榜书的 {ratio:.0f}%，含 {names}。"
             f"这类书靠纯内容力出圈，是京东自营对标销售的高优先级候选。",
             "纯内容信号",
         ))
@@ -217,7 +217,7 @@ def generate(books: list[dict], news: list[dict]) -> list[dict]:
         candidates.append(_insight(
             "📊",
             "今日数据已就位",
-            f"抓取到当当新书 {len(books)} 本、行业新闻 {len(news)} 条。"
+            f"抓取到当当上榜书 {len(books)} 本、行业新闻 {len(news)} 条。"
             f"待积累跨日数据后将生成更多趋势洞察。",
             "数据状态",
         ))
