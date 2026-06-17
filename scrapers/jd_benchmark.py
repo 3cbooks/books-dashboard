@@ -35,8 +35,22 @@ JD_PERK_PATTERNS = [
     ("独家",   ("京东独家", "京东专属", "京东限定", "京东首发", "独家发售", "京东自营专享")),
     ("首发",   ("首发", "首版", "新书首发")),
     ("礼盒",   ("礼盒", "豪华版", "精装刷边", "藏书票")),
-    ("赠品",   ("赠送", "赠《", "随书赠", "附赠", "附送", "赠 ")),
+    ("赠品",   ("赠品", "赠送", "赠《", "随书赠", "附赠", "附送", "赠 ")),
 ]
+
+
+# 对手品牌识别 — 标题/店铺名含这些词时，这本书是对手平台的卖家在京东 POP 卖，
+# 不能算作"京东自己的对标版本"
+RIVAL_BRANDS = (
+    "当当", "新华书店", "凤凰新华", "博库", "京喜",
+    "孔夫子", "天猫", "淘宝",
+)
+
+
+def is_rival_seller(title: str = "", shop_name: str = "") -> bool:
+    """判断这本书的卖家/标题是否含对手品牌"""
+    blob = f"{title} {shop_name}"
+    return any(b in blob for b in RIVAL_BRANDS)
 
 
 def detect_jd_perks(text: str) -> list[str]:
@@ -114,19 +128,26 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
     # 抓详情，过滤出"和当当书是同一本"的所有版本
-    # 匹配规则：京东标题包含"核心书名"或"核心书名去尾数后的版本"
     pop_core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
     candidates: list[dict] = []
+    skipped_rivals = 0
     for sku in found_skus:
         info = fetch_detail(sku)
         if not info:
             time.sleep(delay)
             continue
+
+        # 关键：剔除对手品牌（当当/新华书店/...）开的 POP 店铺
+        # 这种 SKU 是对手卖家在京东 POP 卖，把它的权益算给京东会误导
+        if is_rival_seller(info.get("title", ""), info.get("shop_name", "")):
+            skipped_rivals += 1
+            time.sleep(delay)
+            continue
+
         self_t = normalize_title(info.get("title", ""))
         if not self_t:
             time.sleep(delay)
             continue
-        # 严格匹配（含完整核心）OR 宽松匹配（含去尾数后的核心 + 必须含作者）
         match_strict = pop_core_normalized in self_t
         match_loose = (
             len(pop_core_stripped) >= 3
@@ -140,9 +161,15 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         info["show_count"] = sd.get("show_count", 0)
         info["show_count_str"] = sd.get("show_count_str", "")
         info["comment_count_str"] = sd.get("comment_count_str", "")
-        info["perks"] = detect_jd_perks(info.get("title", ""))
+        # 权益识别用 _perk_text（已经包含 title + salePropSeq 等变体字段）
+        # 这样能识别到"主 SKU 标题没写但变体里有"的权益（如套装里的'亲签版'）
+        perk_text = info.get("_perk_text") or info.get("title", "")
+        info["perks"] = detect_jd_perks(perk_text)
         candidates.append(info)
         time.sleep(delay)
+
+    if skipped_rivals:
+        log.info("  ↪ 已剔除 %d 个对手品牌 SKU (当当/新华等)", skipped_rivals)
 
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}

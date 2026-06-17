@@ -414,9 +414,20 @@ def fetch_detail(sku: str) -> dict | None:
     NON_BOOK_KW = ["机", "家具", "电器", "电视", "冰箱", "洗衣", "空调", "笔记本",
                    "手机", "电脑", "镜头", "厨具", "床", "柜", "灶"]
     pub = out.get("publisher", "")
-    # 没有出版社字段 + 标题含家电关键词 → 非图书
     if not pub and any(k in title for k in NON_BOOK_KW):
         return None
+
+    # 把"销售属性变体"字段加进 perk 识别用的文本（仅当前选中的变体）
+    # 京东商品页 wname/skuName 是当前 SKU 的全名（含变体），title 可能不全
+    # 但 salePropSeq 是所有变体集合 — 不能用，会误识别其他变体的权益
+    extra_text_parts = [title]
+    # wareName / skuName / wname 是当前 SKU 的完整名（含变体如"亲签版"）
+    for pat in [r'"wareName"\s*:\s*"([^"]+)"',
+                r'"skuName"\s*:\s*"([^"]+)"',
+                r'"wname"\s*:\s*"([^"]+)"']:
+        for m in re.finditer(pat, text):
+            extra_text_parts.append(m.group(1))
+    out["_perk_text"] = " ".join(extra_text_parts)
 
     # 判断是否京东自营：shopName 包含"京东自营"或"自营旗舰店"
     shop = out.get("shop_name", "")
@@ -424,7 +435,7 @@ def fetch_detail(sku: str) -> dict | None:
         shop and ("京东自营" in shop or "自营旗舰店" in shop)
     )
 
-    # 提取细分品类（前端展示用）
+    # 提取细分品类
     out["category"] = _extract_jd_category(text)
 
     return out

@@ -60,23 +60,29 @@ def extract_core_title(title: str) -> str:
     提取书名的真正核心（去掉营销/店铺前缀）。
     《一句顶一万句 刘震云作品集...》  → '一句顶一万句'
     《中信出版【官方旗舰店】真希望我父母读过...》 → '真希望我父母读过这本书'
+    《张嘉佳新书 我是你的遗物》 → '我是你的遗物' （识别"作者+新书"前缀）
     """
     if not title:
         return ""
     norm = normalize_title(title)
 
+    # 当当书名常见模式："作者名+新书 真书名"
+    # 例：'张嘉佳新书 我是你的遗物'   → '我是你的遗物'
+    #     '张嘉佳新书我是你的遗物'   → '我是你的遗物'（无空格也支持）
+    m = re.match(r"^([一-鿿A-Za-z]{2,8})新书[\s ]*(.+)$", norm)
+    if m and len(m.group(2).strip()) >= 3:
+        # 取"新书"后面的部分作为真书名
+        norm = m.group(2).strip()
+
     # 查找第一个"句末"标志（冒号、空格分隔的副标题）
-    # 主标题通常是"X：副标题..." 或 "X X X 别的描述"
-    # 取冒号前 / 顿号前 的内容
     for sep in ["：", ":", " "]:
         if sep in norm:
-            # 但不能太短（避免把 "1+1" 这种切散）
             head = norm.split(sep)[0]
             if len(head) >= 3:
                 norm = head
                 break
 
-    # 限长 12 字（搜索关键词太长反而搜不到）
+    # 限长 12 字
     return norm[:12].strip()
 
 
