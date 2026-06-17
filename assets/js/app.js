@@ -558,15 +558,22 @@ function renderBenchmarkRow(r) {
   const jdPerksSet = new Set(jdAllPerks);
   const ddPerksSet = new Set(dd.perks || []);
 
-  // 当当独有 = 当当有 - 京东任意版本都没有
-  const distinctivePerks = [...ddPerksSet].filter(p => !jdPerksSet.has(p));
-  const distinctiveSet = new Set(distinctivePerks);
+  // 后端已经把"权益差异"按强/弱拆好直接给前端 — 这样前端展示和后端 gap 判定完全一致
+  // distinctive_strong: 真正的对标缺口（亲签/限量/独家）
+  // distinctive_weak:   弱权益差异（礼盒/赠品/首发，营销噱头大但实际差异小，不计入缺口）
+  // 兜底：如果后端没给，按旧逻辑算
+  const strongDistinctive = r.distinctive_strong ||
+    [...ddPerksSet].filter(p => !jdPerksSet.has(p) && !['礼盒','赠品','首发'].includes(p));
+  const weakDistinctive = r.distinctive_weak ||
+    [...ddPerksSet].filter(p => !jdPerksSet.has(p) && ['礼盒','赠品','首发'].includes(p));
+  // 强权益突出（"·当当独有"），弱权益和普通对齐权益一样显示
+  const strongSet = new Set(strongDistinctive);
 
   // 当当权益标签
   const ddPerks = (dd.perks || []).map(p => {
     const cls = PERK_STYLES[p] || 'bg-slate-100 text-slate-600 border-slate-200';
-    const isDistinctive = distinctiveSet.has(p);
-    if (isDistinctive) {
+    const isStrong = strongSet.has(p);
+    if (isStrong) {
       return `<span class="inline-flex items-center text-sm px-2.5 py-1 rounded-md
                           border-2 ${cls} font-bold shadow-sm">
                 ${p}<span class="ml-1 text-[10px] opacity-70">·当当独有</span>
@@ -593,8 +600,11 @@ function renderBenchmarkRow(r) {
       </div>`;
   } else {
     const best = jd.best_match || {};
-    // 京东侧权益：当当独有的同款用灰色"未对标"显示；京东自有权益正常显示
-    const jdMissingHtml = distinctivePerks.map(p => `
+    // 京东侧权益展示：
+    //   - 当当独有的"强权益"（亲签/限量/独家）→ 灰虚线"未对标"（这是真对标缺口）
+    //   - 当当独有的"弱权益"（礼盒/赠品/首发）→ 不显示"未对标"，因为不算缺口
+    //   - 京东自有权益 → 正常彩色标签
+    const jdMissingHtml = strongDistinctive.map(p => `
       <span class="inline-flex items-center text-sm px-2.5 py-1 rounded-md
                    border-2 border-dashed border-slate-300 bg-slate-50
                    text-slate-400 font-medium">
@@ -640,11 +650,11 @@ function renderBenchmarkRow(r) {
       </div>`;
   }
 
-  // 顶部缺口标签条
-  const gapBadge = distinctivePerks.length > 0
+  // 顶部"京东少 N 项权益"徽章 — 只算强权益（弱权益不算真缺口）
+  const gapBadge = strongDistinctive.length > 0
     ? `<span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full
                     bg-${gap.tone}-100 text-${gap.tone}-700 font-bold">
-         京东少 ${distinctivePerks.length} 项权益
+         京东少 ${strongDistinctive.length} 项权益
        </span>`
     : '';
 

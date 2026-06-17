@@ -361,6 +361,17 @@ def benchmark_books(dangdang_books: list[dict],
         # - 京东自营有且权益相同 → 不缺
         gap_level = _assess_gap(dd, jd_data)
 
+        # 把"权益差异"拆好直接给前端 — 前端不再需要自己计算
+        # 这样前端展示和后端 gap 判定永远一致
+        dd_perks_set = set(dd.get("perks", []))
+        jd_perks_set = set(
+            jd_data.get("all_perks") or
+            (jd_data.get("best_match") or {}).get("perks", []) or []
+        )
+        distinctive = dd_perks_set - jd_perks_set
+        distinctive_strong = sorted(distinctive - WEAK_PERKS)  # 真正的对标缺口
+        distinctive_weak = sorted(distinctive & WEAK_PERKS)    # 弱权益差异（仅展示，不计入缺口）
+
         results.append({
             "dangdang": {
                 "title": dd.get("title"),
@@ -376,6 +387,8 @@ def benchmark_books(dangdang_books: list[dict],
             },
             "jd": jd_data,
             "gap_level": gap_level,
+            "distinctive_strong": distinctive_strong,
+            "distinctive_weak": distinctive_weak,
         })
         time.sleep(delay)
 
@@ -389,12 +402,18 @@ def benchmark_books(dangdang_books: list[dict],
     return results
 
 
+# 弱权益：营销噱头大但实际差异小，不算"对标缺口"
+# 共享给 _assess_gap + 前端展示用
+# 前端通过 benchmark.json 里的 distinctive_strong / distinctive_weak 字段区分
+WEAK_PERKS = {"礼盒", "赠品", "首发"}
+
+
 def _assess_gap(dd: dict, jd: dict) -> str:
     """
     评估对标缺口：
       - no_jd     京东未在售
-      - perk_gap  京东在售但当当独有权益更多（用京东所有版本的权益并集判断）
-      - none      权益已对齐
+      - perk_gap  京东在售但当当独有强权益（亲签/限量/独家）
+      - none      权益已对齐（含'仅当当独有弱权益'的情况）
 
     重要修复：用 jd['all_perks']（所有版本权益的并集）而不是 best_match.perks
     避免出现"京东其实有亲签套装版，只是销量最好的是平装版"导致漏判
@@ -402,11 +421,10 @@ def _assess_gap(dd: dict, jd: dict) -> str:
     if not jd.get("available"):
         return "no_jd"
     dd_perks = set(dd.get("perks", []))
-    # 优先用 all_perks（所有 SKU 版本权益的并集），向后兼容老数据用 best_match.perks
     jd_perks = set(jd.get("all_perks") or
                    (jd.get("best_match") or {}).get("perks", []))
     distinctive = dd_perks - jd_perks
-    distinctive_strong = distinctive - {"礼盒", "赠品", "首发"}
+    distinctive_strong = distinctive - WEAK_PERKS
     if distinctive_strong:
         return "perk_gap"
     return "none"
