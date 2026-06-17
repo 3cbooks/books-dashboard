@@ -62,14 +62,31 @@ def main() -> int:
 
     # ============ 当当 vs 京东 权益对标 ============
     # 对当当带权益的书逐一查京东对应版本，做权益对比
+    # 注意：京东对 GitHub Actions 云端 IP 反爬，跑出来全是 'no_jd'。
+    # 这种情况下，我们保留旧数据（之前本地跑的真实结果），避免覆盖。
     try:
         from . import jd_benchmark
         benchmark_data = jd_benchmark.benchmark_books(
             books, only_with_perks=True, delay=1.5,
         )
-        save_json("benchmark.json", benchmark_data)
-        sources_status["benchmark"] = "ok" if benchmark_data else "partial"
-        log.info("✓ 权益对标: %d 本", len(benchmark_data))
+        # 检测京东被反爬：如果 ≥80% 的书是 'no_jd'，认为这次跑被反爬了
+        if benchmark_data:
+            no_jd_count = sum(1 for r in benchmark_data
+                              if r.get("gap_level") == "no_jd")
+            if no_jd_count / len(benchmark_data) >= 0.8:
+                log.warning(
+                    "⚠ 京东对标 %d/%d 本判为 'no_jd' — 大概率被云端反爬，"
+                    "保留旧数据不覆盖",
+                    no_jd_count, len(benchmark_data),
+                )
+                # 不写文件，保留磁盘上的旧数据
+                sources_status["benchmark"] = "blocked_by_anticrawl"
+            else:
+                save_json("benchmark.json", benchmark_data)
+                sources_status["benchmark"] = "ok"
+                log.info("✓ 权益对标: %d 本", len(benchmark_data))
+        else:
+            sources_status["benchmark"] = "partial"
     except Exception:
         log.error("✗ 权益对标抛异常:\n%s", traceback.format_exc())
         sources_status["benchmark"] = "failed"
