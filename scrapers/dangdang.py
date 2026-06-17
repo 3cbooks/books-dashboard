@@ -1,7 +1,8 @@
 """
 当当网新书榜抓取器
 URL 模板:
-  http://bang.dangdang.com/books/newhotsales/<分类码>-recent7-0-0-1-<页码>
+  http://bang.dangdang.com/books/newhotsales/<分类码>-24hours-0-0-1-<页码>
+  （24hours = 近 24 小时新书热卖；recent7 = 近 7 日；month = 近一月）
 
 分类码（dangdang 官方分类）:
   01.00.00.00.00.00  全部
@@ -100,7 +101,7 @@ CATEGORIES = [
 
 URL_TMPL = (
     "http://bang.dangdang.com/books/newhotsales/"
-    "{code}-recent7-0-0-1-1"
+    "{code}-24hours-0-0-1-1"
 )
 
 

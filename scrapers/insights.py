@@ -70,7 +70,7 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
         names = "、".join(f"《{b['title'][:14]}》" for b in qianqian_books[:3])
         out.append(_insight(
             "✍️",
-            f"当当近 7 日 {len(qianqian_books)} 本亲签版上榜",
+            f"当当 24 小时榜 {len(qianqian_books)} 本亲签版上榜",
             f"平均榜位 #{avg_rank:.1f}，含 {names}。"
             f"亲签是作者×渠道的强绑定，京东自营对标空白。",
             "亲签机会",

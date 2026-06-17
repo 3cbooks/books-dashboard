@@ -634,6 +634,7 @@ function renderBenchmarkRow(r) {
            class="block text-xs text-slate-700 leading-snug line-clamp-2 hover:text-mint-700 mb-2">
           ${escapeHtml(best.title || '')}
         </a>
+        ${best.shop_name ? `<p class="text-[10px] text-slate-500 mb-1.5 line-clamp-1">🏪 ${escapeHtml(best.shop_name)}</p>` : ''}
         <div class="flex flex-wrap gap-1.5 mb-1.5">${perksDisplay}</div>
         ${stats ? `<p class="text-[10px] text-slate-400 mt-1">${stats}</p>` : ''}
       </div>`;
