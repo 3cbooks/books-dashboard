@@ -622,7 +622,11 @@ function renderBenchmarkRow(r) {
     jdSection = `
       <div class="flex-1 p-4 bg-slate-50/40 rounded-r-2xl border-l-2 border-slate-200">
         <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-          <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">📘 京东在售</span>
+          ${best.stock_status === 'pre_order'
+            ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">📦 京东预订</span>${best.arrival_date ? `<span class="text-[11px] text-amber-600">到货 ${best.arrival_date}</span>` : ''}`
+            : best.stock_status === 'out_of_stock'
+              ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-medium">📦 京东暂无货</span>`
+              : `<span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">📘 京东在售</span>`}
           ${best.category ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">📂 ${escapeHtml(best.category)}</span>` : ''}
           ${best.price ? `<span class="text-sm font-semibold text-rose-600">${best.price}</span>` : ''}
         </div>

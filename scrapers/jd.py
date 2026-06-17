@@ -248,6 +248,8 @@ DETAIL_PATTERNS = {
     "isbn":       re.compile(r'"ISBN"\s*:\s*"([^"]+)"'),
     # "skuStatus":"1" → 1 在售 / 0 下架
     "sku_status": re.compile(r'"skuStatus"\s*:\s*"?(\d+)"?'),
+    # "ArrivalDate":"2026-07-17" → 预订到货日期
+    "arrival_date": re.compile(r'"ArrivalDate"\s*:\s*"([^"]+)"'),
 }
 
 
@@ -437,6 +439,21 @@ def fetch_detail(sku: str) -> dict | None:
 
     # 提取细分品类
     out["category"] = _extract_jd_category(text)
+
+    # 库存状态：是否在售/预订/无货
+    # - 如果有 ArrivalDate → 预订商品（标'pre_order'）
+    # - 如果搜到 "无货" 显示按钮 → 无货
+    # - 否则视为在售
+    arrival = out.get("arrival_date")
+    if arrival:
+        out["stock_status"] = "pre_order"
+    else:
+        # 详情页里 stock 区域可能含 skuState=0 表示无货
+        m_state = re.search(r'"stock"\s*:\s*\{[^}]*"skuState"\s*:\s*"?(\d+)"?', text)
+        if m_state and m_state.group(1) == "0":
+            out["stock_status"] = "out_of_stock"
+        else:
+            out["stock_status"] = "in_stock"
 
     return out
 

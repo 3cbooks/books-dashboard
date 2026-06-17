@@ -160,7 +160,9 @@ def _extract_one_keyword(keyword: str, limit: int = 20) -> list[dict]:
             "tn": "news",
             "from": "news",
             "cl": "2",
-            "ct": "0",  # 不限时间
+            "ct": "1",     # 1 = 最近一周；2 = 一月；3 = 一年；0 = 全部
+            "rsv_dl": "ns_pc",
+            "ie": "utf-8",
         },
     )
     if resp is None:
@@ -222,7 +224,7 @@ def fetch() -> list[dict]:
 
     for kw in KEYWORDS:
         log.info("抓取百度新闻 [%s]...", kw)
-        items = _extract_one_keyword(kw, limit=15)
+        items = _extract_one_keyword(kw, limit=30)
         new_count = 0
         for it in items:
             if it["url"] in seen_urls:
@@ -234,11 +236,33 @@ def fetch() -> list[dict]:
 
     # 不再用"当前时间"兜底 — 这会让所有新闻显示成"刚刚"，误导用户
     # 没有日期的新闻保持 published_at = None，前端展示成 '—'
-    # 然后按时间倒序（无时间的排到最后）
-    all_news.sort(
-        key=lambda x: x["published_at"] or "",
-        reverse=True,
+
+    # 过滤掉过老的新闻（>30 天）和无日期的（行业动态要保持时效）
+    from datetime import datetime, timezone, timedelta
+    tz = timezone(timedelta(hours=8))
+    cutoff = datetime.now(tz) - timedelta(days=30)
+    cutoff_iso = cutoff.isoformat(timespec="seconds")
+    fresh_news = []
+    too_old = 0
+    no_date = 0
+    for n in all_news:
+        pub = n.get("published_at")
+        if not pub:
+            # 无日期的多是产业调研报告等 SEO 内容，不是真新闻
+            no_date += 1
+            continue
+        if pub >= cutoff_iso:
+            fresh_news.append(n)
+        else:
+            too_old += 1
+    log.info(
+        "新闻时效过滤: 保留 %d 条 | 剔除 %d 条 >30天 | 剔除 %d 条无日期",
+        len(fresh_news), too_old, no_date,
     )
+
+    # 按时间倒序
+    fresh_news.sort(key=lambda x: x["published_at"], reverse=True)
+    all_news = fresh_news
 
     # 移除内部字段
     for n in all_news:
