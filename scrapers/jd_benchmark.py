@@ -153,10 +153,12 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     # 拿销量数据
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
-    # 抓详情，过滤出"和当当书是同一本"的所有版本
+    # 抓详情，过滤出"和当当书是同一本"且 **是京东自营** 的所有版本
+    # 业务要求：京东侧只展示自营店铺的书，POP 全部跳过
     pop_core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
     candidates: list[dict] = []
     skipped_rivals = 0
+    skipped_pop = 0
     for sku in found_skus:
         info = fetch_detail(sku)
         if not info:
@@ -164,9 +166,14 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
             continue
 
         # 关键：剔除对手品牌（当当/新华书店/...）开的 POP 店铺
-        # 这种 SKU 是对手卖家在京东 POP 卖，把它的权益算给京东会误导
         if is_rival_seller(info.get("title", ""), info.get("shop_name", "")):
             skipped_rivals += 1
+            time.sleep(delay)
+            continue
+
+        # 业务要求：只对标京东自营，POP 跳过（京喜也是非标准自营）
+        if _shop_priority(info) < 100:
+            skipped_pop += 1
             time.sleep(delay)
             continue
 
@@ -194,8 +201,9 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         candidates.append(info)
         time.sleep(delay)
 
-    if skipped_rivals:
-        log.info("  ↪ 已剔除 %d 个对手品牌 SKU (当当/新华等)", skipped_rivals)
+    if skipped_rivals or skipped_pop:
+        log.info("  ↪ 已剔除 %d 对手品牌 SKU + %d POP/京喜 SKU (业务要求只对标自营)",
+                 skipped_rivals, skipped_pop)
 
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}
