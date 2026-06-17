@@ -22,12 +22,19 @@ from .common import http_get, get_logger
 log = get_logger("baidu_news")
 
 # 抓哪些关键词
+# 实测：百度新闻按"相关性"排序，"出版业""书业""实体书店"这种宽词
+# 会返回大量产业调研报告（旧文+无日期），近期命中率<10%。
+# 高命中率关键词：'图书出版' '新书' '新书发布' '图博会' — 都是事件性新闻
 KEYWORDS = [
     "图书出版",
-    "出版业",
     "新书",
-    "书业",
-    "实体书店",
+    "新书发布",
+    "图书博览会",
+    "图书订货会",
+    "童书",
+    "图书畅销",
+    "图书市场",
+    "图书行业",
 ]
 
 URL = "https://news.baidu.com/ns"
@@ -233,14 +240,19 @@ def fetch() -> list[dict]:
             all_news.append(it)
             new_count += 1
         log.info("  └─ +%d 条（去重前 %d）", new_count, len(items))
+        # 关键词之间停 3 秒，避免百度限流
+        # 百度对短时间内多次同 IP 请求很敏感
+        import time
+        time.sleep(3)
 
     # 不再用"当前时间"兜底 — 这会让所有新闻显示成"刚刚"，误导用户
     # 没有日期的新闻保持 published_at = None，前端展示成 '—'
 
-    # 过滤掉过老的新闻（>30 天）和无日期的（行业动态要保持时效）
+    # 过滤掉过老的新闻（>60 天）和无日期的
+    # 60 天窗口：保证至少有 10+ 条新闻可看，又不至于把 2024 年的旧文混进来
     from datetime import datetime, timezone, timedelta
     tz = timezone(timedelta(hours=8))
-    cutoff = datetime.now(tz) - timedelta(days=30)
+    cutoff = datetime.now(tz) - timedelta(days=60)
     cutoff_iso = cutoff.isoformat(timespec="seconds")
     fresh_news = []
     too_old = 0
@@ -248,7 +260,6 @@ def fetch() -> list[dict]:
     for n in all_news:
         pub = n.get("published_at")
         if not pub:
-            # 无日期的多是产业调研报告等 SEO 内容，不是真新闻
             no_date += 1
             continue
         if pub >= cutoff_iso:
@@ -256,11 +267,10 @@ def fetch() -> list[dict]:
         else:
             too_old += 1
     log.info(
-        "新闻时效过滤: 保留 %d 条 | 剔除 %d 条 >30天 | 剔除 %d 条无日期",
+        "新闻时效过滤: 保留 %d 条 | 剔除 %d 条 >60天 | 剔除 %d 条无日期",
         len(fresh_news), too_old, no_date,
     )
 
-    # 按时间倒序
     fresh_news.sort(key=lambda x: x["published_at"], reverse=True)
     all_news = fresh_news
 
