@@ -154,7 +154,7 @@ def _recheck_for_self(core: str, dangdang_book: dict,
                       pop_core_stripped: str,
                       keyword_tokens: list[str],
                       author_short: str,
-                      max_results: int = 20,
+                      max_results: int = 30,
                       delay: float = 0.6) -> dict | None:
     """
     复查：当初始对标 best_match 是 POP 时，主动用更宽的搜索找自营 SKU。
@@ -168,25 +168,33 @@ def _recheck_for_self(core: str, dangdang_book: dict,
     existing_skus = {c.get("sku") for c in existing_candidates}
     pop_core_normalized = normalize_title(core)
     title = dangdang_book.get("title", "") or ""
+    author_full = (dangdang_book.get("author") or "").strip()
 
-    # 用更宽的查询：纯核心标题 + 去尾数版 + 丛书拆词 + 分隔符尾段（不带作者，召回更广）
-    queries = [core]
+    # 用更宽的查询：召回越多越好，自营版可能藏在第 20-40 位
+    queries: list[str] = []
+    queries.append(core)  # 1) 纯核心
+    # 2) 去尾数（《人间小满3》→ "人间小满"）
     core_no_serial = re.sub(r"\s*\d+\s*$", "", core).strip()
     if core_no_serial and core_no_serial != core and len(core_no_serial) >= 2:
         queries.append(core_no_serial)
-    # 丛书前缀拆解：《财之道丛书・经营十二条》→ "经营十二条"
+    # 3) 丛书前缀拆解（《财之道丛书・经营十二条》→ "经营十二条"）
     m_sub = re.search(r"[一-鿿]{2,8}丛书[\s·・\-]*([一-鿿]{2,12})", title)
     if m_sub:
         sub = m_sub.group(1).strip()
         if sub and sub not in queries:
             queries.append(sub)
-    # 分隔符尾段：《X・Y》→ Y
+    # 4) 分隔符尾段（《X・Y》→ Y）
     parts = re.split(r"[・·:：]", title)
     if len(parts) >= 2:
         tail = parts[-1].strip()
         tail = re.sub(r"[（(][^）)]*[)）]", "", tail).strip()
         if tail and 2 <= len(tail) <= 12 and tail not in queries:
             queries.append(tail)
+    # 5) 兜底：核心 + 完整作者名（之前只用 author_short[:6]，全名可能召回更准）
+    if author_full and len(author_full) <= 12 and author_full not in (author_short or ""):
+        queries.append(f"{core} {author_full}")
+    # 6) 极宽召回：核心标题 + "京东自营" 关键词（提高自营版 SKU 的曝光）
+    queries.append(f"{core} 京东自营")
 
     new_skus: list[str] = []
     for keyword in queries:

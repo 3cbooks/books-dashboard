@@ -102,91 +102,114 @@ def main() -> int:
                 )
                 sources_status["benchmark"] = "blocked_by_anticrawl"
             else:
-                # 2. 单本退化保护：检查每本书有没有"自营→POP 退化"
-                #    退化时尝试重试一次；重试还失败就用旧数据该条记录
-                degraded_indices = []
-                for i, r in enumerate(benchmark_data):
-                    new_self = (r.get("jd",{}).get("best_match",{}) or {}).get("is_self", False)
-                    new_avail = r.get("jd",{}).get("available", False)
-                    old = old_by_title.get(r["dangdang"]["title"])
-                    old_self = (
-                        old and old.get("jd",{}).get("best_match",{})
-                        and old["jd"]["best_match"].get("is_self", False)
-                    ) if old else False
-                    # 退化判定: 旧数据是自营，新数据(可用但)不是自营 OR 新数据完全不可用
-                    if old_self and (not new_avail or not new_self):
-                        degraded_indices.append(i)
-
-                if degraded_indices:
+                # 1b. 自营率守护（2026-06-17 加入）：
+                # 历史正常自营率 ≥80%，今天若 < 60% 大概率匹配出问题
+                # 不直接覆盖旧数据，而是后面"单本退化保护"会逐条用旧数据兜底
+                self_count_new = sum(
+                    1 for r in benchmark_data
+                    if (r.get("jd",{}).get("best_match",{}) or {}).get("is_self")
+                )
+                self_rate = self_count_new / len(benchmark_data)
+                self_count_old = sum(
+                    1 for r in old_benchmark
+                    if (r.get("jd",{}).get("best_match",{}) or {}).get("is_self")
+                )
+                old_rate = self_count_old / len(old_benchmark) if old_benchmark else 0
+                if self_rate < 0.6 and old_rate >= 0.8:
                     log.warning(
-                        "⚠ %d 本对标退化（旧自营 → 新 POP/不可用）：尝试重试",
-                        len(degraded_indices),
+                        "⚠ 自营率剧降 %d/%d=%.0f%% (旧 %.0f%%)，整体保留旧数据",
+                        self_count_new, len(benchmark_data),
+                        self_rate*100, old_rate*100,
                     )
-                    # 重试一次（在 books 里找原书，不限制 perks）
-                    for i in degraded_indices:
-                        title = benchmark_data[i]["dangdang"]["title"]
-                        target = next((b for b in books if b.get("title") == title), None)
-                        if not target:
-                            continue
-                        retry_result = jd_benchmark.query_jd_for_book(target, delay=1.5)
-                        retry_self = (retry_result.get("best_match",{}) or {}).get("is_self", False)
-                        if retry_self:
-                            log.info("  ↪《%s...》重试成功，恢复自营匹配", title[:20])
-                            benchmark_data[i]["jd"] = retry_result
-                            from .jd_benchmark import _assess_gap, WEAK_PERKS
-                            benchmark_data[i]["gap_level"] = _assess_gap(
-                                benchmark_data[i]["dangdang"], retry_result
-                            )
-                            # 同步刷新 distinctive_strong/weak
-                            dd_perks = set(benchmark_data[i]["dangdang"].get("perks", []))
-                            jd_perks = set(retry_result.get("all_perks") or
-                                           (retry_result.get("best_match") or {}).get("perks", []) or [])
-                            distinctive = dd_perks - jd_perks
-                            benchmark_data[i]["distinctive_strong"] = sorted(distinctive - WEAK_PERKS)
-                            benchmark_data[i]["distinctive_weak"] = sorted(distinctive & WEAK_PERKS)
-                        else:
-                            old = old_by_title.get(title)
-                            if old:
-                                log.info("  ↪《%s...》重试失败，用旧数据兜底", title[:20])
-                                benchmark_data[i] = old
+                    benchmark_data = old_benchmark
+                    sources_status["benchmark"] = "self_rate_drop"
+                    save_json("benchmark.json", benchmark_data)
+                else:
+                    # 2. 单本退化保护：检查每本书有没有"自营→POP 退化"
+                    #    退化时尝试重试一次；重试还失败就用旧数据该条记录
+                    degraded_indices = []
+                    for i, r in enumerate(benchmark_data):
+                        new_self = (r.get("jd",{}).get("best_match",{}) or {}).get("is_self", False)
+                        new_avail = r.get("jd",{}).get("available", False)
+                        old = old_by_title.get(r["dangdang"]["title"])
+                        old_self = (
+                            old and old.get("jd",{}).get("best_match",{})
+                            and old["jd"]["best_match"].get("is_self", False)
+                        ) if old else False
+                        # 退化判定: 旧数据是自营，新数据(可用但)不是自营 OR 新数据完全不可用
+                        if old_self and (not new_avail or not new_self):
+                            degraded_indices.append(i)
 
-                # 3. 关键 SKU 守护：业务确认过的"应该匹配某 SKU"清单
-                #    搜索结果偶发波动可能让 best_match 选错（如《人间小满3》被选到套装版）
-                #    每本关键书检查 best_match.sku 是否等于期望 SKU，不一致就用旧数据
-                from .validate import EXPECTED_KEY_SKUS
-                wrong_sku_indices = []
-                for i, r in enumerate(benchmark_data):
-                    title = r["dangdang"]["title"]
-                    expected_sku = None
-                    for kw, sku in EXPECTED_KEY_SKUS.items():
-                        if kw in title:
-                            expected_sku = sku
-                            break
-                    if not expected_sku:
-                        continue
-                    actual_sku = (r.get("jd",{}).get("best_match",{}) or {}).get("sku")
-                    if actual_sku != expected_sku:
-                        # 看旧数据里是不是对的
-                        old = old_by_title.get(title)
-                        old_sku = (old.get("jd",{}).get("best_match",{}) or {}).get("sku") if old else None
-                        if old_sku == expected_sku:
-                            wrong_sku_indices.append((i, title, actual_sku, expected_sku, old))
-
-                if wrong_sku_indices:
-                    log.warning(
-                        "⚠ %d 本关键书 best_match SKU 不一致，从旧数据恢复",
-                        len(wrong_sku_indices),
-                    )
-                    for i, title, actual, expected, old in wrong_sku_indices:
-                        log.info(
-                            "  ↪《%s...》期望 SKU %s，实际 %s，用旧数据兜底",
-                            title[:20], expected, actual,
+                    if degraded_indices:
+                        log.warning(
+                            "⚠ %d 本对标退化（旧自营 → 新 POP/不可用）：尝试重试",
+                            len(degraded_indices),
                         )
-                        benchmark_data[i] = old
+                        # 重试一次（在 books 里找原书，不限制 perks）
+                        for i in degraded_indices:
+                            title = benchmark_data[i]["dangdang"]["title"]
+                            target = next((b for b in books if b.get("title") == title), None)
+                            if not target:
+                                continue
+                            retry_result = jd_benchmark.query_jd_for_book(target, delay=1.5)
+                            retry_self = (retry_result.get("best_match",{}) or {}).get("is_self", False)
+                            if retry_self:
+                                log.info("  ↪《%s...》重试成功，恢复自营匹配", title[:20])
+                                benchmark_data[i]["jd"] = retry_result
+                                from .jd_benchmark import _assess_gap, WEAK_PERKS
+                                benchmark_data[i]["gap_level"] = _assess_gap(
+                                    benchmark_data[i]["dangdang"], retry_result
+                                )
+                                # 同步刷新 distinctive_strong/weak
+                                dd_perks = set(benchmark_data[i]["dangdang"].get("perks", []))
+                                jd_perks = set(retry_result.get("all_perks") or
+                                               (retry_result.get("best_match") or {}).get("perks", []) or [])
+                                distinctive = dd_perks - jd_perks
+                                benchmark_data[i]["distinctive_strong"] = sorted(distinctive - WEAK_PERKS)
+                                benchmark_data[i]["distinctive_weak"] = sorted(distinctive & WEAK_PERKS)
+                            else:
+                                old = old_by_title.get(title)
+                                if old:
+                                    log.info("  ↪《%s...》重试失败，用旧数据兜底", title[:20])
+                                    benchmark_data[i] = old
 
-                save_json("benchmark.json", benchmark_data)
-                sources_status["benchmark"] = "ok"
-                log.info("✓ 权益对标: %d 本", len(benchmark_data))
+                    # 3. 关键 SKU 守护：业务确认过的"应该匹配某 SKU"清单
+                    #    搜索结果偶发波动可能让 best_match 选错（如《人间小满3》被选到套装版）
+                    #    每本关键书检查 best_match.sku 是否等于期望 SKU，不一致就用旧数据
+                    from .validate import EXPECTED_KEY_SKUS
+                    wrong_sku_indices = []
+                    for i, r in enumerate(benchmark_data):
+                        title = r["dangdang"]["title"]
+                        expected_sku = None
+                        for kw, sku in EXPECTED_KEY_SKUS.items():
+                            if kw in title:
+                                expected_sku = sku
+                                break
+                        if not expected_sku:
+                            continue
+                        actual_sku = (r.get("jd",{}).get("best_match",{}) or {}).get("sku")
+                        if actual_sku != expected_sku:
+                            # 看旧数据里是不是对的
+                            old = old_by_title.get(title)
+                            old_sku = (old.get("jd",{}).get("best_match",{}) or {}).get("sku") if old else None
+                            if old_sku == expected_sku:
+                                wrong_sku_indices.append((i, title, actual_sku, expected_sku, old))
+
+                    if wrong_sku_indices:
+                        log.warning(
+                            "⚠ %d 本关键书 best_match SKU 不一致，从旧数据恢复",
+                            len(wrong_sku_indices),
+                        )
+                        for i, title, actual, expected, old in wrong_sku_indices:
+                            log.info(
+                                "  ↪《%s...》期望 SKU %s，实际 %s，用旧数据兜底",
+                                title[:20], expected, actual,
+                            )
+                            benchmark_data[i] = old
+
+                    save_json("benchmark.json", benchmark_data)
+                    sources_status["benchmark"] = "ok"
+                    log.info("✓ 权益对标: %d 本", len(benchmark_data))
     except Exception:
         log.error("✗ 权益对标抛异常:\n%s", traceback.format_exc())
         sources_status["benchmark"] = "failed"

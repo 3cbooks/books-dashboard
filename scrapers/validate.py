@@ -108,6 +108,7 @@ def validate() -> dict:
 
     # ============ 关键书自营匹配验证 ============
     book_to_status: dict[str, str] = {}
+    book_to_sku: dict[str, str] = {}
     for r in benchmark:
         title = r["dangdang"]["title"]
         if not r.get("jd", {}).get("available"):
@@ -115,6 +116,68 @@ def validate() -> dict:
             continue
         best = r["jd"].get("best_match", {}) or {}
         book_to_status[title] = "self" if best.get("is_self") else "pop"
+        book_to_sku[title] = best.get("sku", "") or ""
+
+    # ============ 每日审计：与昨天对比退化清单 ============
+    # 思路：保留 _last_audit.json，记录每本书的 sku/is_self/perks
+    # 今天再跑时对比：哪些书"昨天自营今天 POP"、"昨天有权益今天没"
+    # 让用户每天打开页面/审计报告就能看到差异，不必逐本检查
+    from pathlib import Path
+    audit_path = Path("data/_last_audit.json")
+    last_audit: dict = {}
+    if audit_path.exists():
+        try:
+            last_audit = json.loads(audit_path.read_text(encoding="utf-8"))
+        except Exception:
+            last_audit = {}
+    last_books = last_audit.get("books", {}) if isinstance(last_audit, dict) else {}
+
+    today_books: dict[str, dict] = {}
+    for r in benchmark:
+        title = r["dangdang"]["title"]
+        best = r["jd"].get("best_match", {}) or {}
+        today_books[title] = {
+            "sku":     best.get("sku", "") or "",
+            "is_self": bool(best.get("is_self")),
+            "perks":   sorted(r["jd"].get("all_perks", []) or []),
+        }
+
+    audit_diffs = []
+    for title, today_info in today_books.items():
+        if title not in last_books:
+            continue  # 新增的书不算退化
+        last_info = last_books[title]
+        # 退化 1：自营 → POP
+        if last_info.get("is_self") and not today_info["is_self"]:
+            audit_diffs.append(
+                f"{title[:30]} 自营→POP "
+                f"(SKU {last_info.get('sku','-')}→{today_info['sku']})"
+            )
+        # 退化 2：SKU 突变（同店）
+        elif (last_info.get("sku") and today_info["sku"]
+              and last_info["sku"] != today_info["sku"]
+              and last_info.get("is_self") and today_info["is_self"]):
+            audit_diffs.append(
+                f"{title[:30]} 自营 SKU 变更 "
+                f"({last_info['sku']}→{today_info['sku']})"
+            )
+        # 退化 3：京东权益消失
+        elif last_info.get("perks") and not today_info["perks"]:
+            audit_diffs.append(
+                f"{title[:30]} 京东权益消失 "
+                f"({','.join(last_info['perks'])} → 无)"
+            )
+
+    if audit_diffs:
+        report["warnings"].append(f"昨日对比发现 {len(audit_diffs)} 本退化:")
+        for d in audit_diffs:
+            report["warnings"].append(f"  · {d}")
+
+    # 保存今天的快照供明天比对
+    audit_path.write_text(
+        json.dumps({"books": today_books}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
     degraded = []
     for expected in EXPECTED_JD_SELF_BOOKS:
