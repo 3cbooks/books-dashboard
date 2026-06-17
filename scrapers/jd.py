@@ -255,45 +255,119 @@ DETAIL_PATTERNS = {
 # - "name":"家教方法图书热卖榜第3名"  → 家教方法
 # - "longTitle":"文学动漫金榜"        → 文学动漫
 # - "shortTitle":"中国当代小说"       → 中国当代小说
-_CAT_RANK_RE = re.compile(r'"(?:name|longTitle|shortTitle|channelEntryTitle)"\s*:\s*"([^"]+)"')
-_CAT_TRIM_RE = re.compile(r'(?:图书)?(?:热卖)?(?:总)?榜(?:第\d+名)?$|^榜单|金榜?$')
-
-# 太宽泛的品类标签，过滤掉
-_CAT_BLACKLIST = {"图书", "热卖", "京东", "新书", "总榜", "畅销榜", "新书榜",
-                  "热卖榜", "图书热卖榜", "图书榜", "畅销", "新品"}
+# 实现见下方 _extract_jd_category()
 
 
 def _extract_jd_category(text: str) -> str | None:
     """
     从京东商品 HTML 里抽取细分品类。
 
-    京东商品页里的"榜单"字段是细分品类的最稳信号：
-      "name":"家教方法图书热卖榜第3名"     → 家教方法
-      "longTitle":"中国当代小说图书榜"      → 中国当代小说
-      "channelEntryTitle":"心理学图书热卖榜"→ 心理学
-
-    严格只抓"X榜"模式，避免误抓售后承诺/书名。
+    优先级 1（最准）: 从 cat1/cat2/cat3 ID 反查 list.jd.com 拿到完整面包屑
+                     例：cat=1713,3260,3339 → '青春文学 / 爱情情感'
+    优先级 2（兜底）: 从'榜单字段'解析（'家教方法图书热卖榜第3名' → '家教方法'）
     """
-    cats: list[tuple[str, int]] = []  # (品类名, 优先级)
+    # 优先级 1: cat ID 反查
+    cat1 = _find_cat_id(text, "cat1") or _find_cat_id(text, "firstCateId")
+    cat2 = _find_cat_id(text, "cat2") or _find_cat_id(text, "secondCateId")
+    cat3 = _find_cat_id(text, "cat3") or _find_cat_id(text, "thirdCateId")
+    if cat1 and cat2 and cat3:
+        crumb = _resolve_cat_via_list(cat1, cat2, cat3)
+        if crumb:
+            return crumb
 
-    # 优先级 1: "name":"X图书热卖榜第N名" — 最稳，只在榜单字段出现
+    # 优先级 2: 从榜单字段解析
+    return _extract_category_from_rank(text)
+
+
+def _find_cat_id(text: str, field: str) -> str | None:
+    """从 HTML 里找 'cat1':'1713' 这种形式的 ID"""
+    m = re.search(rf'"{field}"\s*:\s*"?(\d+)"?', text)
+    return m.group(1) if m else None
+
+
+# cat 组合 → 面包屑名 的本地缓存（避免重复请求）
+_CAT_CRUMB_CACHE: dict[tuple[str, str, str], str | None] = {}
+
+
+def _resolve_cat_via_list(cat1: str, cat2: str, cat3: str) -> str | None:
+    """
+    用 list.jd.com/list.html?cat=A,B,C 反查面包屑名。
+    用 <title>'爱情/情感青春文学图书...' 解析出 cat2/cat3 名。
+    """
+    key = (cat1, cat2, cat3)
+    if key in _CAT_CRUMB_CACHE:
+        return _CAT_CRUMB_CACHE[key]
+
+    url = f"https://list.jd.com/list.html?cat={cat1},{cat2},{cat3}"
+    resp = http_get(url, timeout=10, max_retries=1)
+    if not resp:
+        _CAT_CRUMB_CACHE[key] = None
+        return None
+
+    # 标题格式: '爱情/情感青春文学图书【行情 价格 评价 正品行货】商品搜索-京东'
+    m = re.search(r'<title>([^<]+)</title>', resp.text)
+    if not m:
+        _CAT_CRUMB_CACHE[key] = None
+        return None
+
+    title = m.group(1)
+    # 去掉尾巴 '【行情 价格 评价 正品行货】商品搜索-京东'
+    head = re.split(r'【|商品搜索|图书\b|【行情', title)[0].strip()
+    if not head:
+        _CAT_CRUMB_CACHE[key] = None
+        return None
+
+    # 试着从 keywords meta 拿更结构化的面包屑
+    # 通常 meta keywords 是 'cat3,cat2,cat1' 形式
+    m_kw = re.search(r'<meta\s+name="keywords"\s+content="([^"]+)"', resp.text)
+    if m_kw:
+        kw = m_kw.group(1).strip()
+        parts = [p.strip() for p in kw.split(",") if p.strip() and "京东" not in p]
+        if len(parts) >= 2:
+            # 关键词第一个词最有信息（cat3 最细分），后面的逐级宽
+            # 拼成 'cat3 / cat2' 这种紧凑格式
+            crumb = f"{parts[0]} / {parts[1]}" if parts[1] != "图书" else parts[0]
+            _CAT_CRUMB_CACHE[key] = crumb
+            return crumb
+
+    # 兜底：title 里"爱情/情感青春文学"这种连写的，按 list 页面规则切开
+    # 京东 title 实际是 "<cat3><cat2>图书..."，cat2 通常是 2-4 个常见词之一
+    common_cat2 = ["小说", "文学", "童书", "教辅", "励志与成功", "心理",
+                   "经济", "管理", "历史", "艺术", "科普", "家教", "青春文学",
+                   "传记", "哲学/宗教", "生活", "工业技术", "教育", "法律"]
+    for c2 in sorted(common_cat2, key=len, reverse=True):
+        if head.endswith(c2) and len(head) > len(c2):
+            cat3_part = head[:-len(c2)].strip()
+            crumb = f"{cat3_part} / {c2}" if cat3_part else c2
+            _CAT_CRUMB_CACHE[key] = crumb
+            return crumb
+
+    _CAT_CRUMB_CACHE[key] = head[:20]
+    return head[:20]
+
+
+# 黑名单：太宽泛的品类标签，过滤掉
+_CAT_BLACKLIST = {"图书", "热卖", "京东", "新书", "总榜", "畅销榜", "新书榜",
+                  "热卖榜", "图书热卖榜", "图书榜", "畅销", "新品"}
+
+
+def _extract_category_from_rank(text: str) -> str | None:
+    """
+    旧路径：从京东商品页"X榜"字段抽取品类（兜底用）。
+    """
+    cats: list[tuple[str, int]] = []
     for m in re.finditer(r'"name"\s*:\s*"([^"]+?(?:图书|童书)?(?:热卖)?榜(?:第\d+名)?)"', text):
         s = m.group(1)
         cleaned = re.sub(r'(?:图书|童书)?(?:热卖)?榜(?:第\d+名)?$', '', s).strip()
         if cleaned and cleaned not in _CAT_BLACKLIST and 2 <= len(cleaned) <= 12:
             cats.append((cleaned, 1))
-
-    # 优先级 2: "longTitle":"XXX图书榜" / "channelEntryTitle":"XXX图书热卖榜"
     for key in ["longTitle", "channelEntryTitle", "shortTitle"]:
         for m in re.finditer(rf'"{key}"\s*:\s*"([^"]+?)(?:图书|童书)?(?:热卖)?(?:金)?榜"', text):
             cleaned = m.group(1).strip()
             if cleaned and cleaned not in _CAT_BLACKLIST and 2 <= len(cleaned) <= 12:
                 cats.append((cleaned, 2))
-
     if not cats:
         return None
-
-    # 选优先级最高 + 最频繁出现的
     cats.sort(key=lambda x: x[1])
     return cats[0][0]
 
