@@ -40,7 +40,11 @@ def main() -> int:
 
     # ============ 抓书 ============
     from . import dangdang
-    books, status = _safe_run("dangdang", lambda: dangdang.fetch(per_category=4))
+    # 对标主力：当当 24h 总榜前 20 名 + 各品类前 4 名（去重后约 40+ 本）
+    books, status = _safe_run(
+        "dangdang",
+        lambda: dangdang.fetch(per_category=4, top_n_total=20),
+    )
     sources_status["dangdang"] = status
 
     # 失败兜底：用上次的 books.json
@@ -82,7 +86,7 @@ def main() -> int:
         old_by_title = {r["dangdang"]["title"]: r for r in old_benchmark}
 
         benchmark_data = jd_benchmark.benchmark_books(
-            books, only_with_perks=True, delay=1.5,
+            books, only_with_perks=False, top_n_total=20, delay=1.5,
         )
 
         if not benchmark_data:

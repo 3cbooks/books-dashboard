@@ -328,17 +328,28 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
 
 
 def benchmark_books(dangdang_books: list[dict],
-                    only_with_perks: bool = True,
+                    only_with_perks: bool = False,
+                    top_n_total: int = 20,
                     delay: float = 1.0) -> list[dict]:
     """
-    主流程：对当当带权益的书逐一查京东对标。
+    主流程：对当当 24h 总榜 Top N 的书逐一查京东对标。
+
+    Args:
+      only_with_perks: True 时只对标带权益的书；False（默认）对标所有 Top N
+      top_n_total: "全部"总榜对标前 N 名（默认 20）
+
     返回每本书的"对标条目"列表，前端可直接渲染为对比表。
     """
-    targets = (
-        [b for b in dangdang_books if b.get("perks")]
-        if only_with_perks
-        else dangdang_books
-    )
+    # 取"全部"分类（即 24h 总榜）的前 N 本
+    # category="热销" 是当当总榜的标识
+    top_books = [b for b in dangdang_books if b.get("category") == "热销"][:top_n_total]
+    log.info("当当 24h 总榜前 %d 本（实际 %d 本）", top_n_total, len(top_books))
+
+    if only_with_perks:
+        targets = [b for b in top_books if b.get("perks")]
+    else:
+        targets = top_books
+
     if not targets:
         log.warning("没有当当书需要对标")
         return []

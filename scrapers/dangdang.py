@@ -199,18 +199,18 @@ def _fetch_category(code: str, std_category: str) -> Iterator[dict]:
             yield item
 
 
-def fetch(per_category: int = 5) -> list[dict]:
+def fetch(per_category: int = 5, top_n_total: int = 20) -> list[dict]:
     """
     抓所有分类的新书。
-    per_category: 每个分类保留前几名（默认 5）；
-                  "全部"分类作为兜底，多保留 10 本。
+    per_category: 每个分类保留前几名（默认 5）
+    top_n_total:  "全部"总榜保留前几名（默认 20，作为对标主力）
     """
     seen_urls: set[str] = set()  # 跨分类去重
     all_books: list[dict] = []
 
     for label, code, std in CATEGORIES:
         log.info("抓取当当 [%s]...", label)
-        keep = 10 if label == "全部" else per_category
+        keep = top_n_total if label == "全部" else per_category
         count = 0
         for item in _fetch_category(code, std):
             if item["url"] in seen_urls:
