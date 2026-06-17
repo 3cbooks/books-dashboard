@@ -22,6 +22,9 @@ scrapers/*.log
 scrapers/.cache/
 scrapers/raw/
 
+# 数据质量验证报告（运行时生成，仅供 Actions 显示）
+data/_validate_report.md
+
 # Node（如果以后加打包）
 node_modules/
 dist/

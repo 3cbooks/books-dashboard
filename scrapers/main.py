@@ -238,6 +238,14 @@ def main() -> int:
     log.info("═══ 完成 books=%d news=%d ═══", len(books), len(news))
     log.info("数据源状态: %s", sources_status)
 
+    # ============ 数据质量验证 ============
+    # 跑完抓取后立刻验证关键指标，发现退化输出警告
+    try:
+        from . import validate
+        validate.main()
+    except Exception:
+        log.error("数据质量验证抛异常:\n%s", traceback.format_exc())
+
     # 任一源失败就退出码非 0（让 GitHub Actions 告警，但不阻断 commit）
     return 0 if all(s == "ok" for s in sources_status.values()) else 0
 

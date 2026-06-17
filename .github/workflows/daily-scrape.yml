@@ -61,6 +61,14 @@ jobs:
           echo "===== insights.json (前 3 条) ====="
           python -c "import json; [print(f'{i+1}. {x[\"icon\"]} {x[\"title\"]}') for i,x in enumerate(json.load(open('data/insights.json')))]"
 
+      # ⑤.5 把验证报告输出到 GitHub Actions 摘要（页面顶部能看到）
+      - name: 📋 数据质量报告
+        if: always()
+        run: |
+          if [ -f data/_validate_report.md ]; then
+            cat data/_validate_report.md >> $GITHUB_STEP_SUMMARY
+          fi
+
       # ⑥ 把新数据 commit + push 回仓库
       #    GitHub Actions Bot 作为 commit author
       - name: 💾 提交数据更新
@@ -68,7 +76,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # 只把 data/ 目录的变化加进 commit
+          # 只把 data/ 目录的变化加进 commit（_validate_report.md 不进 commit，已在 .gitignore）
           git add data/
 
           # 如果没变化（比如所有源都失败拿到一样的兜底数据），就不提交
