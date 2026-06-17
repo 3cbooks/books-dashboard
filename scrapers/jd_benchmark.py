@@ -48,8 +48,6 @@ RIVAL_BRANDS = (
 )
 
 
-# 店铺优先级（数字越大越优先选作 best_match）
-# 选 best_match 时优先级高的胜出；同优先级再按销量排
 def _shop_priority(book: dict) -> int:
     """
     给京东每个候选 SKU 打优先级分（用于挑 best_match）：
@@ -90,6 +88,37 @@ def detect_jd_perks(text: str) -> list[str]:
     return perks
 
 
+def _tokenize_for_match(title: str) -> list[str]:
+    """
+    把当当书名拆成"用于匹配的关键词"列表。
+    例：'大中华寻宝记城市系列 泉州寻宝记' →
+        ['大中华寻宝记城市', '大中华寻宝记', '泉州寻宝记']
+    比 'in' 字串匹配更宽松，能应对京东和当当书名"空格位置不一致"的情况。
+    """
+    if not title:
+        return []
+    norm = normalize_title(title)
+    # 先按空格 + 常见分隔结构切（"系列""·"等）
+    parts = re.split(r"[\s·•·:\-]+|系列", norm)
+    tokens = [p.strip() for p in parts if p and len(p.strip()) >= 2]
+
+    # 处理"X+修饰后缀"模式：去掉常见后缀拿到主干
+    # 例：'大中华寻宝记城市' → 也加 '大中华寻宝记'（"城市"是分类修饰）
+    extra = []
+    suffix_modifiers = ["城市", "儿童", "少儿", "亲子", "古代", "现代", "中国"]
+    for t in tokens:
+        for sfx in suffix_modifiers:
+            if t.endswith(sfx) and len(t) > len(sfx) + 1:
+                stripped = t[:-len(sfx)]
+                if stripped not in tokens and stripped not in extra:
+                    extra.append(stripped)
+    tokens.extend(extra)
+
+    if norm not in tokens:
+        tokens.append(norm)
+    return tokens
+
+
 def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
                      delay: float = 0.6) -> dict:
     """
@@ -125,6 +154,7 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     # 1. "书名核心+作者"（精确）
     # 2. "书名核心"（兜底）
     # 3. "书名去尾数"（《人间小满3》→ "人间小满"，能搜到套装版）
+    # 4. 标题里"系列"等分隔后的副标题部分（《大中华寻宝记城市系列 泉州寻宝记》→ "泉州寻宝记"）
     queries = []
     if author_short:
         queries.append(f"{core} {author_short}")
@@ -133,6 +163,14 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
     if core_stripped and core_stripped != core and len(core_stripped) >= 2:
         queries.append(core_stripped)
+    # 取标题里的副词条（"系列 X" "X 系列" 后的子标题），如"泉州寻宝记"
+    full_norm = normalize_title(title)
+    # 找形如 "X系列 Y" 或 "X 系列 Y"，取 Y
+    m_sub = re.search(r"系列\s*([一-鿿]{2,10})$", full_norm)
+    if m_sub:
+        sub = m_sub.group(1).strip()
+        if sub and sub not in queries:
+            queries.append(sub)
 
     # 收集所有 query 命中的 SKU 并集（之前只取第一个有结果的 query）
     all_found_skus: set[str] = set()
@@ -153,12 +191,14 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     # 拿销量数据
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
-    # 抓详情，过滤出"和当当书是同一本"且 **是京东自营** 的所有版本
-    # 业务要求：京东侧只展示自营店铺的书，POP 全部跳过
+    # 抓详情，过滤出"和当当书是同一本"的所有版本
+    # 业务要求：京东侧优先自营，没自营时降级到销量最高的 POP（不再硬卡只看自营）
     pop_core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
+    # 关键词分词（用于宽松匹配，解决"大中华寻宝记城市系列" vs "大中华寻宝记 城市系列"这种因空格匹配失败的问题）
+    keyword_tokens = _tokenize_for_match(dangdang_book.get("title", ""))
+
     candidates: list[dict] = []
     skipped_rivals = 0
-    skipped_pop = 0
     for sku in found_skus:
         info = fetch_detail(sku)
         if not info:
@@ -171,23 +211,26 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
             time.sleep(delay)
             continue
 
-        # 业务要求：只对标京东自营，POP 跳过（京喜也是非标准自营）
-        if _shop_priority(info) < 100:
-            skipped_pop += 1
-            time.sleep(delay)
-            continue
-
         self_t = normalize_title(info.get("title", ""))
         if not self_t:
             time.sleep(delay)
             continue
+
+        # 三重匹配（任一通过即视为同款）：
+        #  1. strict: 整段核心字串出现在京东标题
+        #  2. loose:  去尾数核心字串 + 作者
+        #  3. token:  关键词分词 ≥2 个出现（最宽松，解决空格/顺序差异）
         match_strict = pop_core_normalized in self_t
         match_loose = (
             len(pop_core_stripped) >= 3
             and pop_core_stripped in self_t
             and (not author_short or author_short in self_t)
         )
-        if not (match_strict or match_loose):
+        match_token = (
+            len(keyword_tokens) >= 2
+            and sum(1 for t in keyword_tokens if t in self_t) >= 2
+        )
+        if not (match_strict or match_loose or match_token):
             time.sleep(delay)
             continue
         sd = sales.get(sku, {})
@@ -201,9 +244,8 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         candidates.append(info)
         time.sleep(delay)
 
-    if skipped_rivals or skipped_pop:
-        log.info("  ↪ 已剔除 %d 对手品牌 SKU + %d POP/京喜 SKU (业务要求只对标自营)",
-                 skipped_rivals, skipped_pop)
+    if skipped_rivals:
+        log.info("  ↪ 已剔除 %d 个对手品牌 SKU (当当/新华等)", skipped_rivals)
 
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}
