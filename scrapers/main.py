@@ -47,6 +47,15 @@ def main() -> int:
     if not books:
         log.warning("⚠ 所有图书源失败，使用上次数据兜底")
         books = load_json("books.json", default=[])
+    else:
+        # 数据保护：当当突然只抓到极少（< 旧数据 50%）也认为不可信
+        old_books = load_json("books.json", default=[]) or []
+        if len(old_books) >= 20 and len(books) < len(old_books) * 0.5:
+            log.warning(
+                "⚠ 当当抓到 %d 本（旧 %d 本）数据剧降，保留旧数据不覆盖",
+                len(books), len(old_books),
+            )
+            books = old_books
 
     # ============ 抓真新书 / 预售书（已废弃前端展示，但保留数据用于校验日期）============
     from . import dangdang_new
@@ -178,6 +187,16 @@ def main() -> int:
     if not news:
         log.warning("⚠ 所有新闻源失败，使用上次数据兜底")
         news = load_json("news.json", default=[])
+    else:
+        # 新闻数据保护：如果突然剧降（< 旧数据 50%），可能是百度反爬或时效过滤太狠
+        # 此时不覆盖，保留旧数据
+        old_news = load_json("news.json", default=[]) or []
+        if len(old_news) >= 10 and len(news) < len(old_news) * 0.5:
+            log.warning(
+                "⚠ 新闻数 %d 远小于旧数据 %d (< 50%%)，可能反爬/时效过滤异常，保留旧数据",
+                len(news), len(old_news),
+            )
+            news = old_news
 
     # ============ 写文件 ============
     save_json("books.json", books)
