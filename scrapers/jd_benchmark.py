@@ -103,7 +103,6 @@ def _tokenize_for_match(title: str) -> list[str]:
     tokens = [p.strip() for p in parts if p and len(p.strip()) >= 2]
 
     # 处理"X+修饰后缀"模式：去掉常见后缀拿到主干
-    # 例：'大中华寻宝记城市' → 也加 '大中华寻宝记'（"城市"是分类修饰）
     extra = []
     suffix_modifiers = ["城市", "儿童", "少儿", "亲子", "古代", "现代", "中国"]
     for t in tokens:
@@ -117,6 +116,35 @@ def _tokenize_for_match(title: str) -> list[str]:
     if norm not in tokens:
         tokens.append(norm)
     return tokens
+
+
+# 标志性"版本/纪念/特殊"词 — 用于做细颗粒度的标题相似度匹配
+# 当当书名里如果出现这些词，京东 SKU 标题里也含相同词的优先选
+_VERSION_KEYWORDS = [
+    # 纪念/版本
+    "十周年", "二十周年", "三十周年", "周年纪念", "纪念版", "纪念",
+    "初版", "首版", "再版", "新版", "复刻", "复刻版",
+    "典藏", "珍藏", "精装", "豪华", "限量",
+    # 内容/赠品
+    "亲签", "签名", "印签", "特签", "礼盒", "护身符",
+    "全集", "套装", "全册", "全套", "选集",
+    # 时代/作者关联
+    "仙逝", "逝世", "诞辰", "百年", "九十年代",
+    # 特殊版式
+    "图文", "插图", "彩图", "彩绘", "绘本",
+]
+
+
+def _extract_version_keywords(title: str) -> set[str]:
+    """从书名里提取出现的'版本/纪念/特殊词'集合（用于细粒度相似度匹配）"""
+    if not title:
+        return set()
+    norm = normalize_title(title)
+    found = set()
+    for kw in _VERSION_KEYWORDS:
+        if kw in norm:
+            found.add(kw)
+    return found
 
 
 def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
@@ -250,10 +278,22 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}
 
-    # 选最佳匹配：先按店铺优先级排（标准自营 > 京喜 > POP），同级按销量
-    # 这样 best_match 总是选"最像京东本家"的版本，而不是销量最高但是京喜的
+    # 选最佳匹配三级排序：
+    # 1. 店铺优先级（标准自营 > POP > 京喜）
+    # 2. 版本关键词相似度（与当当书名共享多少"纪念/初版/精装/亲签"等版本词）
+    #    例：当当《白鹿原 ... 仙逝十周年纪念》→ 京东选含"十周年""纪念"的版本
+    # 3. 销量
+    dd_version_kws = _extract_version_keywords(dangdang_book.get("title", ""))
+
+    def _similarity(book: dict) -> int:
+        """京东 SKU 标题和当当标题的版本关键词重叠数（越大越优先）"""
+        if not dd_version_kws:
+            return 0
+        jd_kws = _extract_version_keywords(book.get("title", ""))
+        return len(dd_version_kws & jd_kws)
+
     candidates.sort(
-        key=lambda b: (-_shop_priority(b), -b.get("show_count", 0))
+        key=lambda b: (-_shop_priority(b), -_similarity(b), -b.get("show_count", 0))
     )
     best_match = candidates[0]
 
