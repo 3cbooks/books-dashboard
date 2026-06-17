@@ -41,10 +41,36 @@ JD_PERK_PATTERNS = [
 
 # 对手品牌识别 — 标题/店铺名含这些词时，这本书是对手平台的卖家在京东 POP 卖，
 # 不能算作"京东自己的对标版本"
+# （注意："京喜"是京东子品牌，不算对手；但它的权益质量差，best_match 选择时降级，详见 _shop_priority）
 RIVAL_BRANDS = (
-    "当当", "新华书店", "凤凰新华", "博库", "京喜",
+    "当当", "新华书店", "凤凰新华", "博库",
     "孔夫子", "天猫", "淘宝",
 )
+
+
+# 店铺优先级（数字越大越优先选作 best_match）
+# 选 best_match 时优先级高的胜出；同优先级再按销量排
+def _shop_priority(book: dict) -> int:
+    """
+    给京东每个候选 SKU 打优先级分（用于挑 best_match）：
+      - 标准京东自营（果麦/博集天卷/中信等出版社的京东自营旗舰店）  → 100
+      - POP 商家                                                    → 10
+      - 京喜自营 (京东低价子品牌，权益少质量参差，业务上不愿对标)    → 5
+
+    京喜被压到比 POP 还低 —— 业务方反馈：京喜自营官方店的权益质量不能代表京东侧
+    实际能力，宁可对标普通 POP 店（一般是出版社直营的店）。
+    """
+    shop = book.get("shop_name", "") or ""
+    if not shop:
+        return 0
+    # 标准京东自营（最高优先级）
+    if ("京东自营" in shop or "自营旗舰店" in shop) and "京喜" not in shop:
+        return 100
+    # 京喜自营 — 业务降级
+    if "京喜" in shop:
+        return 5
+    # 普通 POP
+    return 10
 
 
 def is_rival_seller(title: str = "", shop_name: str = "") -> bool:
@@ -174,12 +200,18 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}
 
-    # 销量降序
-    candidates.sort(key=lambda b: b.get("show_count", 0), reverse=True)
+    # 选最佳匹配：先按店铺优先级排（标准自营 > 京喜 > POP），同级按销量
+    # 这样 best_match 总是选"最像京东本家"的版本，而不是销量最高但是京喜的
+    candidates.sort(
+        key=lambda b: (-_shop_priority(b), -b.get("show_count", 0))
+    )
     best_match = candidates[0]
 
     # 关键：合并所有版本的权益（京东可能在不同 SKU 里分散提供权益）
-    all_perks = sorted(set(p for c in candidates for p in (c.get("perks") or [])))
+    # 但只统计"标准京东自营"的权益（京喜质量参差，不算入正式对标）
+    standard_self_books = [c for c in candidates if _shop_priority(c) >= 100]
+    perk_pool = standard_self_books if standard_self_books else candidates
+    all_perks = sorted(set(p for c in perk_pool for p in (c.get("perks") or [])))
 
     # 简化版的版本列表（前端可展开看"京东其他版本"）
     all_versions = [
