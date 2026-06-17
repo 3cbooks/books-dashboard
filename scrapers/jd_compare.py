@@ -59,9 +59,12 @@ def normalize_title(title: str) -> str:
         return ""
     s = title.strip()
     # 多遍清洗（清掉一个营销词后可能露出下一个）
+    # 关键：替换为空格 而不是空字符串，避免两边的词黏在一起
+    # 例：'真实之书 印签版 活出自己' 清洗"印签版" 应得 '真实之书   活出自己'
+    #      而不是 '真实之书活出自己'
     for _ in range(3):
         for pat in _STOP_PATTERNS:
-            s = re.sub(pat, "", s)
+            s = re.sub(pat, " ", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 

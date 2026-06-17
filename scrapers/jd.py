@@ -238,7 +238,8 @@ DETAIL_PATTERNS = {
     "publisher":  re.compile(r'"Publishers"\s*:\s*"([^"]+)"'),
     # "venderId":"1000005647"
     "vender_id":  re.compile(r'"venderId"\s*:\s*"?(\d+)"?'),
-    # "shopName":"博集天卷京东自营旗舰店"
+    # "shopName":"博集天卷京东自营旗舰店" — 注意：商品页 HTML 里也有 <em "shopName">
+    # 这种属性，所以必须在 ":" 后面（确认是 JSON 字段）才取
     "shop_name":  re.compile(r'"shopName"\s*:\s*"([^"]+)"'),
     # 商品名（在 <title> 或 "name" 字段）
     "title":      re.compile(r'<title>([^<]+)</title>'),
@@ -431,11 +432,32 @@ def fetch_detail(sku: str) -> dict | None:
             extra_text_parts.append(m.group(1))
     out["_perk_text"] = " ".join(extra_text_parts)
 
-    # 判断是否京东自营：shopName 包含"京东自营"或"自营旗舰店"
+    # 判断是否京东自营：
+    # 主信号：shopName 含"京东自营"或"自营旗舰店"
+    # 兜底信号 1：venderId=0 或 shopId=0（京东自营特征 — POP 商家 venderId 是具体 ID）
+    # 兜底信号 2：rankInfo 里榜单名带"自营"前缀
     shop = out.get("shop_name", "")
-    out["is_self"] = bool(
+    is_self = bool(
         shop and ("京东自营" in shop or "自营旗舰店" in shop)
     )
+    if not is_self:
+        # venderId/shopId = 0 是京东自营的硬特征
+        # 抓所有 venderId/shopId 值，只要其中有一个是 "0" 就可能是自营
+        vender_ids = re.findall(r'"venderId"\s*:\s*"?(\d+)"?', text)
+        shop_ids = re.findall(r'"shopId"\s*:\s*"?(\d+)"?', text)
+        # 第一个 venderId 就是当前 SKU 的归属
+        if vender_ids and vender_ids[0] == "0":
+            is_self = True
+        elif shop_ids and shop_ids[0] == "0":
+            is_self = True
+        # 兜底：rankInfo 里"自营 X 榜"
+        elif re.search(r'"(?:name|longTitle|channelEntryTitle)"\s*:\s*"自营[^"]+', text):
+            is_self = True
+
+        if is_self and not shop:
+            # 没 shopName 时给个占位，让前端能正确显示
+            out["shop_name"] = "京东自营"
+    out["is_self"] = is_self
 
     # 提取细分品类
     out["category"] = _extract_jd_category(text)
