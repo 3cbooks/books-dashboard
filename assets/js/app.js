@@ -513,15 +513,11 @@ function renderDangdangBenchmark() {
     };
   });
 
-  // 排序：缺口严重度 → 当当排名
-  const ORDER = { no_jd: 1, perk_gap: 2, none: 3 };
+  // 排序：严格按当当热卖榜排名（用户要求 2026-06-17，不再按缺口严重度优先）
   let shown = activeGap === 'all'
     ? items
     : items.filter(r => r.gap_level === activeGap);
   shown = shown.slice().sort((a, b) => {
-    const oa = ORDER[a.gap_level] || 9;
-    const ob = ORDER[b.gap_level] || 9;
-    if (oa !== ob) return oa - ob;
     return (a.dangdang.rank || 99) - (b.dangdang.rank || 99);
   });
 

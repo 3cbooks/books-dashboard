@@ -65,6 +65,9 @@ def normalize_title(title: str) -> str:
     for _ in range(3):
         for pat in _STOP_PATTERNS:
             s = re.sub(pat, " ", s)
+    # 去掉书名内的分隔符（中点、间隔号），这样
+    # "财之道丛书・经营十二条"（当当）能匹配"财之道丛书经营十二条"（京东）
+    s = re.sub(r"[・·]", "", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 

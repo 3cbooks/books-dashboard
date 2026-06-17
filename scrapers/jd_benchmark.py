@@ -167,12 +167,26 @@ def _recheck_for_self(core: str, dangdang_book: dict,
     """
     existing_skus = {c.get("sku") for c in existing_candidates}
     pop_core_normalized = normalize_title(core)
+    title = dangdang_book.get("title", "") or ""
 
-    # 用更宽的查询：纯核心标题 + 去尾数版（不带作者，召回更广）
+    # 用更宽的查询：纯核心标题 + 去尾数版 + 丛书拆词 + 分隔符尾段（不带作者，召回更广）
     queries = [core]
     core_no_serial = re.sub(r"\s*\d+\s*$", "", core).strip()
     if core_no_serial and core_no_serial != core and len(core_no_serial) >= 2:
         queries.append(core_no_serial)
+    # 丛书前缀拆解：《财之道丛书・经营十二条》→ "经营十二条"
+    m_sub = re.search(r"[一-鿿]{2,8}丛书[\s·・\-]*([一-鿿]{2,12})", title)
+    if m_sub:
+        sub = m_sub.group(1).strip()
+        if sub and sub not in queries:
+            queries.append(sub)
+    # 分隔符尾段：《X・Y》→ Y
+    parts = re.split(r"[・·:：]", title)
+    if len(parts) >= 2:
+        tail = parts[-1].strip()
+        tail = re.sub(r"[（(][^）)]*[)）]", "", tail).strip()
+        if tail and 2 <= len(tail) <= 12 and tail not in queries:
+            queries.append(tail)
 
     new_skus: list[str] = []
     for keyword in queries:
@@ -281,7 +295,9 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     # 1. "书名核心+作者"（精确）
     # 2. "书名核心"（兜底）
     # 3. "书名去尾数"（《人间小满3》→ "人间小满"，能搜到套装版）
-    # 4. 标题里"系列"等分隔后的副标题部分（《大中华寻宝记城市系列 泉州寻宝记》→ "泉州寻宝记"）
+    # 4. 标题里"系列"/"丛书"等分隔后的副标题部分
+    #    《大中华寻宝记城市系列 泉州寻宝记》→ "泉州寻宝记"
+    #    《财之道丛书・经营十二条》→ "经营十二条"
     queries = []
     if author_short:
         queries.append(f"{core} {author_short}")
@@ -298,6 +314,20 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         sub = m_sub.group(1).strip()
         if sub and sub not in queries:
             queries.append(sub)
+    # 找形如 "X丛书Y" 或 "X丛书·Y" 或 "X丛书・Y"，取 Y（如《财之道丛书・经营十二条》）
+    m_sub2 = re.search(r"[一-鿿]{2,8}丛书[\s·・\-]*([一-鿿]{2,12})", title)
+    if m_sub2:
+        sub = m_sub2.group(1).strip()
+        if sub and sub not in queries:
+            queries.append(sub)
+    # 找标题里被"・"或"·"或":"分隔的最后一段，如"财之道丛书・经营十二条" → "经营十二条"
+    parts = re.split(r"[・·:：]", title)
+    if len(parts) >= 2:
+        tail = parts[-1].strip()
+        # 清理一下，去掉括号内容
+        tail = re.sub(r"[（(][^）)]*[)）]", "", tail).strip()
+        if tail and 2 <= len(tail) <= 12 and tail not in queries:
+            queries.append(tail)
 
     # 收集所有 query 命中的 SKU 并集（之前只取第一个有结果的 query）
     all_found_skus: set[str] = set()
