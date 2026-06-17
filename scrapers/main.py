@@ -62,31 +62,80 @@ def main() -> int:
 
     # ============ 当当 vs 京东 权益对标 ============
     # 对当当带权益的书逐一查京东对应版本，做权益对比
-    # 注意：京东对 GitHub Actions 云端 IP 反爬，跑出来全是 'no_jd'。
-    # 这种情况下，我们保留旧数据（之前本地跑的真实结果），避免覆盖。
+    # 数据保护多层防御:
+    #  1. 整体反爬保护: ≥80% 是 'no_jd' → 保留旧数据
+    #  2. 单本退化保护: 旧数据是自营、新数据降级 POP → 重试或保留旧
+    #  3. 退化到 POP 也比丢数据强: 至少 best_match 不为空
     try:
         from . import jd_benchmark
+        old_benchmark = load_json("benchmark.json", default=[]) or []
+        # 旧数据按当当书名建索引，方便查
+        old_by_title = {r["dangdang"]["title"]: r for r in old_benchmark}
+
         benchmark_data = jd_benchmark.benchmark_books(
             books, only_with_perks=True, delay=1.5,
         )
-        # 检测京东被反爬：如果 ≥80% 的书是 'no_jd'，认为这次跑被反爬了
-        if benchmark_data:
+
+        if not benchmark_data:
+            sources_status["benchmark"] = "partial"
+        else:
+            # 1. 整体反爬保护
             no_jd_count = sum(1 for r in benchmark_data
                               if r.get("gap_level") == "no_jd")
             if no_jd_count / len(benchmark_data) >= 0.8:
                 log.warning(
-                    "⚠ 京东对标 %d/%d 本判为 'no_jd' — 大概率被云端反爬，"
-                    "保留旧数据不覆盖",
+                    "⚠ 京东对标 %d/%d 本 'no_jd' — 大概率被云端反爬，保留旧数据",
                     no_jd_count, len(benchmark_data),
                 )
-                # 不写文件，保留磁盘上的旧数据
                 sources_status["benchmark"] = "blocked_by_anticrawl"
             else:
+                # 2. 单本退化保护：检查每本书有没有"自营→POP 退化"
+                #    退化时尝试重试一次；重试还失败就用旧数据该条记录
+                degraded_indices = []
+                for i, r in enumerate(benchmark_data):
+                    new_self = (r.get("jd",{}).get("best_match",{}) or {}).get("is_self", False)
+                    new_avail = r.get("jd",{}).get("available", False)
+                    old = old_by_title.get(r["dangdang"]["title"])
+                    old_self = (
+                        old and old.get("jd",{}).get("best_match",{})
+                        and old["jd"]["best_match"].get("is_self", False)
+                    ) if old else False
+                    # 退化判定: 旧数据是自营，新数据(可用但)不是自营 OR 新数据完全不可用
+                    if old_self and (not new_avail or not new_self):
+                        degraded_indices.append(i)
+
+                if degraded_indices:
+                    log.warning(
+                        "⚠ %d 本对标退化（旧自营 → 新 POP/不可用）：尝试重试",
+                        len(degraded_indices),
+                    )
+                    # 重试一次
+                    perk_books = [b for b in books if b.get("perks")]
+                    for i in degraded_indices:
+                        title = benchmark_data[i]["dangdang"]["title"]
+                        target = next((b for b in perk_books if b.get("title") == title), None)
+                        if not target:
+                            continue
+                        retry_result = jd_benchmark.query_jd_for_book(target, delay=1.5)
+                        retry_self = (retry_result.get("best_match",{}) or {}).get("is_self", False)
+                        if retry_self:
+                            # 重试拿到自营了，更新这条
+                            log.info("  ↪《%s...》重试成功，恢复自营匹配", title[:20])
+                            benchmark_data[i]["jd"] = retry_result
+                            from .jd_benchmark import _assess_gap
+                            benchmark_data[i]["gap_level"] = _assess_gap(
+                                benchmark_data[i]["dangdang"], retry_result
+                            )
+                        else:
+                            # 重试还是不是自营，用旧数据兜底
+                            old = old_by_title.get(title)
+                            if old:
+                                log.info("  ↪《%s...》重试失败，用旧数据兜底", title[:20])
+                                benchmark_data[i] = old
+
                 save_json("benchmark.json", benchmark_data)
                 sources_status["benchmark"] = "ok"
                 log.info("✓ 权益对标: %d 本", len(benchmark_data))
-        else:
-            sources_status["benchmark"] = "partial"
     except Exception:
         log.error("✗ 权益对标抛异常:\n%s", traceback.format_exc())
         sources_status["benchmark"] = "failed"
