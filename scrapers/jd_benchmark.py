@@ -219,6 +219,13 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     # 拿销量数据
     sales = fetch_sales_proxy(found_skus, batch_size=20)
 
+    # 提取当当书名末尾的"序号"（用于序号守护 + 后续排序）
+    # 例：《人间小满3》→ serial="3", prefix="人间小满"
+    #      《肥志百科17》→ serial="17", prefix="肥志百科"
+    dd_serial_match = re.search(r"([一-鿿]{2,8})(\d+)\s*$", core or "")
+    dd_serial = dd_serial_match.group(2) if dd_serial_match else None
+    dd_serial_prefix = dd_serial_match.group(1) if dd_serial_match else None
+
     # 抓详情，过滤出"和当当书是同一本"的所有版本
     # 业务要求：京东侧优先自营，没自营时降级到销量最高的 POP（不再硬卡只看自营）
     pop_core_stripped = re.sub(r"\s*\d+\s*$", "", core).strip()
@@ -243,6 +250,21 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         if not self_t:
             time.sleep(delay)
             continue
+
+        # 系列序号守护：当当书名带数字（如"人间小满3""肥志百科17"）
+        # → 京东 SKU 标题必须含相同数字（防止选到"人间小满 1+2 套装"）
+        # 用 dd_serial_match 在前面已经提取过
+        if dd_serial:
+            # 京东标题里要么含相同数字，要么是含"全 N 册"等明显套装标识
+            jd_t_full = info.get("title", "")  # 不 normalize 避免数字被吃掉
+            has_serial = (
+                dd_serial in jd_t_full
+                # 套装也算（虽然包含 1+2+...+N，但里面有这本书）
+                or re.search(rf"全\s*\d+\s*册|套装\s*\d|1\s*\+\s*2", jd_t_full)
+            )
+            if not has_serial:
+                time.sleep(delay)
+                continue
 
         # 三重匹配（任一通过即视为同款）：
         #  1. strict: 整段核心字串出现在京东标题
@@ -278,22 +300,49 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
     if not candidates:
         return {"available": False, "reason": "no_match_after_detail"}
 
-    # 选最佳匹配三级排序：
+    # 选最佳匹配多级排序：
     # 1. 店铺优先级（标准自营 > POP > 京喜）
-    # 2. 版本关键词相似度（与当当书名共享多少"纪念/初版/精装/亲签"等版本词）
-    #    例：当当《白鹿原 ... 仙逝十周年纪念》→ 京东选含"十周年""纪念"的版本
-    # 3. 销量
+    # 2. 系列序号严格匹配（《人间小满3》必须选含"3"的，不能选"1+2 套装"）
+    # 3. 版本关键词相似度（纪念/初版/精装/亲签等版本词重合度）
+    # 4. 销量
     dd_version_kws = _extract_version_keywords(dangdang_book.get("title", ""))
 
+    def _serial_match(book: dict) -> int:
+        """京东 SKU 是否含相同序号 — 严格单本=3，含序号但是套装=2，套装匹配=1，其他=0"""
+        if not dd_serial:
+            return 0  # 当当书没序号，所有 SKU 平等
+        jd_t = normalize_title(book.get("title", ""))
+        if not jd_t:
+            return 0
+        # 是否套装（标题含"套装""全X册""1+2"等）
+        is_bundle = bool(re.search(r"套装|全\s*\d+\s*册|全套|1\+2", jd_t))
+        # 严格匹配："X+序号"连续出现（如"人间小满3"）
+        if dd_serial_prefix and (
+            f"{dd_serial_prefix}{dd_serial}" in jd_t
+            or f"{dd_serial_prefix} {dd_serial}" in jd_t
+        ):
+            # 含序号但是套装 → 2（套装含的不止这一本）
+            # 含序号且是单本 → 3（最匹配）
+            return 2 if is_bundle else 3
+        # 不含明确序号但是套装匹配
+        if dd_serial_prefix and dd_serial_prefix in jd_t and is_bundle:
+            return 1
+        return 0
+
     def _similarity(book: dict) -> int:
-        """京东 SKU 标题和当当标题的版本关键词重叠数（越大越优先）"""
+        """版本关键词重合度"""
         if not dd_version_kws:
             return 0
         jd_kws = _extract_version_keywords(book.get("title", ""))
         return len(dd_version_kws & jd_kws)
 
     candidates.sort(
-        key=lambda b: (-_shop_priority(b), -_similarity(b), -b.get("show_count", 0))
+        key=lambda b: (
+            -_shop_priority(b),
+            -_serial_match(b),
+            -_similarity(b),
+            -b.get("show_count", 0),
+        )
     )
     best_match = candidates[0]
 

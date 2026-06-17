@@ -420,14 +420,19 @@ def fetch_detail(sku: str) -> dict | None:
     if not pub and any(k in title for k in NON_BOOK_KW):
         return None
 
-    # 把"销售属性变体"字段加进 perk 识别用的文本（仅当前选中的变体）
-    # 京东商品页 wname/skuName 是当前 SKU 的全名（含变体），title 可能不全
-    # 但 salePropSeq 是所有变体集合 — 不能用，会误识别其他变体的权益
+    # 权益识别用的文本：title + wareName/skuName/wname
+    # 都是当前 SKU 自身的"商品全名"，不会引入其他 SKU 的权益
     extra_text_parts = [title]
-    # wareName / skuName / wname 是当前 SKU 的完整名（含变体如"亲签版"）
     for pat in [r'"wareName"\s*:\s*"([^"]+)"',
                 r'"skuName"\s*:\s*"([^"]+)"',
                 r'"wname"\s*:\s*"([^"]+)"']:
+        for m in re.finditer(pat, text):
+            extra_text_parts.append(m.group(1))
+    # 也加京东促销/标签标识 — 这些是"当前 SKU 自己挂"的标签，不会引入其他变体的权益
+    # 例：promotionTags / skuTags / labels
+    for pat in [r'"promotionTags?"\s*:\s*"([^"]+)"',
+                r'"skuTags?"\s*:\s*"([^"]+)"',
+                r'"labels?"\s*:\s*\[([^\]]+)\]']:
         for m in re.finditer(pat, text):
             extra_text_parts.append(m.group(1))
     out["_perk_text"] = " ".join(extra_text_parts)

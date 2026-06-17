@@ -70,7 +70,7 @@
     "author": "刘洪波",
     "category": "热销",
     "rating": null,
-    "cover": "http://img3m7.ddimg.cn/92/28/30057977-1_l_1781680289.jpg",
+    "cover": "http://img3m7.ddimg.cn/92/28/30057977-1_l_1781683870.jpg",
     "url": "http://product.dangdang.com/30057977.html",
     "price": "¥24.00",
     "rank": 4,
@@ -147,7 +147,16 @@
     "rank": 7,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "新华字典 : 双色版第12版",
+    "douban_pubdate": "2020-07-28",
+    "douban_publisher": "商务印书馆",
+    "douban_rating": 8.6,
+    "douban_id": 30459275,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 2150,
+    "pubdate_verified": "2020-07-28"
   },
   {
     "title": "肥志百科17 18特典版",
@@ -163,7 +172,16 @@
       "限量"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "肥志百科",
+    "douban_pubdate": "2018-09-28",
+    "douban_publisher": "",
+    "douban_rating": 8.2,
+    "douban_id": 30307146,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 2819,
+    "pubdate_verified": "2018-09-28"
   },
   {
     "title": "樱花树下站谁都美",
@@ -194,20 +212,146 @@
     "source": "当当"
   },
   {
+    "title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
+    "raw_title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
+    "author": "阿尔贝・加缪",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m0.ddimg.cn/83/15/30056780-1_l_1780994380.jpg",
+    "url": "http://product.dangdang.com/30056780.html",
+    "price": "¥29.90",
+    "rank": 11,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事",
+    "raw_title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事 当当自营",
+    "author": "杨雨坤",
+    "category": "社科",
+    "rating": null,
+    "cover": "http://img3m9.ddimg.cn/59/29/30064379-1_l_1780457994.jpg",
+    "url": "http://product.dangdang.com/30064379.html",
+    "price": "¥33.80",
+    "rank": 12,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "快乐是头等大事 弗洛伊德与为什么鸭2",
+    "raw_title": "快乐是头等大事 弗洛伊德与为什么鸭2 当当独家签章 刷单边版本 武志红作序推荐 把快乐从随机事件变成可掌握的能力 当当自营图书",
+    "author": "徐慢慢心理话",
+    "category": "社科",
+    "rating": 5.0,
+    "cover": "http://img3m0.ddimg.cn/30/33/30048510-1_l_1778149795.jpg",
+    "url": "http://product.dangdang.com/30048510.html",
+    "price": "¥29.80",
+    "rank": 13,
+    "perks": [
+      "独家"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作",
+    "raw_title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作 当当专享亲签版 限量随机掉落姑苏阿焦手写寄语手绘画当当自营",
+    "author": "姑苏阿焦",
+    "category": "热销",
+    "rating": 4.0,
+    "cover": "http://img3m8.ddimg.cn/79/36/30060538-1_l_1780628140.jpg",
+    "url": "http://product.dangdang.com/30060538.html",
+    "price": "¥29.90",
+    "rank": 14,
+    "perks": [
+      "亲签",
+      "限量"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "做号 个人IP创作手册",
+    "raw_title": "做号 个人IP创作手册 当当专享印签版 当当自营图书",
+    "author": "徐沪生",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m0.ddimg.cn/67/25/30057160-1_l_1780373644.jpg",
+    "url": "http://product.dangdang.com/30057160.html",
+    "price": "¥39.80",
+    "rank": 15,
+    "perks": [],
+    "source": "当当"
+  },
+  {
     "title": "泥潭精装刷边 编码限量版 更有特签",
     "raw_title": "泥潭精装刷边 编码限量版 更有特签亲签300套随机掉落  赠《刘楚昕访谈录》藏书票 透卡 漓江文学奖获奖作品 当当自营现货发售 飞机盒发货",
     "author": "刘楚昕",
-    "category": "小说",
+    "category": "热销",
     "rating": 5.0,
     "cover": "http://img3m9.ddimg.cn/23/1/30066719-1_l_1781493447.jpg",
     "url": "http://product.dangdang.com/30066719.html",
     "price": "¥39.80",
-    "rank": 2,
+    "rank": 16,
     "perks": [
       "亲签",
       "限量",
       "礼盒",
       "赠品"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "崇祯传 中华帝王传记",
+    "raw_title": "崇祯传   中华帝王传记 当当独家特装版 中华书局出版",
+    "author": "樊树志",
+    "category": "人文",
+    "rating": 5.0,
+    "cover": "http://img3m1.ddimg.cn/62/20/30064481-1_l_1781150736.jpg",
+    "url": "http://product.dangdang.com/30064481.html",
+    "price": "¥88.00",
+    "rank": 17,
+    "perks": [
+      "独家"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "剑来山水郎 端午限时机缘版 全3册",
+    "raw_title": "剑来山水郎 端午限时机缘版 全3册 当当自营图书",
+    "author": "烽火戏诸侯",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m2.ddimg.cn/25/35/30072562-1_l_1781519333.jpg",
+    "url": "http://product.dangdang.com/30072562.html",
+    "price": "¥126.00",
+    "rank": 18,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "中国式家庭 知名心理咨询师陈海贤重磅新作 走进咨询现场 解开家庭的难题 活出自由通透的人生",
+    "raw_title": "中国式家庭 知名心理咨询师陈海贤重磅新作 走进咨询现场 解开家庭的难题 活出自由通透的人生 当当自营图书",
+    "author": "陈海贤",
+    "category": "社科",
+    "rating": 5.0,
+    "cover": "http://img3m7.ddimg.cn/66/8/30052407-1_l_1779697501.jpg",
+    "url": "http://product.dangdang.com/30052407.html",
+    "price": "¥39.90",
+    "rank": 19,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "真实之书",
+    "raw_title": "真实之书  亲签版  活出自己 全世界都能拥抱你    “生命成长” 系列的开篇之作",
+    "author": "柳智宇",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/35/17/30045941-1_l_1779868151.jpg",
+    "url": "http://product.dangdang.com/30045941.html",
+    "price": "¥39.90",
+    "rank": 20,
+    "perks": [
+      "亲签"
     ],
     "source": "当当"
   },
@@ -256,43 +400,16 @@
     "source": "当当"
   },
   {
-    "title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
-    "raw_title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
-    "author": "阿尔贝・加缪",
-    "category": "文学",
+    "title": "其中一个是谎言",
+    "raw_title": "其中一个是谎言 当当限定首刷版  印签版 金爱烂沉淀13年新长篇  为了活下去 我们用谎言保护天真 当当自营",
+    "author": "金爱烂",
+    "category": "小说",
     "rating": null,
-    "cover": "http://img3m0.ddimg.cn/83/15/30056780-1_l_1780994380.jpg",
-    "url": "http://product.dangdang.com/30056780.html",
-    "price": "¥29.90",
-    "rank": 2,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事",
-    "raw_title": "为父则刚 前额叶主理人 杨雨坤新书 颠覆传统育儿观之作 亲子教育需要父职叙事 当当自营",
-    "author": "杨雨坤",
-    "category": "文学",
-    "rating": null,
-    "cover": "http://img3m9.ddimg.cn/59/29/30064379-1_l_1780457994.jpg",
-    "url": "http://product.dangdang.com/30064379.html",
-    "price": "¥33.80",
-    "rank": 3,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作",
-    "raw_title": "人间小满3 茶要细细品日子慢慢过 姑苏阿焦新作 当当专享亲签版 限量随机掉落姑苏阿焦手写寄语手绘画当当自营",
-    "author": "姑苏阿焦",
-    "category": "文学",
-    "rating": 4.0,
-    "cover": "http://img3m8.ddimg.cn/79/36/30060538-1_l_1780628140.jpg",
-    "url": "http://product.dangdang.com/30060538.html",
-    "price": "¥29.90",
-    "rank": 4,
+    "cover": "http://img3m3.ddimg.cn/86/31/30071633-1_l_1781077038.jpg",
+    "url": "http://product.dangdang.com/30071633.html",
+    "price": "¥35.90",
+    "rank": 6,
     "perks": [
-      "亲签",
       "限量"
     ],
     "source": "当当"
@@ -314,18 +431,44 @@
     "source": "当当"
   },
   {
-    "title": "真实之书",
-    "raw_title": "真实之书  亲签版  活出自己 全世界都能拥抱你    “生命成长” 系列的开篇之作",
-    "author": "柳智宇",
-    "category": "童书",
-    "rating": null,
-    "cover": "http://img3m1.ddimg.cn/35/17/30045941-1_l_1779868151.jpg",
-    "url": "http://product.dangdang.com/30045941.html",
-    "price": "¥39.90",
-    "rank": 3,
+    "title": "门外：边境 锈带与好莱坞",
+    "raw_title": "门外：边境 锈带与好莱坞   限量亲笔签名  刘骁骞新书当当自营",
+    "author": "刘骁骞",
+    "category": "文学",
+    "rating": 5.0,
+    "cover": "http://img3m2.ddimg.cn/43/24/30045652-1_l_1780640943.jpg",
+    "url": "http://product.dangdang.com/30045652.html",
+    "price": "¥28.90",
+    "rank": 6,
     "perks": [
-      "亲签"
+      "限量"
     ],
+    "source": "当当"
+  },
+  {
+    "title": "亲爱的朋友，人生永远柳暗花明",
+    "raw_title": "亲爱的朋友，人生永远柳暗花明（人生所有的困顿，都会是转机的序幕）",
+    "author": "史铁生",
+    "category": "文学",
+    "rating": null,
+    "cover": "http://img3m1.ddimg.cn/5/7/30051851-1_l_1778310225.jpg",
+    "url": "http://product.dangdang.com/30051851.html",
+    "price": "¥19.80",
+    "rank": 7,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "命运 讲述潮汕人家的平凡故事 阿太与命运的百年缠斗 蔡崇达 著",
+    "raw_title": "命运 讲述潮汕人家的平凡故事 阿太与命运的百年缠斗 蔡崇达 著  当当随书专享 蔡崇达印签锦鲤信纸当当自营",
+    "author": "蔡崇达",
+    "category": "文学",
+    "rating": 5.0,
+    "cover": "http://img3m5.ddimg.cn/36/31/30064455-1_l_1780045243.jpg",
+    "url": "http://product.dangdang.com/30064455.html",
+    "price": "¥39.80",
+    "rank": 8,
+    "perks": [],
     "source": "当当"
   },
   {
@@ -366,6 +509,19 @@
     "url": "http://product.dangdang.com/30047179.html",
     "price": "¥29.50",
     "rank": 6,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "我还想看见",
+    "raw_title": "我还想看见   当当印签本，东亚女儿 职场卷王 抗癌博主“柱子哥”与疾病和不确定性共处的璀璨人生",
+    "author": "柱子哥",
+    "category": "童书",
+    "rating": 5.0,
+    "cover": "http://img3m5.ddimg.cn/37/15/30044755-1_l_1778653631.jpg",
+    "url": "http://product.dangdang.com/30044755.html",
+    "price": "¥40.00",
+    "rank": 7,
     "perks": [],
     "source": "当当"
   },

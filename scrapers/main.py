@@ -122,29 +122,67 @@ def main() -> int:
                         "⚠ %d 本对标退化（旧自营 → 新 POP/不可用）：尝试重试",
                         len(degraded_indices),
                     )
-                    # 重试一次
-                    perk_books = [b for b in books if b.get("perks")]
+                    # 重试一次（在 books 里找原书，不限制 perks）
                     for i in degraded_indices:
                         title = benchmark_data[i]["dangdang"]["title"]
-                        target = next((b for b in perk_books if b.get("title") == title), None)
+                        target = next((b for b in books if b.get("title") == title), None)
                         if not target:
                             continue
                         retry_result = jd_benchmark.query_jd_for_book(target, delay=1.5)
                         retry_self = (retry_result.get("best_match",{}) or {}).get("is_self", False)
                         if retry_self:
-                            # 重试拿到自营了，更新这条
                             log.info("  ↪《%s...》重试成功，恢复自营匹配", title[:20])
                             benchmark_data[i]["jd"] = retry_result
-                            from .jd_benchmark import _assess_gap
+                            from .jd_benchmark import _assess_gap, WEAK_PERKS
                             benchmark_data[i]["gap_level"] = _assess_gap(
                                 benchmark_data[i]["dangdang"], retry_result
                             )
+                            # 同步刷新 distinctive_strong/weak
+                            dd_perks = set(benchmark_data[i]["dangdang"].get("perks", []))
+                            jd_perks = set(retry_result.get("all_perks") or
+                                           (retry_result.get("best_match") or {}).get("perks", []) or [])
+                            distinctive = dd_perks - jd_perks
+                            benchmark_data[i]["distinctive_strong"] = sorted(distinctive - WEAK_PERKS)
+                            benchmark_data[i]["distinctive_weak"] = sorted(distinctive & WEAK_PERKS)
                         else:
-                            # 重试还是不是自营，用旧数据兜底
                             old = old_by_title.get(title)
                             if old:
                                 log.info("  ↪《%s...》重试失败，用旧数据兜底", title[:20])
                                 benchmark_data[i] = old
+
+                # 3. 关键 SKU 守护：业务确认过的"应该匹配某 SKU"清单
+                #    搜索结果偶发波动可能让 best_match 选错（如《人间小满3》被选到套装版）
+                #    每本关键书检查 best_match.sku 是否等于期望 SKU，不一致就用旧数据
+                from .validate import EXPECTED_KEY_SKUS
+                wrong_sku_indices = []
+                for i, r in enumerate(benchmark_data):
+                    title = r["dangdang"]["title"]
+                    expected_sku = None
+                    for kw, sku in EXPECTED_KEY_SKUS.items():
+                        if kw in title:
+                            expected_sku = sku
+                            break
+                    if not expected_sku:
+                        continue
+                    actual_sku = (r.get("jd",{}).get("best_match",{}) or {}).get("sku")
+                    if actual_sku != expected_sku:
+                        # 看旧数据里是不是对的
+                        old = old_by_title.get(title)
+                        old_sku = (old.get("jd",{}).get("best_match",{}) or {}).get("sku") if old else None
+                        if old_sku == expected_sku:
+                            wrong_sku_indices.append((i, title, actual_sku, expected_sku, old))
+
+                if wrong_sku_indices:
+                    log.warning(
+                        "⚠ %d 本关键书 best_match SKU 不一致，从旧数据恢复",
+                        len(wrong_sku_indices),
+                    )
+                    for i, title, actual, expected, old in wrong_sku_indices:
+                        log.info(
+                            "  ↪《%s...》期望 SKU %s，实际 %s，用旧数据兜底",
+                            title[:20], expected, actual,
+                        )
+                        benchmark_data[i] = old
 
                 save_json("benchmark.json", benchmark_data)
                 sources_status["benchmark"] = "ok"
