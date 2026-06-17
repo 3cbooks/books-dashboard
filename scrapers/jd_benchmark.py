@@ -147,6 +147,105 @@ def _extract_version_keywords(title: str) -> set[str]:
     return found
 
 
+def _recheck_for_self(core: str, dangdang_book: dict,
+                      existing_candidates: list[dict],
+                      dd_serial: str | None,
+                      dd_serial_prefix: str | None,
+                      pop_core_stripped: str,
+                      keyword_tokens: list[str],
+                      author_short: str,
+                      max_results: int = 20,
+                      delay: float = 0.6) -> dict | None:
+    """
+    复查：当初始对标 best_match 是 POP 时，主动用更宽的搜索找自营 SKU。
+
+    目的：防止"营销词污染初始搜索"导致漏掉自营版。
+    例：当当《真实之书 印签版 …》初始搜 12 个 SKU 没命中自营 15385432，
+        本函数用纯 core 多召一些 SKU 专门挑自营。
+
+    返回：找到的"自营且匹配同款"的 SKU info；没找到返回 None。
+    """
+    existing_skus = {c.get("sku") for c in existing_candidates}
+    pop_core_normalized = normalize_title(core)
+
+    # 用更宽的查询：纯核心标题 + 去尾数版（不带作者，召回更广）
+    queries = [core]
+    core_no_serial = re.sub(r"\s*\d+\s*$", "", core).strip()
+    if core_no_serial and core_no_serial != core and len(core_no_serial) >= 2:
+        queries.append(core_no_serial)
+
+    new_skus: list[str] = []
+    for keyword in queries:
+        url = f"https://so.m.jd.com/ware/search.action?keyword={quote(keyword)}&book=y"
+        resp = http_get(url, timeout=15, extra_headers={"User-Agent": MOBILE_UA})
+        if resp is None:
+            continue
+        skus_a = set(re.findall(r'item\.m\.jd\.com/product/(\d{6,14})\.html', resp.text))
+        skus_b = set(re.findall(r'"sku(?:Id)?":\s*"?(\d{6,14})"?', resp.text))
+        for s in (skus_a | skus_b):
+            if s not in existing_skus and s not in new_skus:
+                new_skus.append(s)
+        if len(new_skus) >= max_results:
+            break
+
+    if not new_skus:
+        return None
+
+    # 只查这些"新出现的 SKU"详情，找第一个自营且匹配的
+    for sku in new_skus[:max_results]:
+        info = fetch_detail(sku)
+        if not info:
+            time.sleep(delay)
+            continue
+        if not info.get("is_self"):
+            time.sleep(delay)
+            continue
+        if is_rival_seller(info.get("title", ""), info.get("shop_name", "")):
+            time.sleep(delay)
+            continue
+
+        self_t = normalize_title(info.get("title", ""))
+        if not self_t:
+            time.sleep(delay)
+            continue
+
+        # 序号守护
+        if dd_serial:
+            jd_t_full = info.get("title", "")
+            has_serial = (
+                dd_serial in jd_t_full
+                or re.search(rf"全\s*\d+\s*册|套装\s*\d|1\s*\+\s*2", jd_t_full)
+            )
+            if not has_serial:
+                time.sleep(delay)
+                continue
+
+        # 同款匹配（与主流程一致的三重判定）
+        match_strict = pop_core_normalized in self_t
+        match_loose = (
+            len(pop_core_stripped) >= 3
+            and pop_core_stripped in self_t
+            and (not author_short or author_short in self_t)
+        )
+        match_token = (
+            len(keyword_tokens) >= 2
+            and sum(1 for t in keyword_tokens if t in self_t) >= 2
+        )
+        if not (match_strict or match_loose or match_token):
+            time.sleep(delay)
+            continue
+
+        # 命中：补全权益识别
+        info["show_count"] = 0  # 复查时不要求销量数据
+        info["show_count_str"] = ""
+        info["comment_count_str"] = ""
+        perk_text = info.get("_perk_text") or info.get("title", "")
+        info["perks"] = detect_jd_perks(perk_text)
+        return info
+
+    return None
+
+
 def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
                      delay: float = 0.6) -> dict:
     """
@@ -345,6 +444,32 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         )
     )
     best_match = candidates[0]
+
+    # ===== 复查机制（最后防线，无需人工兜底）=====
+    # 当 best_match 不是京东自营时，主动用"裸核心标题"再做一轮专门找自营的搜索
+    # 防止"印签版/精装版"等营销词污染初始搜索，导致自营 SKU 没进 found_skus
+    # 例：当当《真实之书 印签版 ...》初始搜 12 个 SKU 没命中自营 15385432
+    #     复查时用纯"真实之书"搜更多结果 → 抓到自营版
+    if not best_match.get("is_self"):
+        recheck_self = _recheck_for_self(
+            core, dangdang_book, candidates, dd_serial,
+            dd_serial_prefix, pop_core_stripped, keyword_tokens,
+            author_short, max_results=20, delay=delay,
+        )
+        if recheck_self:
+            log.info("  ↪ 复查找到京东自营 SKU=%s（替换原 best_match=%s）",
+                     recheck_self.get("sku"), best_match.get("sku"))
+            # 把找到的自营加进 candidates 重新排序
+            candidates.append(recheck_self)
+            candidates.sort(
+                key=lambda b: (
+                    -_shop_priority(b),
+                    -_serial_match(b),
+                    -_similarity(b),
+                    -b.get("show_count", 0),
+                )
+            )
+            best_match = candidates[0]
 
     # 关键：合并所有版本的权益（京东可能在不同 SKU 里分散提供权益）
     # 但只统计"标准京东自营"的权益（京喜质量参差，不算入正式对标）
