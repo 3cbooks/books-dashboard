@@ -3,6 +3,13 @@
    配合 Tailwind CDN 使用
    ============================================================ */
 
+/* 全局字体 — 优先苹果苹方/微软雅黑（中文渲染更清爽） */
+html, body {
+  font-family: "PingFang SC", "Microsoft YaHei",
+               -apple-system, BlinkMacSystemFont,
+               "Helvetica Neue", Arial, sans-serif;
+}
+
 /* 全局：减少滚动条侵占感（Windows） */
 html { scrollbar-gutter: stable; }
 
