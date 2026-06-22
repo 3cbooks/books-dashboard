@@ -47,10 +47,27 @@ def compute_today_changes(today: list[dict], yesterday: list[dict]) -> dict:
       new_perk_titles:   今日比昨日多出权益的书名（如《XX》新增亲签）
       churn:             "X 进 Y 出" 字符串
       summary_line:      一行摘要，用作所有规则的兜底"今日特征"
+      top1_title:        今日 #1 书名（不依赖昨日，作为"持平日"兜底素材）
+      top_perks_today:   今日权益最多的前 3 本（兜底素材）
     """
+    # 今日榜首 / 权益最多 — 不依赖昨日，持平时用作兜底
+    dd = [b for b in today if b.get("source") == "当当"]
+    top1_title = ""
+    for b in sorted(dd, key=lambda x: x.get("rank") or 99):
+        if (b.get("rank") or 99) == 1:
+            top1_title = b.get("title", "")
+            break
+    top_perks_today = sorted(
+        [b for b in dd if b.get("perks")],
+        key=lambda x: (-len(x.get("perks") or []), x.get("rank") or 99),
+    )[:3]
+
     if not yesterday:
-        return {"new_titles": [], "rising_titles": [], "new_perk_titles": [],
-                "churn": "", "summary_line": "今日为首日基线"}
+        return {
+            "new_titles": [], "rising_titles": [], "new_perk_titles": [],
+            "churn": "", "summary_line": "今日为首日基线",
+            "top1_title": top1_title, "top_perks_today": top_perks_today,
+        }
 
     yest_map = {_book_key(b): b for b in yesterday if _book_key(b)}
     today_map = {_book_key(b): b for b in today if _book_key(b)}
@@ -104,6 +121,8 @@ def compute_today_changes(today: list[dict], yesterday: list[dict]) -> dict:
         "new_perk_titles": new_perk_titles,
         "churn": churn,
         "summary_line": summary_line,
+        "top1_title": top1_title,
+        "top_perks_today": top_perks_today,
     }
 
 
@@ -131,11 +150,19 @@ def rule_dangdang_perks(books: list[dict], changes: dict | None = None) -> list[
     )
 
     # 今日"权益变化"加塞到 body 末尾（让卡片每天都不一样）
+    # 优先用真实变化，没变化时用今日 top 权益书兜底
     perk_change_line = ""
-    if changes and changes.get("new_perk_titles"):
-        perk_change_line = "今日新增权益：" + "、".join(
-            changes["new_perk_titles"][:2]
-        ) + "。"
+    if changes:
+        if changes.get("new_perk_titles"):
+            perk_change_line = "今日新增权益：" + "、".join(
+                changes["new_perk_titles"][:2]
+            ) + "。"
+        elif changes.get("top_perks_today"):
+            tops = changes["top_perks_today"][:2]
+            perk_change_line = "今日权益最丰富：" + "、".join(
+                f"《{b.get('title','')[:12]}》({'/'.join((b.get('perks') or [])[:3])})"
+                for b in tops
+            ) + "。"
 
     if perk_ratio >= 0.25:
         # 高占比 → 强信号
@@ -155,10 +182,10 @@ def rule_dangdang_perks(books: list[dict], changes: dict | None = None) -> list[
     if qianqian_books:
         avg_rank = sum(b.get("rank", 99) for b in qianqian_books) / len(qianqian_books)
         names = "、".join(f"《{b['title'][:14]}》" for b in qianqian_books[:3])
-        # 亲签今日变化：从 changes.new_titles 里筛出带亲签的新进入者
+        # 亲签今日变化：优先"今日新进的亲签书"，否则用"亲签 Top 1 榜位"兜底
         qianqian_today = ""
-        if changes and changes.get("new_titles"):
-            new_set = set(changes["new_titles"])
+        if changes:
+            new_set = set(changes.get("new_titles") or [])
             new_qianqian = [b for b in qianqian_books if b.get("title") in new_set]
             if new_qianqian:
                 qianqian_today = (
@@ -166,6 +193,14 @@ def rule_dangdang_perks(books: list[dict], changes: dict | None = None) -> list[
                     + "、".join(f"《{b['title'][:12]}》" for b in new_qianqian[:2])
                     + "。"
                 )
+            else:
+                # 兜底：今日亲签 Top 那本的具体榜位
+                top_qq = sorted(qianqian_books, key=lambda b: b.get("rank") or 99)
+                if top_qq:
+                    qianqian_today = (
+                        f"今日亲签榜首：《{top_qq[0]['title'][:14]}》"
+                        f"位列 #{top_qq[0].get('rank','?')}。"
+                    )
         out.append(_insight(
             "✍️",
             f"当当 24 小时榜 {len(qianqian_books)} 本亲签版上榜",
@@ -238,6 +273,8 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
         ("实体书店",         ("实体书店", "独立书店", "书店")),
         ("少儿/童书",        ("少儿", "童书", "儿童阅读", "绘本")),
         ("政策与监管",       ("政府奖", "新闻出版署", "条例", "监管", "政策")),
+        ("国际书展",         ("国际图书博览会", "BIBF", "图博会", "书展", "版权贸易")),
+        ("新书发布",         ("新书发布", "新书出版", "出版", "首发")),
     ]
 
     matches: list[tuple[str, int, list[str]]] = []
@@ -266,6 +303,19 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
             "info",
             anchor="news-section",
         ))
+
+    # 兜底：所有主题都没击中 ≥3 命中时，至少出"今日新闻摘要"那条
+    # —— 这是用户原诉求："今日洞察永远要给人变化感"
+    if not out and news:
+        out.append(_insight(
+            "📰",
+            f"今日抓取行业新闻 {len(news)} 条",
+            f"今日代表：《{news[0].get('title','')[:30]}》。"
+            f"暂无单一主题集中（≥3 条命中），建议浏览下方新闻列表查看各方动态。",
+            "新闻动态",
+            "info",
+            anchor="news-section",
+        ))
     return out
 
 
@@ -275,16 +325,22 @@ def rule_high_rated(books: list[dict], changes: dict | None = None) -> list[dict
     high = [b for b in books if (b.get("rating") or 0) >= 4.7]
     if len(high) >= 3:
         names = "、".join(f"《{b['title'][:12]}》" for b in high[:3])
-        # 今日新进榜的高分书 → 加到 body 末尾
+        # 今日新进榜的高分书 → 加到 body 末尾；持平时用最高分那本兜底
         new_high_line = ""
-        if changes and changes.get("new_titles"):
-            new_set = set(changes["new_titles"])
+        if changes:
+            new_set = set(changes.get("new_titles") or [])
             new_high = [b for b in high if b.get("title") in new_set]
             if new_high:
                 new_high_line = (
                     f" 今日新进 {len(new_high)} 本高分书："
                     + "、".join(f"《{b['title'][:12]}》" for b in new_high[:2])
                     + "。"
+                )
+            else:
+                top_rated = max(high, key=lambda b: b.get("rating") or 0)
+                new_high_line = (
+                    f" 今日最高分：《{top_rated['title'][:14]}》"
+                    f"({top_rated.get('rating','?'):.1f} 分)。"
                 )
         out.append(_insight(
             "⭐",
@@ -314,10 +370,14 @@ def rule_no_perk_top(books: list[dict], changes: dict | None = None) -> list[dic
     if len(pure_top3) >= 3:
         names = "、".join(f"《{b['title'][:14]}》" for b in pure_top3[:3])
         ratio = len(pure_top3) / max(1, len(no_perk_total)) * 100
-        # 今日"排名上升"信号 → 拼到 body 末尾
+        # 今日"排名上升"信号 → 拼到 body 末尾；持平时用今日 #1 兜底
         rising_line = ""
-        if changes and changes.get("rising_titles"):
-            rising_line = " 今日排名上升：" + "、".join(changes["rising_titles"][:2]) + "。"
+        if changes:
+            if changes.get("rising_titles"):
+                rising_line = " 今日排名上升：" + "、".join(changes["rising_titles"][:2]) + "。"
+            elif pure_top3:
+                top1 = sorted(pure_top3, key=lambda b: b.get("rank") or 99)[0]
+                rising_line = f" 今日榜首（无权益）：《{top1['title'][:14]}》位列 #{top1.get('rank','?')}。"
         out.append(_insight(
             "🔥",
             f"{len(pure_top3)} 本无权益版上榜书登品类前 3",
@@ -436,17 +496,19 @@ def rule_douban_verification(books: list[dict], new_books: list[dict],
         names_ages = "、".join(
             f"《{b['title'][:14]}》({age}年前)" for b, age in old_hot[:3]
         )
-        # 今日老书重热的具体书名兜底（防止只剩 "1 本'老书重热'入榜前 10" 没具体差异）
-        # 用 changes 兜底加 churn 信号（X 进 Y 出）
-        churn_line = ""
-        if changes and changes.get("churn"):
-            churn_line = f" 今日榜单流转：{changes['churn']}。"
+        # 持平日兜底：用 churn / top1 让 body 仍带"今日"特征
+        change_line = ""
+        if changes:
+            if changes.get("churn"):
+                change_line = f" 今日榜单流转：{changes['churn']}。"
+            elif changes.get("top1_title"):
+                change_line = f" 今日榜首：《{changes['top1_title'][:14]}》。"
         out.append(_insight(
             "📜",
             f"{len(old_hot)} 本'老书重热'入榜前 10",
             f"豆瓣校验显示这些书出版 ≥5 年仍在热卖榜：{names_ages}。"
             f"长尾内容力强，是经典常销 / 新版重发的典型，自营若有同款值得长期备货。"
-            + churn_line,
+            + change_line,
             "常销信号",
             anchor="books-section",
         ))

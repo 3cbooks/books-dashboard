@@ -292,9 +292,17 @@ def main() -> int:
     # 写 books.json 之前先把"昨天的 books"快照成 books_yesterday.json
     # —— 给 insights 模块做"今日 vs 昨日"的差异比对，让每条洞察 body 都能
     #    带"今日新增 X"这种当日特征
+    # 同一天内多次手动重跑时不要覆盖快照（否则会把"昨天"擦成"几小时前的自己"）
+    from datetime import datetime, timezone, timedelta
+    bj = timezone(timedelta(hours=8))
+    today_date = datetime.now(bj).strftime("%Y-%m-%d")
+    prev_meta = load_json("meta.json", default={}) or {}
+    prev_date = (prev_meta.get("updated_at") or "")[:10]
     prev_books = load_json("books.json", default=None)
-    if prev_books:
+    if prev_books and prev_date and prev_date != today_date:
+        # 只有当 books.json 是"上一天"的产物时才覆盖快照
         save_json("books_yesterday.json", prev_books)
+        log.info("已快照昨日 books（%s → books_yesterday.json）", prev_date)
     save_json("books.json", books)
     save_json("news.json", news)
 
