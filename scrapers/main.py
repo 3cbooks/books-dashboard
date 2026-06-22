@@ -253,15 +253,40 @@ def main() -> int:
         log.warning("⚠ 所有新闻源失败，使用上次数据兜底")
         news = load_json("news.json", default=[])
     else:
-        # 新闻数据保护：新数据少于旧数据 50% → 保留旧
-        # 不要求旧数据有多少（哪怕只有 3 条，也比 0 条强）
+        # 新闻数据保护：新数据少于旧数据 50% 时，把新旧合并去重
+        # —— 不再整份用旧数据替换（之前那样做会让"5 天前的旧条目"挂在首页不动）
+        # —— 合并后新条目能渗入，旧条目仍然兜底，反爬当天也不会清零
         old_news = load_json("news.json", default=[]) or []
         if len(old_news) > 0 and len(news) < len(old_news) * 0.5:
             log.warning(
-                "⚠ 新闻数 %d 少于旧数据 %d 的 50%%，可能反爬，保留旧数据",
+                "⚠ 新闻数 %d 少于旧数据 %d 的 50%%，可能反爬，与旧数据合并去重",
                 len(news), len(old_news),
             )
-            news = old_news
+            seen_urls = {n.get("url") for n in news if n.get("url")}
+            seen_titles = {n.get("title") for n in news if n.get("title")}
+            merged = list(news)
+            for n in old_news:
+                if n.get("url") in seen_urls:
+                    continue
+                if n.get("title") in seen_titles:
+                    continue
+                merged.append(n)
+                if n.get("url"):
+                    seen_urls.add(n["url"])
+                if n.get("title"):
+                    seen_titles.add(n["title"])
+            # 按 published_at 降序，没日期的兜底放最后
+            merged.sort(key=lambda x: x.get("published_at") or "", reverse=True)
+            # 合并后再过一遍 60 天窗口（与 baidu_news.fetch 一致），避免数据只增不减
+            from datetime import datetime, timezone, timedelta
+            tz = timezone(timedelta(hours=8))
+            cutoff_iso = (datetime.now(tz) - timedelta(days=60)).isoformat(timespec="seconds")
+            merged = [
+                n for n in merged
+                if not n.get("published_at") or n["published_at"] >= cutoff_iso
+            ]
+            news = merged
+            log.info("合并后新闻总数 %d 条", len(news))
 
     # ============ 写文件 ============
     save_json("books.json", books)
