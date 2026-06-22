@@ -29,10 +29,89 @@ def _insight(icon: str, title: str, body: str, tag: str,
 
 
 # ============================================================
+# 今日 vs 昨日差异（让每条洞察 body 都带"当日特征"）
+# ============================================================
+
+def _book_key(b: dict) -> str:
+    """跨日识别同一本书的稳定 key（url 优先，回退 title）"""
+    return b.get("url") or b.get("title") or ""
+
+
+def compute_today_changes(today: list[dict], yesterday: list[dict]) -> dict:
+    """
+    返回一个 dict，描述今日相对昨日的变化。所有规则都可以从里面取词拼到 body 末尾。
+
+    返回字段：
+      new_titles:        今日新进入榜单的书名列表（按今日 rank 升序）
+      rising_titles:     排名上升 ≥3 名的书名（带"升 N 名"）
+      new_perk_titles:   今日比昨日多出权益的书名（如《XX》新增亲签）
+      churn:             "X 进 Y 出" 字符串
+      summary_line:      一行摘要，用作所有规则的兜底"今日特征"
+    """
+    if not yesterday:
+        return {"new_titles": [], "rising_titles": [], "new_perk_titles": [],
+                "churn": "", "summary_line": "今日为首日基线"}
+
+    yest_map = {_book_key(b): b for b in yesterday if _book_key(b)}
+    today_map = {_book_key(b): b for b in today if _book_key(b)}
+
+    new_keys = [k for k in today_map if k not in yest_map]
+    out_keys = [k for k in yest_map if k not in today_map]
+
+    new_books_sorted = sorted(
+        (today_map[k] for k in new_keys),
+        key=lambda b: b.get("rank") or 99,
+    )
+    new_titles = [b.get("title", "") for b in new_books_sorted]
+
+    rising = []
+    for k in today_map.keys() & yest_map.keys():
+        t_rank = today_map[k].get("rank") or 99
+        y_rank = yest_map[k].get("rank") or 99
+        if y_rank - t_rank >= 3:
+            rising.append((today_map[k].get("title", ""), y_rank - t_rank))
+    rising.sort(key=lambda x: x[1], reverse=True)
+    rising_titles = [f"《{t[:14]}》(升 {n} 名)" for t, n in rising[:3]]
+
+    new_perk_titles = []
+    for k in today_map.keys() & yest_map.keys():
+        t_perks = set(today_map[k].get("perks") or [])
+        y_perks = set(yest_map[k].get("perks") or [])
+        added = t_perks - y_perks
+        if added:
+            new_perk_titles.append(
+                f"《{today_map[k].get('title','')[:12]}》+{'/'.join(added)}"
+            )
+
+    churn = f"{len(new_keys)} 进 {len(out_keys)} 出" if (new_keys or out_keys) else ""
+
+    if new_titles:
+        summary_line = f"今日新进 {len(new_titles)} 本：" + "、".join(
+            f"《{t[:12]}》" for t in new_titles[:3]
+        )
+    elif rising_titles:
+        summary_line = f"今日排名上升：{rising_titles[0]}"
+    elif new_perk_titles:
+        summary_line = f"今日新增权益：{new_perk_titles[0]}"
+    elif churn:
+        summary_line = f"今日榜单 {churn}"
+    else:
+        summary_line = "今日榜单与昨日持平"
+
+    return {
+        "new_titles": new_titles,
+        "rising_titles": rising_titles,
+        "new_perk_titles": new_perk_titles,
+        "churn": churn,
+        "summary_line": summary_line,
+    }
+
+
+# ============================================================
 # 规则集
 # ============================================================
 
-def rule_dangdang_perks(books: list[dict]) -> list[dict]:
+def rule_dangdang_perks(books: list[dict], changes: dict | None = None) -> list[dict]:
     """
     当当权益专题：识别亲签/限量/独家/首发等差异化权益，
     评估它们在热卖榜里的占比和排名表现 —— 直接对标京东自营的潜在缺口。
@@ -51,13 +130,21 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
         f"{p}({c})" for p, c in perk_counter.most_common(4)
     )
 
+    # 今日"权益变化"加塞到 body 末尾（让卡片每天都不一样）
+    perk_change_line = ""
+    if changes and changes.get("new_perk_titles"):
+        perk_change_line = "今日新增权益：" + "、".join(
+            changes["new_perk_titles"][:2]
+        ) + "。"
+
     if perk_ratio >= 0.25:
         # 高占比 → 强信号
         out.append(_insight(
             "🎯",
             f"当当 Top 榜 {len(with_perks)}/{len(dd)} 本带差异化权益",
             f"占比 {perk_ratio*100:.0f}%。其中 {top_perk_str}。"
-            f"这些权益版京东自营多数缺货 — 是当当用户黏性的核心抓手。",
+            f"这些权益版京东自营多数缺货 — 是当当用户黏性的核心抓手。"
+            + (f" {perk_change_line}" if perk_change_line else ""),
             "当当对标",
             "warn",
             anchor="benchmark-section",
@@ -68,11 +155,23 @@ def rule_dangdang_perks(books: list[dict]) -> list[dict]:
     if qianqian_books:
         avg_rank = sum(b.get("rank", 99) for b in qianqian_books) / len(qianqian_books)
         names = "、".join(f"《{b['title'][:14]}》" for b in qianqian_books[:3])
+        # 亲签今日变化：从 changes.new_titles 里筛出带亲签的新进入者
+        qianqian_today = ""
+        if changes and changes.get("new_titles"):
+            new_set = set(changes["new_titles"])
+            new_qianqian = [b for b in qianqian_books if b.get("title") in new_set]
+            if new_qianqian:
+                qianqian_today = (
+                    f"今日 {len(new_qianqian)} 本亲签新进榜："
+                    + "、".join(f"《{b['title'][:12]}》" for b in new_qianqian[:2])
+                    + "。"
+                )
         out.append(_insight(
             "✍️",
             f"当当 24 小时榜 {len(qianqian_books)} 本亲签版上榜",
             f"平均榜位 #{avg_rank:.1f}，含 {names}。"
-            f"亲签是作者×渠道的强绑定，京东自营对标空白。",
+            f"亲签是作者×渠道的强绑定，京东自营对标空白。"
+            + (f" {qianqian_today}" if qianqian_today else ""),
             "亲签机会",
             "warn",
             anchor="benchmark-section",
@@ -154,12 +253,15 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
 
     matches.sort(key=lambda x: x[1], reverse=True)
     # 只取最热的一条，避免占满洞察板块
-    for theme, cnt, _hits in matches[:1]:
+    for theme, cnt, hits in matches[:1]:
+        # 拼一条"今日头条新闻"让 body 每天都不一样
+        # hits 顺序与 news 一致（news 已按时间倒序），取第 1 条作为今日代表
+        head = f"今日代表：《{hits[0][:24]}》。" if hits else ""
         out.append(_insight(
             "📰",
             f"行业话题聚焦：{theme}（{cnt} 条）",
             f"今日 {cnt} 条相关新闻进入议程，是当下出版业舆论的核心。"
-            f"建议关联选题或营销叙事时同步把握热度。",
+            f"{head}建议关联选题或营销叙事时同步把握热度。",
             "新闻热点",
             "info",
             anchor="news-section",
@@ -167,16 +269,28 @@ def rule_news_themes(news: list[dict]) -> list[dict]:
     return out
 
 
-def rule_high_rated(books: list[dict]) -> list[dict]:
+def rule_high_rated(books: list[dict], changes: dict | None = None) -> list[dict]:
     """高分上榜书：评分 ≥ 4.7 的书单独拎出来，作为"质量信号"。"""
     out = []
     high = [b for b in books if (b.get("rating") or 0) >= 4.7]
     if len(high) >= 3:
         names = "、".join(f"《{b['title'][:12]}》" for b in high[:3])
+        # 今日新进榜的高分书 → 加到 body 末尾
+        new_high_line = ""
+        if changes and changes.get("new_titles"):
+            new_set = set(changes["new_titles"])
+            new_high = [b for b in high if b.get("title") in new_set]
+            if new_high:
+                new_high_line = (
+                    f" 今日新进 {len(new_high)} 本高分书："
+                    + "、".join(f"《{b['title'][:12]}》" for b in new_high[:2])
+                    + "。"
+                )
         out.append(_insight(
             "⭐",
             f"高分上榜书集中：{len(high)} 本评分 ≥ 4.7",
-            f"包含 {names}。读者口碑端正反馈强烈，可作为大客户/会员推荐重点。",
+            f"包含 {names}。读者口碑端正反馈强烈，可作为大客户/会员推荐重点。"
+            + new_high_line,
             "口碑信号",
             "info",
             anchor="books-section",
@@ -184,7 +298,7 @@ def rule_high_rated(books: list[dict]) -> list[dict]:
     return out
 
 
-def rule_no_perk_top(books: list[dict]) -> list[dict]:
+def rule_no_perk_top(books: list[dict], changes: dict | None = None) -> list[dict]:
     """
     没有权益的书也排在前列 —— 反向信号：它们靠纯"内容力"上榜。
     （rank 是品类内排名，前 3 名内才算"前列"）
@@ -200,11 +314,16 @@ def rule_no_perk_top(books: list[dict]) -> list[dict]:
     if len(pure_top3) >= 3:
         names = "、".join(f"《{b['title'][:14]}》" for b in pure_top3[:3])
         ratio = len(pure_top3) / max(1, len(no_perk_total)) * 100
+        # 今日"排名上升"信号 → 拼到 body 末尾
+        rising_line = ""
+        if changes and changes.get("rising_titles"):
+            rising_line = " 今日排名上升：" + "、".join(changes["rising_titles"][:2]) + "。"
         out.append(_insight(
             "🔥",
             f"{len(pure_top3)} 本无权益版上榜书登品类前 3",
             f"占无权益版上榜书的 {ratio:.0f}%，含 {names}。"
-            f"这类书靠纯内容力出圈，是京东自营对标销售的高优先级候选。",
+            f"这类书靠纯内容力出圈，是京东自营对标销售的高优先级候选。"
+            + rising_line,
             "纯内容信号",
             anchor="books-section",
         ))
@@ -286,7 +405,8 @@ def rule_freshly_published(new_books: list[dict]) -> list[dict]:
     return out
 
 
-def rule_douban_verification(books: list[dict], new_books: list[dict]) -> list[dict]:
+def rule_douban_verification(books: list[dict], new_books: list[dict],
+                              changes: dict | None = None) -> list[dict]:
     """
     豆瓣校验相关洞察：
     - 当当热卖榜里被豆瓣确认是"5 年以上老书"的，是常销长红信号
@@ -316,11 +436,17 @@ def rule_douban_verification(books: list[dict], new_books: list[dict]) -> list[d
         names_ages = "、".join(
             f"《{b['title'][:14]}》({age}年前)" for b, age in old_hot[:3]
         )
+        # 今日老书重热的具体书名兜底（防止只剩 "1 本'老书重热'入榜前 10" 没具体差异）
+        # 用 changes 兜底加 churn 信号（X 进 Y 出）
+        churn_line = ""
+        if changes and changes.get("churn"):
+            churn_line = f" 今日榜单流转：{changes['churn']}。"
         out.append(_insight(
             "📜",
             f"{len(old_hot)} 本'老书重热'入榜前 10",
             f"豆瓣校验显示这些书出版 ≥5 年仍在热卖榜：{names_ages}。"
-            f"长尾内容力强，是经典常销 / 新版重发的典型，自营若有同款值得长期备货。",
+            f"长尾内容力强，是经典常销 / 新版重发的典型，自营若有同款值得长期备货。"
+            + churn_line,
             "常销信号",
             anchor="books-section",
         ))
@@ -402,17 +528,23 @@ def rule_jd_pop_gap(jd_pop_only: list[dict]) -> list[dict]:
 
 def generate(books: list[dict], news: list[dict],
              new_books: list[dict] | None = None,
-             jd_pop_only: list[dict] | None = None) -> list[dict]:
+             jd_pop_only: list[dict] | None = None,
+             yesterday_books: list[dict] | None = None) -> list[dict]:
     """跑所有规则，按"信号强度"挑出 5-10 条。"""
     new_books = new_books or []
     jd_pop_only = jd_pop_only or []
+    yesterday_books = yesterday_books or []
+
+    # 计算"今日 vs 昨日"差异，让每条规则都能拼一句"当日特征"到 body
+    changes = compute_today_changes(books, yesterday_books)
+    log.info("今日变化: %s", changes.get("summary_line", ""))
 
     candidates: list[dict] = []
-    candidates.extend(rule_dangdang_perks(books))
-    candidates.extend(rule_douban_verification(books, new_books))
+    candidates.extend(rule_dangdang_perks(books, changes))
+    candidates.extend(rule_douban_verification(books, new_books, changes))
     candidates.extend(rule_category_distribution(books))
-    candidates.extend(rule_high_rated(books))
-    candidates.extend(rule_no_perk_top(books))
+    candidates.extend(rule_high_rated(books, changes))
+    candidates.extend(rule_no_perk_top(books, changes))
     candidates.extend(rule_news_themes(news))
 
     # 兜底：哪怕一条都没生成，也给一个总览

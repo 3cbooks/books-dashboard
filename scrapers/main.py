@@ -289,6 +289,12 @@ def main() -> int:
             log.info("合并后新闻总数 %d 条", len(news))
 
     # ============ 写文件 ============
+    # 写 books.json 之前先把"昨天的 books"快照成 books_yesterday.json
+    # —— 给 insights 模块做"今日 vs 昨日"的差异比对，让每条洞察 body 都能
+    #    带"今日新增 X"这种当日特征
+    prev_books = load_json("books.json", default=None)
+    if prev_books:
+        save_json("books_yesterday.json", prev_books)
     save_json("books.json", books)
     save_json("news.json", news)
 
@@ -296,10 +302,13 @@ def main() -> int:
     from . import insights as insights_mod
     try:
         jd_pop_only_data = load_json("jd_pop_only.json", default=[]) or []
+        # 读昨天快照供"今日差异"使用（首次运行没有，传 [] 即可）
+        yesterday_books = load_json("books_yesterday.json", default=[]) or []
         insights_list = insights_mod.generate(
             books, news,
             new_books=new_books,
             jd_pop_only=jd_pop_only_data,
+            yesterday_books=yesterday_books,
         )
         save_json("insights.json", insights_list)
         log.info("✓ insights: %d 条", len(insights_list))
