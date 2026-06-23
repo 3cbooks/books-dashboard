@@ -43,6 +43,7 @@ def _fetch_dangdang_isbn(dangdang_url: str) -> str | None:
         return None
     resp = http_get(dangdang_url, timeout=10)
     if resp is None:
+        log.warning("ISBN 抓取: %s 网络失败", dangdang_url)
         return None
     try:
         text = resp.content.decode("gbk", errors="replace")
@@ -50,9 +51,17 @@ def _fetch_dangdang_isbn(dangdang_url: str) -> str | None:
         text = resp.text
     m = _DD_ISBN_RE.search(text)
     if not m:
+        log.warning(
+            "ISBN 抓取: %s 页面里无 978* (页面 %d 字节)",
+            dangdang_url, len(resp.content),
+        )
         return None
     isbn = m.group(1).replace(" ", "").replace("-", "")
-    return isbn if len(isbn) == 13 else None
+    if len(isbn) == 13:
+        log.info("当当 ISBN: %s → %s", dangdang_url[-20:], isbn)
+        return isbn
+    log.warning("ISBN 抓取: %s 长度异常 %s", dangdang_url, isbn)
+    return None
 
 
 # 京东侧的权益识别（参考当当的规则）
