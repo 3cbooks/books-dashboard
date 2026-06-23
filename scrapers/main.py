@@ -245,9 +245,33 @@ def main() -> int:
                 log.error("豆瓣校验预售书抛异常:\n%s", traceback.format_exc())
 
     # ============ 抓新闻 ============
-    from . import baidu_news
-    news, status = _safe_run("baidu_news", baidu_news.fetch)
-    sources_status["baidu_news"] = status
+    # 多源策略：百度 + cnpubg —— 任何单源被反爬时，另一源还在
+    # 百度强但反爬频繁；cnpubg 弱（量少、单一来源）但稳定到爆，直接抓 HTML 列表
+    from . import baidu_news, cnpubg_news
+    news_baidu, status_b = _safe_run("baidu_news", baidu_news.fetch)
+    news_cnpubg, status_c = _safe_run("cnpubg_news", cnpubg_news.fetch)
+    sources_status["baidu_news"] = status_b
+    sources_status["cnpubg_news"] = status_c
+
+    # 合并两源（按 url 去重，保留先到的）
+    seen_urls_src = set()
+    seen_titles_src = set()
+    news = []
+    for n in (news_baidu or []) + (news_cnpubg or []):
+        u, t = n.get("url"), n.get("title")
+        if u and u in seen_urls_src:
+            continue
+        if t and t in seen_titles_src:
+            continue
+        news.append(n)
+        if u:
+            seen_urls_src.add(u)
+        if t:
+            seen_titles_src.add(t)
+    log.info(
+        "新闻多源合并: 百度 %d + cnpubg %d → 去重后 %d 条",
+        len(news_baidu or []), len(news_cnpubg or []), len(news),
+    )
 
     if not news:
         log.warning("⚠ 所有新闻源失败，使用上次数据兜底")
