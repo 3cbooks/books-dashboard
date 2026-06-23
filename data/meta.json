@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-06-23T10:09:31+08:00",
+  "updated_at": "2026-06-23T10:15:55+08:00",
   "new_books_week": 48,
   "new_books_trend_pct": 0.0,
   "news_count": 30,
   "sources_status": {
     "dangdang": "ok",
     "dangdang_new": "ok",
-    "benchmark": "ok",
+    "benchmark": "blocked_by_anticrawl",
     "baidu_news": "ok",
-    "cnpubg_news": "ok"
+    "cnpubg_news": "failed"
   }
 }
