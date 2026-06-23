@@ -22,6 +22,7 @@
         "publisher": "人民邮电出版社",
         "vender_id": "0",
         "title": "活出来：12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长逆风翻盘",
+        "isbn": "9787115697530",
         "sku_status": "1",
         "_perk_text": "活出来：12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长逆风翻盘 活出来：12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长逆风翻盘 活出来：12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长逆风翻盘",
         "shop_name": "京东自营",
@@ -31,7 +32,8 @@
         "show_count": 0,
         "show_count_str": "0",
         "comment_count_str": "0",
-        "perks": []
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
@@ -46,44 +48,24 @@
           "detail_url": "https://item.jd.com/15414610.html"
         },
         {
-          "sku": "10225334120197",
-          "title": "2026新书 活出来 12位女性的觉醒与重生 刘慧 女性觉醒励志书籍个人成长逆风翻盘 人民邮电出版社 活出来：12位女性的觉醒与重生 无规格",
-          "shop_name": "云聚算图书专营店",
+          "sku": "10225428763370",
+          "title": "活出来 12位女性的觉醒与重生 刘慧 邮电出版社9787115697530",
+          "shop_name": "兰兴达图书官方旗舰店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225334120197.html"
+          "detail_url": "https://item.jd.com/10225428763370.html"
         },
         {
-          "sku": "10225485501966",
-          "title": "【新华正版包邮】活出来12位女性的觉醒与重生 人民邮电出版社 刘慧 著 书籍 图书",
-          "shop_name": "文轩在线文学专营店",
+          "sku": "10225428347023",
+          "title": "活出来 12位女性的觉醒与重生 刘慧 邮电出版社9787115697530",
+          "shop_name": "蓝墨水图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225485501966.html"
-        },
-        {
-          "sku": "10225480692414",
-          "title": "活出来:12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长 活出来:12位女性的觉醒与重生 无规格",
-          "shop_name": "柒阅文学专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10225480692414.html"
-        },
-        {
-          "sku": "10225334593477",
-          "title": "2026新书 活出来 12位女性的觉醒与重生 刘慧 女性觉醒励志书籍个人成长逆风翻盘 人民邮电出版社 活出来：12位女性的觉醒与重生 无规格",
-          "shop_name": "南京中译图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10225334593477.html"
+          "detail_url": "https://item.jd.com/10225428347023.html"
         },
         {
           "sku": "10225287227778",
@@ -96,14 +78,34 @@
           "detail_url": "https://item.jd.com/10225287227778.html"
         },
         {
-          "sku": "10225485209999",
-          "title": "【新华正版包邮】活出来12位女性的觉醒与重生 人民邮电出版社 刘慧 著 书籍 图书",
-          "shop_name": "文轩在线图书专营店",
+          "sku": "10225334593477",
+          "title": "2026新书 活出来 12位女性的觉醒与重生 刘慧 女性觉醒励志书籍个人成长逆风翻盘 人民邮电出版社 活出来：12位女性的觉醒与重生 无规格",
+          "shop_name": "南京中译图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225485209999.html"
+          "detail_url": "https://item.jd.com/10225334593477.html"
+        },
+        {
+          "sku": "10223145954122",
+          "title": "科学活出来系列 探秘海洋世界[加拿大]迈克*富兰克林9787550713093海天出版社{正版书}",
+          "shop_name": "超凡图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223145954122.html"
+        },
+        {
+          "sku": "10225480692414",
+          "title": "活出来:12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长 活出来:12位女性的觉醒与重生 无规格",
+          "shop_name": "柒阅文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225480692414.html"
         },
         {
           "sku": "10217571714170",
@@ -116,14 +118,14 @@
           "detail_url": "https://item.jd.com/10217571714170.html"
         },
         {
-          "sku": "10206354302876",
-          "title": "诗不必写，我活出来张玮玮,乌青,远子等中国言实出版社9787517110",
-          "shop_name": "芊盛图书专营店",
+          "sku": "10225270963456",
+          "title": "活出来：12位女性的觉醒与重生 刘慧著女性觉醒励志书籍个人成长逆风翻盘",
+          "shop_name": "人民邮电出版社图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10206354302876.html"
+          "detail_url": "https://item.jd.com/10225270963456.html"
         }
       ],
       "all_skus_count": 9
@@ -159,6 +161,7 @@
         "vender_id": "1000005647",
         "shop_name": "博集天卷京东自营旗舰店",
         "title": "我是你的遗物 张嘉佳【现货包邮 京东专属包装加固】我是 你的 遗物 多重随书赠品 时隔5年，张嘉佳 2026全新小说，升维突破之作，强伏笔，深治愈  如果永远无法相见，那么一字一句都是遗言",
+        "isbn": "9787572629464",
         "sku_status": "1",
         "_perk_text": "我是你的遗物 张嘉佳【现货包邮 京东专属包装加固】我是 你的 遗物 多重随书赠品 时隔5年，张嘉佳 2026全新小说，升维突破之作，强伏笔，深治愈  如果永远无法相见，那么一字一句都是遗言 我是你的遗物 张嘉佳【现货包邮 京东专属包装加固】我是 你的 遗物 多重随书赠品 时隔5年，张嘉佳 2026全新小说，升维突破之作，强伏笔，深治愈  如果永远无法相见，那么一字一句都是遗言 我是你的遗物 张嘉佳【现货包邮 京东专属包装加固】我是 你的 遗物 多重随书赠品 时隔5年，张嘉佳 2026全新小说，升维突破之作，强伏笔，深治愈  如果永远无法相见，那么一字一句都是遗言",
         "is_self": true,
@@ -170,7 +173,8 @@
         "perks": [
           "独家",
           "赠品"
-        ]
+        ],
+        "_matched_by": "isbn"
       },
       "all_perks": [
         "独家",
@@ -189,26 +193,6 @@
             "赠品"
           ],
           "detail_url": "https://item.jd.com/15371686.html"
-        },
-        {
-          "sku": "10030120786128",
-          "title": "【现货速发】我是你的遗物 张嘉佳新书小说 张嘉佳的书作品集 云边有个小卖部、从你的全世界路过、天堂旅行团、让我留在你身边等正版全套系列书 我是你的遗物 张嘉佳新书",
-          "shop_name": "文轩网旗舰店",
-          "is_self": false,
-          "show_count_str": "100+",
-          "comment_count_str": "2万+",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10030120786128.html"
-        },
-        {
-          "sku": "10220818174416",
-          "title": "【官方正版】我是你的遗物 张嘉佳新书 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言 我是你的遗物 张嘉佳新书",
-          "shop_name": "同球图书专营店",
-          "is_self": false,
-          "show_count_str": "13",
-          "comment_count_str": "2000+",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10220818174416.html"
         },
         {
           "sku": "10220802579373",
@@ -231,26 +215,104 @@
           "detail_url": "https://item.jd.com/10220802674697.html"
         },
         {
-          "sku": "10225785247717",
-          "title": "我是你的遗物 张嘉佳 2026全新小说升维突破治愈博集",
-          "shop_name": "凡墨图书专营店",
+          "sku": "10220797926481",
+          "title": "我是你的遗物 张嘉佳 时隔5年张嘉佳2026全新小说 9787572629464 升维突破之作 强伏笔 深治愈 悬念 温情 人性 如果永远无法相见 那么一字一句都是遗言 R",
+          "shop_name": "时代蔚蓝图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10220797926481.html"
+        },
+        {
+          "sku": "10221361324930",
+          "title": "张嘉佳书籍2026】我是你的遗物 张嘉佳时隔五年全新力作 云边有个小卖部从你的全世界路过天堂旅行团张嘉佳的书青春文学书籍湖南文艺出版社9787572629464 我是你的遗物+让我留在你身边",
+          "shop_name": "创品世纪图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "1",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225785247717.html"
+          "detail_url": "https://item.jd.com/10221361324930.html"
         },
         {
-          "sku": "10220672048098",
-          "title": "【首发新书现货】我是你的遗物 张嘉佳新书籍2026全新小说 从你的全世界路过张嘉佳张嘉佳四部曲文学青春畅销书籍 我是你的遗物",
-          "shop_name": "京喜自营官方店",
+          "sku": "10221841318205",
+          "title": "正版现货 我是你的遗物 张嘉佳新书2026全新小说 升维突破之作 张嘉佳小说四部曲终章 博集天卷9787572629464 我是你的遗物",
+          "shop_name": "立达书店图书专营店",
           "is_self": false,
-          "show_count_str": "20",
-          "comment_count_str": "2000+",
-          "perks": [
-            "首发"
-          ],
-          "detail_url": "https://item.jd.com/10220672048098.html"
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221841318205.html"
+        },
+        {
+          "sku": "10221036330186",
+          "title": "我是你的遗物张嘉佳湖南文艺出版社9787572629464 文化书籍",
+          "shop_name": "人天书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221036330186.html"
+        },
+        {
+          "sku": "10221361324929",
+          "title": "张嘉佳书籍2026】我是你的遗物 张嘉佳时隔五年全新力作 云边有个小卖部从你的全世界路过天堂旅行团张嘉佳的书青春文学书籍湖南文艺出版社9787572629464 我是你的遗物+ 天堂旅行团",
+          "shop_name": "创品世纪图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221361324929.html"
+        },
+        {
+          "sku": "10221226175522",
+          "title": "张嘉佳书籍2026】我是你的遗物 张嘉佳时隔五年全新力作 云边有个小卖部从你的全世界路过天堂旅行团张嘉佳的书青春文学书籍湖南文艺出版社9787572629464 我是你的遗物",
+          "shop_name": "创品世纪图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221226175522.html"
+        },
+        {
+          "sku": "10225692822876",
+          "title": "9787572629464 我是你的遗物 湖南文艺出版社 张嘉佳",
+          "shop_name": "妙语书言图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225692822876.html"
+        },
+        {
+          "sku": "10221298428530",
+          "title": "【正版新书】我是你的遗物9787572629464",
+          "shop_name": "心阅图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221298428530.html"
+        },
+        {
+          "sku": "10221535968806",
+          "title": "张嘉佳新书 我是你的遗物 张嘉佳新书2026全新小说 升维突破之作 强伏笔深治愈 如果永远无法相见 那么一字一句都是遗言 XZ 我是你的遗物 无规格",
+          "shop_name": "读者天元专卖店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "26",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221535968806.html"
+        },
+        {
+          "sku": "10223457775243",
+          "title": "你是我的遗物2026全新小说我是你的遗物张嘉佳作品时隔5年正版书籍云边有个小卖部从你的全世界路过让我留在你身边青春文 你是我藏在风里的喜欢",
+          "shop_name": "榕屿专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223457775243.html"
         },
         {
           "sku": "10225564308405",
@@ -263,7 +325,7 @@
           "detail_url": "https://item.jd.com/10225564308405.html"
         }
       ],
-      "all_skus_count": 8
+      "all_skus_count": 14
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -297,6 +359,7 @@
         "vender_id": "1000102682",
         "shop_name": "中信童书京东自营旗舰店",
         "title": "现货包邮 赠吧唧 泉州寻宝记 大中华寻宝记 城市系列 随机掉落限量吧唧 大中华",
+        "isbn": "9787521734898",
         "sku_status": "1",
         "_perk_text": "现货包邮 赠吧唧 泉州寻宝记 大中华寻宝记 城市系列 随机掉落限量吧唧 大中华 现货包邮 赠吧唧 泉州寻宝记 大中华寻宝记 城市系列 随机掉落限量吧唧 大中华  现货包邮 赠吧唧 泉州寻宝记 大中华寻宝记 城市系列 随机掉落限量吧唧 大中华 ",
         "is_self": true,
@@ -307,7 +370,8 @@
         "comment_count_str": "2万+",
         "perks": [
           "限量"
-        ]
+        ],
+        "_matched_by": "isbn"
       },
       "all_perks": [
         "限量"
@@ -336,44 +400,14 @@
           "detail_url": "https://item.jd.com/10223418897165.html"
         },
         {
-          "sku": "10224198082164",
-          "title": "大中华寻宝记城市系列（第1卷）：泉州寻宝记 （孙家裕,京鼎动漫 中信社）",
-          "shop_name": "青苑图书专营店",
+          "sku": "10223322291022",
+          "title": "央视网（CCTVCOM）泉州寻宝记 孙家裕 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生科普百科WX 泉州寻宝记",
+          "shop_name": "央视网官方旗舰店",
           "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
+          "show_count_str": "4",
+          "comment_count_str": "200+",
           "perks": [],
-          "detail_url": "https://item.jd.com/10224198082164.html"
-        },
-        {
-          "sku": "10225088953172",
-          "title": "全新版泉州寻宝记寻宝记大中华寻宝记大中华寻宝记城市系列首卷专为少年儿童打造的行走百科全书寻宝少年队深入世界遗产之城 泉州寻宝记",
-          "shop_name": "志林图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10225088953172.html"
-        },
-        {
-          "sku": "10226810525308",
-          "title": "【正版现货】大中华寻宝记33册 泉州寻宝记 城市系列1孙家裕等著 宁夏寻宝记 顶呱呱 京鼎动漫中信出版社图书 【新书上市】泉州寻宝记",
-          "shop_name": "锦予图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226810525308.html"
-        },
-        {
-          "sku": "10223431996924",
-          "title": "正版2026新书泉州寻宝记大中华寻宝记城市系列孙家裕科普百科漫画书适合6-12岁男孩女孩小学生二三四五六年级看的阅读课外书中信出版社 泉州寻宝记",
-          "shop_name": "悦读鹅图书官方旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10223431996924.html"
+          "detail_url": "https://item.jd.com/10223322291022.html"
         },
         {
           "sku": "10226129737416",
@@ -386,6 +420,16 @@
           "detail_url": "https://item.jd.com/10226129737416.html"
         },
         {
+          "sku": "10223420774061",
+          "title": "【六一儿童节礼物】2026新书泉州寻宝记 大中华寻宝记城市系列 地理历史民俗非遗建筑美食等跨学科知识历史文化小百科小学生三四五年级科普百科 【2026新书】泉州寻宝记",
+          "shop_name": "阳悦初品图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223420774061.html"
+        },
+        {
           "sku": "10226810525309",
           "title": "【正版现货】大中华寻宝记33册 泉州寻宝记 城市系列1孙家裕等著 宁夏寻宝记 顶呱呱 京鼎动漫中信出版社图书 【新书】泉州+宁夏",
           "shop_name": "锦予图书专营店",
@@ -394,6 +438,26 @@
           "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/10226810525309.html"
+        },
+        {
+          "sku": "10226440727809",
+          "title": "新书！泉州寻宝记 大中华寻宝记城市系列全33册 孙家裕漫画 宁夏吉林山西内蒙古寻宝记 新华文轩旗舰正版 第一辑【上海_北京_天津_重庆】全4册",
+          "shop_name": "画纪（HUAJI）图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226440727809.html"
+        },
+        {
+          "sku": "10226915968691",
+          "title": "【正版】泉州寻宝记 城市寻宝记 京鼎动漫作品中信出版集团股份9787521734898",
+          "shop_name": null,
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226915968691.html"
         }
       ],
       "all_skus_count": 8
@@ -418,85 +482,146 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "12925910",
-        "url": "https://item.m.jd.com/product/12925910.html",
-        "detail_url": "https://item.jd.com/12925910.html",
+        "sku": "14704031",
+        "url": "https://item.m.jd.com/product/14704031.html",
+        "detail_url": "https://item.jd.com/14704031.html",
         "author": "刘洪波，李媛媛，刘潋",
         "publisher": "四川文艺出版社",
         "vender_id": "1000080426",
         "shop_name": "酷威文化京东自营旗舰店",
-        "title": "基本演绎法",
+        "title": "基本演绎法 南开大学教授作序推荐 底层逻辑科普畅销书籍自我逻辑思维训练入门改变思考习惯商业思维社交管理沟通正版实体书籍认知觉醒简单的逻辑学同类书赠书签",
+        "isbn": "9787541177071",
         "sku_status": "1",
-        "_perk_text": "基本演绎法 基本演绎法 基本演绎法",
+        "_perk_text": "基本演绎法 南开大学教授作序推荐 底层逻辑科普畅销书籍自我逻辑思维训练入门改变思考习惯商业思维社交管理沟通正版实体书籍认知觉醒简单的逻辑学同类书赠书签 基本演绎法 南开大学教授作序推荐 底层逻辑科普畅销书籍自我逻辑思维训练入门改变思考习惯商业思维社交管理沟通正版实体书籍认知觉醒简单的逻辑学同类书赠书签 基本演绎法 南开大学教授作序推荐 底层逻辑科普畅销书籍自我逻辑思维训练入门改变思考习惯商业思维社交管理沟通正版实体书籍认知觉醒简单的逻辑学同类书赠书签",
         "is_self": true,
         "category": "逻辑学哲学",
         "stock_status": "in_stock",
-        "show_count": 200,
-        "show_count_str": "200+",
-        "comment_count_str": "2万+",
+        "show_count": 0,
+        "show_count_str": "",
+        "comment_count_str": "",
         "perks": []
       },
       "all_perks": [],
       "all_versions": [
         {
-          "sku": "12925910",
-          "title": "基本演绎法",
-          "shop_name": "酷威文化京东自营旗舰店",
-          "is_self": true,
-          "show_count_str": "200+",
-          "comment_count_str": "2万+",
-          "perks": [],
-          "detail_url": "https://item.jd.com/12925910.html"
-        },
-        {
           "sku": "14704031",
           "title": "基本演绎法 南开大学教授作序推荐 底层逻辑科普畅销书籍自我逻辑思维训练入门改变思考习惯商业思维社交管理沟通正版实体书籍认知觉醒简单的逻辑学同类书赠书签",
           "shop_name": "酷威文化京东自营旗舰店",
           "is_self": true,
-          "show_count_str": "200+",
-          "comment_count_str": "2万+",
+          "show_count_str": "",
+          "comment_count_str": "",
           "perks": [],
           "detail_url": "https://item.jd.com/14704031.html"
         },
         {
-          "sku": "10214764136249",
-          "title": "基本演绎法 刘洪波，李媛媛，刘潋 四川文艺出版社 正版",
-          "shop_name": "铭嘉文学专营店",
+          "sku": "10224340316649",
+          "title": "【正版包邮】【赠书签】基本演绎法 刘洪波 等著 南开大学逻辑学教授张晓芒作序 底层逻辑自我逻辑思维训练 改变思考习惯 商业思维社交管理沟通 9787541177071",
+          "shop_name": "馨海图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10214764136249.html"
+          "detail_url": "https://item.jd.com/10224340316649.html"
         },
         {
-          "sku": "10215146402736",
-          "title": "基本演绎法刘洪波，李媛媛，刘潋四川文艺出版社9787541156397",
-          "shop_name": "曦霖文化专营店",
+          "sku": "10226171552816",
+          "title": "基本演绎法刘洪波四川文艺出版社9787541177071 历史书籍",
+          "shop_name": "读买天下图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10215146402736.html"
+          "detail_url": "https://item.jd.com/10226171552816.html"
         },
         {
-          "sku": "10110816256146",
-          "title": "【当日发明日达】基本演绎法",
-          "shop_name": "拓尔文学专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "1",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10110816256146.html"
-        },
-        {
-          "sku": "10211221446819",
-          "title": "基本演绎法 刘洪波,李媛媛,刘潋 /正版",
-          "shop_name": "学美图书专营店",
+          "sku": "10226265101262",
+          "title": "基本演绎法刘洪波四川文艺出版社9787541177071 工业技术书籍",
+          "shop_name": "人天书店图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10211221446819.html"
+          "detail_url": "https://item.jd.com/10226265101262.html"
+        },
+        {
+          "sku": "10225886644539",
+          "title": "【正版】基本演绎法刘洪波, 李媛媛, 刘潋著四川文艺出版社9787541177071",
+          "shop_name": "顿格图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225886644539.html"
+        },
+        {
+          "sku": "10226283628509",
+          "title": "正版全新 基本演绎法 9787541177071 四川文艺出版社 刘洪波, 李媛媛, 刘潋著",
+          "shop_name": "卡乐图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226283628509.html"
+        },
+        {
+          "sku": "10226480537037",
+          "title": "基本演绎法刘洪波，李媛媛，刘潋著9787541177071四川文艺出版社2026-06",
+          "shop_name": "俊龙文教用品专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226480537037.html"
+        },
+        {
+          "sku": "10225472845624",
+          "title": "基本演绎法刘洪波四川文艺出版社9787541177071 历史书籍",
+          "shop_name": "古韵图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225472845624.html"
+        },
+        {
+          "sku": "10225697126324",
+          "title": "正版包邮 基本演绎法 刘洪波,李媛媛,刘潋 著 著 9787541177071 四川文艺出版社",
+          "shop_name": "文悦享阅图书官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225697126324.html"
+        },
+        {
+          "sku": "10226158930113",
+          "title": "基本演绎法9787541177071刘洪波, 李媛媛, 刘潋著四川文艺出版社梦溪臻选，正版现货，正规发票。SX",
+          "shop_name": "梦溪图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226158930113.html"
+        },
+        {
+          "sku": "10225762992170",
+          "title": "基本演绎法刘洪波, 李媛媛, 刘潋著9787541177071四川文艺出版社哲学/宗教/伦理学正版现货",
+          "shop_name": "楚风图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225762992170.html"
+        },
+        {
+          "sku": "10222560846668",
+          "title": "基本演绎法 四川文艺出版社 刘洪波李媛媛刘潋 著 著 新华正版书籍包邮 图书",
+          "shop_name": "文轩网图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222560846668.html"
         },
         {
           "sku": "10214414808462",
@@ -507,9 +632,29 @@
           "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/10214414808462.html"
+        },
+        {
+          "sku": "10060447581456",
+          "title": "基本演绎法 刘洪波 著 哲学",
+          "shop_name": "中国经济书店图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10060447581456.html"
+        },
+        {
+          "sku": "10176964466812",
+          "title": "正版旧书 基本演绎法 9787541156397",
+          "shop_name": "青简图书图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10176964466812.html"
         }
       ],
-      "all_skus_count": 7
+      "all_skus_count": 15
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -564,64 +709,44 @@
           "detail_url": "https://item.jd.com/14685775.html"
         },
         {
-          "sku": "13048758",
-          "title": "【赠拉页+人物卡+折立卡+书签+邀请函】提灯照河山 淮上提灯系列作品提灯映桃花经典纯爱小说畅销书籍正版实体书",
-          "shop_name": "酷威文化京东自营旗舰店",
-          "is_self": true,
-          "show_count_str": "200+",
-          "comment_count_str": "2万+",
-          "perks": [],
-          "detail_url": "https://item.jd.com/13048758.html"
-        },
-        {
-          "sku": "10025452164214",
-          "title": "印签版-现货】提灯照河山淮上作品破云提灯映桃花作者晋江文学青春爱情纯爱小说书破云【酷威文化】",
-          "shop_name": "酷威图书专营店",
+          "sku": "10113352387430",
+          "title": "淮上小说 提灯照河山 刷边特典版",
+          "shop_name": "文轩网旗舰店",
           "is_self": false,
-          "show_count_str": "10",
-          "comment_count_str": "200+",
+          "show_count_str": "100+",
+          "comment_count_str": "5000+",
           "perks": [],
-          "detail_url": "https://item.jd.com/10025452164214.html"
+          "detail_url": "https://item.jd.com/10113352387430.html"
         },
         {
-          "sku": "10224286951156",
-          "title": "提灯照河山淮上作品 淮上著 江苏凤凰文艺出版社 9787559452**1 [正版]",
-          "shop_name": "时空文学专营店",
+          "sku": "10226613417253",
+          "title": "【正版2手图书】 提灯照河山 9787559452641 1",
+          "shop_name": "威尔捷家教专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10224286951156.html"
+          "detail_url": "https://item.jd.com/10226613417253.html"
         },
         {
-          "sku": "10224082236016",
-          "title": "提灯照河山淮上作品 淮上著 江苏凤凰文艺出版社 9787559452**1 (正版)",
-          "shop_name": "莱尔文化专营店",
+          "sku": "10158281918907",
+          "title": "提灯照河山 江苏凤凰文艺出版社 9787559452641 淮上",
+          "shop_name": "墨香麦粒图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10158281918907.html"
+        },
+        {
+          "sku": "10152181912695",
+          "title": "(非全新)提灯照河山 淮上 江苏凤凰文艺出版社 9787559452641",
+          "shop_name": "曦霖文学专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10224082236016.html"
-        },
-        {
-          "sku": "10205575306421",
-          "title": "提灯照河山 淮上 江苏凤凰文艺出版社",
-          "shop_name": "曦瀛图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10205575306421.html"
-        },
-        {
-          "sku": "10224066096019",
-          "title": "提灯照河山淮上作品 淮上著 江苏凤凰文艺出版社 (正版)",
-          "shop_name": "阅界书刊专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10224066096019.html"
+          "detail_url": "https://item.jd.com/10152181912695.html"
         },
         {
           "sku": "10216758741514",
@@ -634,24 +759,74 @@
           "detail_url": "https://item.jd.com/10216758741514.html"
         },
         {
-          "sku": "10186524994277",
-          "title": "印签版 提灯照河山 超人气畅销书作家淮上“提灯”系列经典之作，点燃以血还血的家国恩仇 酷威FX 【印签版】 提灯照河山",
-          "shop_name": "磨铁图书官方旗舰店",
+          "sku": "10027194861195",
+          "title": "提灯照河山 淮上 江苏凤凰文艺出版社 9787559452641 小说 书籍",
+          "shop_name": "人天书店图书专营店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "9",
+          "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10186524994277.html"
+          "detail_url": "https://item.jd.com/10027194861195.html"
         },
         {
-          "sku": "10218134330178",
-          "title": "吞海全套三册 破云3册 淮上小说作品全集 提灯照河山 不死者2 青春文 吞海3册全套",
-          "shop_name": "细蕴图书专营店",
+          "sku": "10226614012338",
+          "title": "【正版2手书】 提灯照河山 9787559452641 1",
+          "shop_name": "奥弗忧教育专营店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "11",
+          "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10218134330178.html"
+          "detail_url": "https://item.jd.com/10226614012338.html"
+        },
+        {
+          "sku": "10226608798513",
+          "title": "【正版2手图书】 提灯照河山 9787559452641 1",
+          "shop_name": "蕴祥书刊专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226608798513.html"
+        },
+        {
+          "sku": "10220849484731",
+          "title": "《正版》提灯照河山9787559452641淮上著；酷威文化出品江苏凤凰",
+          "shop_name": "富薇医学旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10220849484731.html"
+        },
+        {
+          "sku": "10226515167074",
+          "title": "【正版旧书】 提灯照河山 9787559452641 1",
+          "shop_name": "同韦德图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226515167074.html"
+        },
+        {
+          "sku": "10100123919248",
+          "title": "【正版新书】提灯照河山 9787559452641 江苏凤凰文艺出版社 淮上 提灯照河山",
+          "shop_name": "纸墨逸趣图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10100123919248.html"
+        },
+        {
+          "sku": "10214767400481",
+          "title": "提灯照河山淮上作品 淮上著 江苏凤凰文艺出版社 正版",
+          "shop_name": "铭嘉文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10214767400481.html"
         },
         {
           "sku": "10197570469130",
@@ -662,9 +837,39 @@
           "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/10197570469130.html"
+        },
+        {
+          "sku": "10217649107493",
+          "title": "提灯照河山淮上作品 淮上著 江苏凤凰文艺出版社(正版)",
+          "shop_name": "育科文学专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10217649107493.html"
+        },
+        {
+          "sku": "10205575306421",
+          "title": "提灯照河山 淮上 江苏凤凰文艺出版社",
+          "shop_name": "曦瀛图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10205575306421.html"
+        },
+        {
+          "sku": "10199936070500",
+          "title": "【签名】提灯照河山（专享人物透卡） 淮上 著,酷威文化 出品 江苏凤凰文艺出版社 9787559452",
+          "shop_name": "阅界艺术专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10199936070500.html"
         }
       ],
-      "all_skus_count": 11
+      "all_skus_count": 17
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -703,58 +908,22 @@
         "is_self": true,
         "category": "散文/随笔/书信 / 文学",
         "stock_status": "in_stock",
-        "show_count": 2,
-        "show_count_str": "2",
-        "comment_count_str": "200+",
+        "show_count": 0,
+        "show_count_str": "",
+        "comment_count_str": "",
         "perks": []
       },
-      "all_perks": [
-        "赠品"
-      ],
+      "all_perks": [],
       "all_versions": [
         {
           "sku": "14665871",
           "title": "请和我门外的花坐一会儿（套装3册）：出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上",
           "shop_name": "时代华语京东自营旗舰店",
           "is_self": true,
-          "show_count_str": "2",
-          "comment_count_str": "200+",
+          "show_count_str": "",
+          "comment_count_str": "",
           "perks": [],
           "detail_url": "https://item.jd.com/14665871.html"
-        },
-        {
-          "sku": "14728073",
-          "title": "请和我门外的花坐一会儿（套装3册）赠 透明DIY压花书签",
-          "shop_name": "时代华语京东自营旗舰店",
-          "is_self": true,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [
-            "赠品"
-          ],
-          "detail_url": "https://item.jd.com/14728073.html"
-        },
-        {
-          "sku": "10095354422171",
-          "title": "【任选】请和我门外的花坐一会儿 出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上 汪曾祺散文 充满烟火气的文字 人间滋味 夏日生花 好景常在 时代华语 请和我门外的花坐一会儿 3册",
-          "shop_name": "时代出版少儿图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "18",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10095354422171.html"
-        },
-        {
-          "sku": "10225706107506",
-          "title": "【现货速发 正版书籍】请和我门外的花坐一会儿3册礼盒 出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上 汪曾祺散文 充满烟火气的文字 人间滋味 夏日生花 好景常在 全3册：请和我门外的花坐一会儿 无规",
-          "shop_name": "时代新知图书旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [
-            "礼盒"
-          ],
-          "detail_url": "https://item.jd.com/10225706107506.html"
         },
         {
           "sku": "10220640292100",
@@ -769,6 +938,18 @@
           "detail_url": "https://item.jd.com/10220640292100.html"
         },
         {
+          "sku": "10225706107506",
+          "title": "【现货速发 正版书籍】请和我门外的花坐一会儿3册礼盒 出门去逛菜市场+野鸭子飞得高高的+太阳照在我手上 汪曾祺散文 充满烟火气的文字 人间滋味 夏日生花 好景常在 全3册：请和我门外的花坐一会儿 无规",
+          "shop_name": "时代新知图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "礼盒"
+          ],
+          "detail_url": "https://item.jd.com/10225706107506.html"
+        },
+        {
           "sku": "10223051357060",
           "title": "请和我门外的花坐一会儿 正版书籍手账本+明信片+书签+祝福卡 汪曾祺诞辰106周年 祝福礼盒面包袋 春和景明 夏日生花 好景常在 和门外的花坐一会儿",
           "shop_name": "卓创图书专营店",
@@ -779,30 +960,6 @@
             "礼盒"
           ],
           "detail_url": "https://item.jd.com/10223051357060.html"
-        },
-        {
-          "sku": "10226667325600",
-          "title": "【认准正版】请和我门外的花坐一会儿全3册出门去逛菜市场野鸭子飞得高高的太阳照在我手上汪曾祺诞辰106周年纪念版散文集礼物 正版 【全3册】请和我门外的花坐一会儿",
-          "shop_name": "AGHK图书旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [
-            "礼盒"
-          ],
-          "detail_url": "https://item.jd.com/10226667325600.html"
-        },
-        {
-          "sku": "10222421047867",
-          "title": "请和我门外的花坐一会儿 汪曾祺诞辰106周年祝福礼盒面包袋 出门去逛菜市场/太阳照在我手上/野鸭子飞得高高的 抚平焦虑治愈系读物 时代华语 【全3册】请和我门外的花坐一会儿",
-          "shop_name": "半小书官方旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "21",
-          "perks": [
-            "礼盒"
-          ],
-          "detail_url": "https://item.jd.com/10222421047867.html"
         },
         {
           "sku": "10221544303120",
@@ -817,7 +974,7 @@
           "detail_url": "https://item.jd.com/10221544303120.html"
         }
       ],
-      "all_skus_count": 9
+      "all_skus_count": 5
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -878,6 +1035,48 @@
           "detail_url": "https://item.jd.com/13748073.html"
         },
         {
+          "sku": "10094009426355",
+          "title": "【全新正版包邮】财之道丛书·经营十二条（盛和塾指定学习教材，稻盛和夫90岁收官之作！9787213110405DD",
+          "shop_name": "简单图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10094009426355.html"
+        },
+        {
+          "sku": "10191707777232",
+          "title": "财之道丛书·经营十二条 [日]稻盛和夫 著,曹岫云,曹寓刚 译 9787213110405 浙江人民",
+          "shop_name": "宗达天光图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10191707777232.html"
+        },
+        {
+          "sku": "10154781203326",
+          "title": "正版 财之道丛书·经营十二条 9787213110405",
+          "shop_name": "宇晨时代图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10154781203326.html"
+        },
+        {
+          "sku": "10226319224691",
+          "title": "【官方旗舰】财之道丛书·经营十二条 稻盛和夫90岁收官之作 附赠稻盛演讲影片 正版书籍 浙江人民出版社",
+          "shop_name": "读衣图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "赠品"
+          ],
+          "detail_url": "https://item.jd.com/10226319224691.html"
+        },
+        {
           "sku": "10215218853935",
           "title": "【二手85成新】财之道丛书·经营十二条稻盛和夫浙江人民出版社",
           "shop_name": "营口聚洋图书专营店",
@@ -886,41 +1085,9 @@
           "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/10215218853935.html"
-        },
-        {
-          "sku": "10174682154782",
-          "title": "财之道丛书·经营十二条（口袋本） (日)稻盛和夫 浙江人民出版社",
-          "shop_name": "博惟图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10174682154782.html"
-        },
-        {
-          "sku": "10097274508196",
-          "title": "【正版 京仓配送】财之道丛书经营十二条（盛和塾指定学习教材，稻盛和夫90岁收官之作！附赠稻盛演讲视频！）",
-          "shop_name": "溱宝图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "4",
-          "perks": [
-            "赠品"
-          ],
-          "detail_url": "https://item.jd.com/10097274508196.html"
-        },
-        {
-          "sku": "10178879325742",
-          "title": "【国图书店】全新正版 财之道丛书·经营十二条（口袋本） [日]稻盛和夫 著，曹岫云 曹寓刚 译 浙江人民出版社 经济/经济理论",
-          "shop_name": "国图书店旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10178879325742.html"
         }
       ],
-      "all_skus_count": 5
+      "all_skus_count": 6
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -944,35 +1111,37 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "14436431",
-        "url": "https://item.m.jd.com/product/14436431.html",
-        "detail_url": "https://item.jd.com/14436431.html",
-        "author": "李智勇",
-        "publisher": "人民邮电出版社",
-        "vender_id": "1000004566",
-        "shop_name": "人民邮电出版社京东自营旗舰店",
-        "title": "无人公司：打造未来超级商业体 李智勇著AI时代个体生存指南单干 智元微库出品",
+        "sku": "15412590",
+        "url": "https://item.m.jd.com/product/15412590.html",
+        "detail_url": "https://item.jd.com/15412590.html",
+        "author": "李一舟",
+        "publisher": "中国友谊出版公司",
+        "vender_id": "1000004821",
+        "shop_name": "时代华语京东自营旗舰店",
+        "title": "无人公司 AI Agent 创富 李一舟 著 李一舟同款 一人公司 AI创富 龙虾 工作流",
+        "isbn": "9787505763081",
         "sku_status": "1",
-        "_perk_text": "无人公司：打造未来超级商业体 李智勇著AI时代个体生存指南单干 智元微库出品 无人公司：打造未来超级商业体 李智勇著AI时代个体生存指南单干 智元微库出品 无人公司：打造未来超级商业体 李智勇著AI时代个体生存指南单干 智元微库出品",
+        "_perk_text": "无人公司 AI Agent 创富 李一舟 著 李一舟同款 一人公司 AI创富 龙虾 工作流 无人公司 AI Agent 创富 李一舟 著 李一舟同款 一人公司 AI创富 龙虾 工作流 无人公司 AI Agent 创富 李一舟 著 李一舟同款 一人公司 AI创富 龙虾 工作流",
         "is_self": true,
-        "category": "成功之道 / 励志与成功",
+        "category": "管理学 / 管理",
         "stock_status": "in_stock",
         "show_count": 0,
-        "show_count_str": "",
-        "comment_count_str": "",
-        "perks": []
+        "show_count_str": "0",
+        "comment_count_str": "2",
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
         {
-          "sku": "14436431",
-          "title": "无人公司：打造未来超级商业体 李智勇著AI时代个体生存指南单干 智元微库出品",
-          "shop_name": "人民邮电出版社京东自营旗舰店",
+          "sku": "15412590",
+          "title": "无人公司 AI Agent 创富 李一舟 著 李一舟同款 一人公司 AI创富 龙虾 工作流",
+          "shop_name": "时代华语京东自营旗舰店",
           "is_self": true,
-          "show_count_str": "",
-          "comment_count_str": "",
+          "show_count_str": "0",
+          "comment_count_str": "2",
           "perks": [],
-          "detail_url": "https://item.jd.com/14436431.html"
+          "detail_url": "https://item.jd.com/15412590.html"
         },
         {
           "sku": "10226372361778",
@@ -985,57 +1154,37 @@
           "detail_url": "https://item.jd.com/10226372361778.html"
         },
         {
-          "sku": "10226592089058",
-          "title": "无人公司:打造未来超级商业体",
-          "shop_name": "琅宇书刊专营店",
+          "sku": "10225733166903",
+          "title": "正版包邮 2026新书 无人公司 AI时代个体生存指南单干转型 规模增长 迭展 经济管理 商业变现企业打造未来商业体 中国友谊出版公司",
+          "shop_name": "阳光前行图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10226592089058.html"
+          "detail_url": "https://item.jd.com/10225733166903.html"
         },
         {
-          "sku": "10225422962711",
-          "title": "无人公司 千万粉丝tou部博主李一舟 教你跑通无人公司全链路创富 告别一人身兼数职 用AI搭好你的自动创富闭环 无人公司",
-          "shop_name": "钟书文化图书专营店",
+          "sku": "10225718772600",
+          "title": "无人公司千万粉丝头部商业博主李一舟教你跑通无人公司全链路创富 无人公司 无规格",
+          "shop_name": "舞书图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225422962711.html"
+          "detail_url": "https://item.jd.com/10225718772600.html"
         },
         {
-          "sku": "10225315172800",
-          "title": "无人公司【全新正版图书】",
-          "shop_name": "雪颜清图书专营店",
+          "sku": "10225755654629",
+          "title": "【官方正版】无人公司书籍 AI Agent创富李一舟著千万粉丝商业博主分享全链路自动化经营方法 普通人 AI变现指南 无人公司 套餐一",
+          "shop_name": "硕尚旺图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225315172800.html"
-        },
-        {
-          "sku": "10226622695253",
-          "title": "无人公司(商业博主李一舟,教你跑通无人公司全链路创富) 无人公司 全新正版",
-          "shop_name": "佐滋文学旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226622695253.html"
-        },
-        {
-          "sku": "10226047054377",
-          "title": "无人公司 千万粉丝tou部博主李一舟 教你跑通无人公司全链路创富 告别一人身兼数职 用AI搭好你的自动创富闭环 【单册】无人公司",
-          "shop_name": "京喜自营官方店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226047054377.html"
+          "detail_url": "https://item.jd.com/10225755654629.html"
         }
       ],
-      "all_skus_count": 7
+      "all_skus_count": 5
     },
     "gap_level": "perk_gap",
     "distinctive_strong": [
@@ -1070,6 +1219,7 @@
         "vender_id": "1000012001",
         "shop_name": "文通天下京东自营旗舰店",
         "title": "人间小满3：茶要细细品，日子慢慢过 高人气作者姑苏阿焦全新漫画随笔集 现象级畅销书",
+        "isbn": "9787519492656",
         "sku_status": "1",
         "_perk_text": "人间小满3：茶要细细品，日子慢慢过 高人气作者姑苏阿焦全新漫画随笔集 现象级畅销书 人间小满3：茶要细细品，日子慢慢过 高人气作者姑苏阿焦全新漫画随笔集 现象级畅销书 人间小满3：茶要细细品，日子慢慢过 高人气作者姑苏阿焦全新漫画随笔集 现象级畅销书",
         "is_self": true,
@@ -1078,7 +1228,8 @@
         "show_count": 200,
         "show_count_str": "200+",
         "comment_count_str": "2万+",
-        "perks": []
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
@@ -1093,17 +1244,27 @@
           "detail_url": "https://item.jd.com/14720705.html"
         },
         {
-          "sku": "10223912623050",
-          "title": "【现货速发 正版书籍】人间小满3：茶要细细品，日子慢慢过 姑苏阿焦 治愈系散文随笔 人间烟火暖心读物 人间小满3：茶要细细品，日子慢慢过",
-          "shop_name": "时代新知图书旗舰店",
+          "sku": "10096475109590",
+          "title": "人间小满123 心有花田万事香 时间一晃人到中场 姑苏阿焦漫画正版作品 人间小满3",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "51",
+          "comment_count_str": "2000+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10096475109590.html"
+        },
+        {
+          "sku": "10224753064886",
+          "title": "【官方正版】人间小满3茶要细细品日子慢慢过 中国近代随笔温暖哲学现代文学治暖心人生感悟愈系生活智慧 姑苏阿焦漫画集 人间小满3 无规格",
+          "shop_name": "三鑫六合图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10223912623050.html"
+          "detail_url": "https://item.jd.com/10224753064886.html"
         }
       ],
-      "all_skus_count": 2
+      "all_skus_count": 3
     },
     "gap_level": "perk_gap",
     "distinctive_strong": [
@@ -1126,10 +1287,52 @@
       "cover": "http://img3m3.ddimg.cn/17/2/30057803-1_l_1779262996.jpg"
     },
     "jd": {
-      "available": false,
-      "reason": "no_match_after_detail"
+      "available": true,
+      "best_match": {
+        "sku": "10221984344736",
+        "url": "https://item.m.jd.com/product/10221984344736.html",
+        "detail_url": "https://item.jd.com/10221984344736.html",
+        "vender_id": "14138534",
+        "shop_name": "泽中图书专营店",
+        "title": "正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609",
+        "isbn": "9787521660609",
+        "sku_status": "1",
+        "_perk_text": "正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609 正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609 正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609",
+        "is_self": false,
+        "category": "社会保障/无障碍阅读社会科学",
+        "stock_status": "in_stock",
+        "show_count": 0,
+        "show_count_str": "0",
+        "comment_count_str": "0",
+        "perks": [],
+        "_matched_by": "isbn"
+      },
+      "all_perks": [],
+      "all_versions": [
+        {
+          "sku": "10221984344736",
+          "title": "正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609",
+          "shop_name": "泽中图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221984344736.html"
+        },
+        {
+          "sku": "10221984645487",
+          "title": "正版2026新书 中华人民共和国劳动法（实用版）第四版 中国法治出版社9787521660609",
+          "shop_name": "泽中信息图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221984645487.html"
+        }
+      ],
+      "all_skus_count": 2
     },
-    "gap_level": "no_jd",
+    "gap_level": "none",
     "distinctive_strong": [],
     "distinctive_weak": []
   },
@@ -1159,6 +1362,7 @@
         "vender_id": "1000005842",
         "shop_name": "漫友文化京东自营旗舰店",
         "title": "肥志百科17原来你是这样的发明A篇",
+        "isbn": "9787557038120",
         "sku_status": "1",
         "arrival_date": "2026-07-03",
         "_perk_text": "肥志百科17原来你是这样的发明A篇 肥志百科17原来你是这样的发明A篇 肥志百科17原来你是这样的发明A篇",
@@ -1183,14 +1387,14 @@
           "detail_url": "https://item.jd.com/15409288.html"
         },
         {
-          "sku": "10225481228935",
-          "title": "全新肥志百科17-18（如果历史是一群喵作者肥志全新力作） 肥志百科17-18",
-          "shop_name": "唐客文娱专营店",
+          "sku": "10226398383376",
+          "title": "肥志百科17-18（特典版） 少儿科普 小学知识拓展 科学启蒙",
+          "shop_name": "维腾亚图书旗舰店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "1",
+          "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225481228935.html"
+          "detail_url": "https://item.jd.com/10226398383376.html"
         },
         {
           "sku": "10226244049943",
@@ -1203,27 +1407,47 @@
           "detail_url": "https://item.jd.com/10226244049943.html"
         },
         {
-          "sku": "10147953909806",
-          "title": "自选书】假如如果西游是一群喵2二西游记漫画书猫1 超级西行棋桌游 肥志百科17-18 如果历史是一群喵17-16全套 如果世界是一窝啾肥志 如果西游是一群喵1 肥志",
-          "shop_name": "新阅图书专营店",
+          "sku": "10225313850528",
+          "title": "全新肥志百科17-18（如果历史是一群喵作者肥志全新力作） 肥志百科17原来你是这样的发明A篇",
+          "shop_name": "唐客文娱专营店",
           "is_self": false,
-          "show_count_str": "24",
-          "comment_count_str": "2000+",
+          "show_count_str": "0",
+          "comment_count_str": "1",
           "perks": [],
-          "detail_url": "https://item.jd.com/10147953909806.html"
+          "detail_url": "https://item.jd.com/10225313850528.html"
         },
         {
-          "sku": "10176858796318",
-          "title": "正版自选】肥志百科17-18册全套 肥志百科1-3-8-9-13-16原来你是这样的发明篇A美食AB动植物CDEF如果历史是一群喵1-14西游记礼物童书 如果西游是一群喵1",
-          "shop_name": "新阅图书专营店",
+          "sku": "10189897380655",
+          "title": "【现货速发】全新肥志百科17-18卷特典版 全套18册1-18 如果历史是一群喵作者肥志全新力作 肥志百科18肥志百科肥志百科17原来你是这样的发明A篇18原来你是这样的美食E篇 【全新4册】肥志百科",
+          "shop_name": "弘文图书专营店",
           "is_self": false,
-          "show_count_str": "1",
-          "comment_count_str": "85",
+          "show_count_str": "6",
+          "comment_count_str": "500+",
           "perks": [],
-          "detail_url": "https://item.jd.com/10176858796318.html"
+          "detail_url": "https://item.jd.com/10189897380655.html"
+        },
+        {
+          "sku": "10226766216706",
+          "title": "【全新正版】肥志百科全套漫画书正版18册 17+18原来你是这样的植物动物美食篇9到12册13到16小学生儿童百科科普漫画漫画书籍 【全套18册】肥志百科1-18册",
+          "shop_name": "岁岁米安图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226766216706.html"
+        },
+        {
+          "sku": "10225481228935",
+          "title": "全新肥志百科17-18（如果历史是一群喵作者肥志全新力作） 肥志百科17-18",
+          "shop_name": null,
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225481228935.html"
         }
       ],
-      "all_skus_count": 5
+      "all_skus_count": 7
     },
     "gap_level": "perk_gap",
     "distinctive_strong": [
@@ -1247,16 +1471,16 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "14699571",
-        "url": "https://item.m.jd.com/product/14699571.html",
-        "detail_url": "https://item.jd.com/14699571.html",
+        "sku": "15289180",
+        "url": "https://item.m.jd.com/product/15289180.html",
+        "detail_url": "https://item.jd.com/15289180.html",
         "author": "未华文化",
         "publisher": "二十一世纪出版社集团",
         "vender_id": "1000004559",
         "shop_name": "乐乐趣童书京东自营旗舰店",
-        "title": "【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡",
+        "title": "米吴科学漫画·奇妙万象篇1-9辑 第1-36册套装 小学生超爱看的科学漫画书全套6-12岁儿童科普 省钱卡",
         "sku_status": "1",
-        "_perk_text": "【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡 【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡 【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡",
+        "_perk_text": "米吴科学漫画·奇妙万象篇1-9辑 第1-36册套装 小学生超爱看的科学漫画书全套6-12岁儿童科普 省钱卡 米吴科学漫画·奇妙万象篇1-9辑 第1-36册套装 小学生超爱看的科学漫画书全套6-12岁儿童科普 省钱卡 米吴科学漫画·奇妙万象篇1-9辑 第1-36册套装 小学生超爱看的科学漫画书全套6-12岁儿童科普 省钱卡",
         "is_self": true,
         "category": "科普/百科 / 童书",
         "stock_status": "in_stock",
@@ -1268,16 +1492,6 @@
       "all_perks": [],
       "all_versions": [
         {
-          "sku": "14699571",
-          "title": "【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡",
-          "shop_name": "乐乐趣童书京东自营旗舰店",
-          "is_self": true,
-          "show_count_str": "5000+",
-          "comment_count_str": "20万+",
-          "perks": [],
-          "detail_url": "https://item.jd.com/14699571.html"
-        },
-        {
           "sku": "15289180",
           "title": "米吴科学漫画·奇妙万象篇1-9辑 第1-36册套装 小学生超爱看的科学漫画书全套6-12岁儿童科普 省钱卡",
           "shop_name": "乐乐趣童书京东自营旗舰店",
@@ -1286,6 +1500,16 @@
           "comment_count_str": "20万+",
           "perks": [],
           "detail_url": "https://item.jd.com/15289180.html"
+        },
+        {
+          "sku": "14707495",
+          "title": "米吴科学漫画·奇妙万象篇1-10辑 第1-40册套装 小学生超爱看的科学漫画书6-12岁儿童科普 省钱卡",
+          "shop_name": "乐乐趣童书京东自营旗舰店",
+          "is_self": true,
+          "show_count_str": "5000+",
+          "comment_count_str": "20万+",
+          "perks": [],
+          "detail_url": "https://item.jd.com/14707495.html"
         },
         {
           "sku": "15192642",
@@ -1308,14 +1532,14 @@
           "detail_url": "https://item.jd.com/14620755.html"
         },
         {
-          "sku": "14707495",
-          "title": "米吴科学漫画·奇妙万象篇1-10辑 第1-40册套装 小学生超爱看的科学漫画书6-12岁儿童科普 省钱卡",
+          "sku": "14699571",
+          "title": "【现货速发】米吴科学漫画·奇妙万象篇第10辑 37-40册 小学生超爱看的科学漫画书4册套装6-12岁儿童科普 省钱卡",
           "shop_name": "乐乐趣童书京东自营旗舰店",
           "is_self": true,
           "show_count_str": "5000+",
           "comment_count_str": "20万+",
           "perks": [],
-          "detail_url": "https://item.jd.com/14707495.html"
+          "detail_url": "https://item.jd.com/14699571.html"
         }
       ],
       "all_skus_count": 5
@@ -1348,6 +1572,7 @@
         "vender_id": "1000412301",
         "shop_name": "京东图书自营旗舰店",
         "title": "樱花树下站谁都美 施威 一本兼具思想深度的疗愈成长书 心理疗愈自我成长励志书籍 刷边+香片+书签",
+        "isbn": "9787213123887",
         "sku_status": "1",
         "_perk_text": "樱花树下站谁都美 施威 一本兼具思想深度的疗愈成长书 心理疗愈自我成长励志书籍 刷边+香片+书签 樱花树下站谁都美 施威 一本兼具思想深度的疗愈成长书 心理疗愈自我成长励志书籍 刷边+香片+书签 樱花树下站谁都美 施威 一本兼具思想深度的疗愈成长书 心理疗愈自我成长励志书籍 刷边+香片+书签",
         "is_self": true,
@@ -1356,7 +1581,8 @@
         "show_count": 7,
         "show_count_str": "7",
         "comment_count_str": "1000+",
-        "perks": []
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
@@ -1371,24 +1597,24 @@
           "detail_url": "https://item.jd.com/15389982.html"
         },
         {
-          "sku": "10222532043713",
-          "title": "樱花树下站谁都美当代治愈系青春文学散文集书写人间温柔生活感悟细腻随笔治愈内心情绪解压暖心美文青少年文艺读者枕边典藏读物 默认规格",
-          "shop_name": "书客书图图书专营店",
+          "sku": "10222602776351",
+          "title": "樱花树下站谁都美 施威著写给被现实磨钝却仍愿意盛开的你 写给所有在关系中走失在付出中怀疑在爱里忘了自己的人浙江人民出版社正版 樱花树下站谁都美",
+          "shop_name": "学成图书专营店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "0",
+          "comment_count_str": "1",
           "perks": [],
-          "detail_url": "https://item.jd.com/10222532043713.html"
+          "detail_url": "https://item.jd.com/10222602776351.html"
         },
         {
-          "sku": "10222758326439",
-          "title": "樱花树下站谁都美 施威新书 送香片+书签+课程 樱花树下站谁都美 无规格",
-          "shop_name": "北京文墨居专营店",
+          "sku": "10225764612239",
+          "title": "樱花树下站谁都美 施威著 你本就是很好的人 我很好 我和谁在一起都会幸福 心灵感悟 樱花树下站谁都美 无规格",
+          "shop_name": "隆沃图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10222758326439.html"
+          "detail_url": "https://item.jd.com/10225764612239.html"
         },
         {
           "sku": "10224766778950",
@@ -1401,24 +1627,24 @@
           "detail_url": "https://item.jd.com/10224766778950.html"
         },
         {
-          "sku": "10225700574186",
-          "title": "【正版现发】樱花树下站谁都美当代治愈系青春文学散文集书写人间温柔生活感悟细腻随笔治愈内心情绪解压暖心美文青少年文艺读者枕边典藏读物 樱花树下站谁都美",
-          "shop_name": "禾墨经济专营店",
+          "sku": "10222792423785",
+          "title": "樱花树下站谁都美",
+          "shop_name": "雪颜清文学专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225700574186.html"
+          "detail_url": "https://item.jd.com/10222792423785.html"
         },
         {
-          "sku": "10225506139511",
-          "title": "【慧知 刷边版】樱花树下站谁都美 施威著 不内耗疗愈自己看到闪闪发光的自己升维认知实现人生价值 浙江人民出版社",
-          "shop_name": "慧知青春文学专营店",
+          "sku": "10222585359083",
+          "title": "央视网（CCTVCOM）樱花树下站谁都美 刷边版赠书签+香片+课程 施威疗愈力作 治愈内心情绪解压放松心灵修养人生哲学散文随笔现代文学书籍SS",
+          "shop_name": "央视网官方旗舰店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "0",
+          "comment_count_str": "25",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225506139511.html"
+          "detail_url": "https://item.jd.com/10222585359083.html"
         },
         {
           "sku": "10225190370693",
@@ -1431,47 +1657,17 @@
           "detail_url": "https://item.jd.com/10225190370693.html"
         },
         {
-          "sku": "10221847677200",
-          "title": "樱花树下站谁都美 施威著 我的爱给谁都热烈SS 樱花树下站谁都美 无规格",
-          "shop_name": "风清文化图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "48",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10221847677200.html"
-        },
-        {
-          "sku": "10222583072142",
-          "title": "【正版】樱花树下站谁都美 施威著 不内耗疗愈自己看到闪闪发光的自己升维认知实现人生价值 浙江人民出版社 无规格 樱花树下站谁都美",
-          "shop_name": "喜文图图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "4",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222583072142.html"
-        },
-        {
-          "sku": "10223688448393",
-          "title": "樱花树下站谁都美",
-          "shop_name": "雪颜清图书专营店",
+          "sku": "10222532043713",
+          "title": "樱花树下站谁都美当代治愈系青春文学散文集书写人间温柔生活感悟细腻随笔治愈内心情绪解压暖心美文青少年文艺读者枕边典藏读物 默认规格",
+          "shop_name": "书客书图图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10223688448393.html"
-        },
-        {
-          "sku": "10222792423785",
-          "title": "樱花树下站谁都美",
-          "shop_name": "雪颜清文学专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222792423785.html"
+          "detail_url": "https://item.jd.com/10222532043713.html"
         }
       ],
-      "all_skus_count": 11
+      "all_skus_count": 8
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -1502,6 +1698,7 @@
         "publisher": "江苏凤凰文艺出版社",
         "vender_id": "0",
         "title": "傅同学，我知道你暗恋我",
+        "isbn": "9787580808073",
         "sku_status": "1",
         "_perk_text": "傅同学，我知道你暗恋我 傅同学，我知道你暗恋我 傅同学，我知道你暗恋我",
         "shop_name": "京东自营",
@@ -1509,9 +1706,10 @@
         "category": "青春校园 / 青春文学",
         "stock_status": "in_stock",
         "show_count": 0,
-        "show_count_str": "",
-        "comment_count_str": "",
-        "perks": []
+        "show_count_str": "0",
+        "comment_count_str": "0",
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
@@ -1520,20 +1718,10 @@
           "title": "傅同学，我知道你暗恋我",
           "shop_name": "京东自营",
           "is_self": true,
-          "show_count_str": "",
-          "comment_count_str": "",
+          "show_count_str": "0",
+          "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/14727979.html"
-        },
-        {
-          "sku": "10221378823850",
-          "title": "傅同学，我知道你暗恋我 甜甜的瓜 治愈救赎之作 元气少女姜珥×听障少年傅听寒 新增番外《青梅是你》畅销青春文学 H 预售 傅同学，我知道你暗恋我",
-          "shop_name": "读买天下图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "3",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10221378823850.html"
         },
         {
           "sku": "10226474374093",
@@ -1544,6 +1732,49 @@
           "comment_count_str": "0",
           "perks": [],
           "detail_url": "https://item.jd.com/10226474374093.html"
+        },
+        {
+          "sku": "10226476220780",
+          "title": "傅同学，我知道你暗恋我甜甜的瓜江苏凤凰文艺出版社9787580808073 历史书籍",
+          "shop_name": "古韵图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226476220780.html"
+        },
+        {
+          "sku": "10226790995958",
+          "title": "傅同学，我知道你暗恋我甜甜的瓜江苏凤凰文艺出版社9787580808073 历史书籍",
+          "shop_name": "青草书店专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226790995958.html"
+        },
+        {
+          "sku": "10226924209773",
+          "title": "傅同学，我知道你暗恋我甜甜的瓜历史9787580808073",
+          "shop_name": "时代蔚蓝图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226924209773.html"
+        },
+        {
+          "sku": "10219713946000",
+          "title": "前10分钟特签10-30分亲签 傅同学，我知道你暗恋我 甜甜的瓜 治愈救赎言情小说 气少女×听障少年 新增番外《青梅是你》 傅同学，我知道你暗恋我+定制赠品",
+          "shop_name": "泽存图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [
+            "亲签",
+            "赠品"
+          ],
+          "detail_url": "https://item.jd.com/10219713946000.html"
         },
         {
           "sku": "10221378823851",
@@ -1567,16 +1798,6 @@
             "赠品"
           ],
           "detail_url": "https://item.jd.com/10225260494540.html"
-        },
-        {
-          "sku": "10226924209773",
-          "title": "傅同学，我知道你暗恋我甜甜的瓜历史9787580808073",
-          "shop_name": "时代蔚蓝图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226924209773.html"
         },
         {
           "sku": "10225260494541",
@@ -1605,17 +1826,17 @@
           "detail_url": "https://item.jd.com/10219714197118.html"
         },
         {
-          "sku": "10226434197777",
-          "title": "傅同学，我知道你暗恋我历史 图书",
-          "shop_name": "读乐尔图书专营店",
+          "sku": "10221378823850",
+          "title": "傅同学，我知道你暗恋我 甜甜的瓜 治愈救赎之作 元气少女姜珥×听障少年傅听寒 新增番外《青梅是你》畅销青春文学 H 预售 傅同学，我知道你暗恋我",
+          "shop_name": "读买天下图书专营店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "0",
+          "comment_count_str": "3",
           "perks": [],
-          "detail_url": "https://item.jd.com/10226434197777.html"
+          "detail_url": "https://item.jd.com/10221378823850.html"
         }
       ],
-      "all_skus_count": 9
+      "all_skus_count": 11
     },
     "gap_level": "perk_gap",
     "distinctive_strong": [
@@ -1639,16 +1860,15 @@
     "jd": {
       "available": true,
       "best_match": {
-        "sku": "10222716702779",
-        "url": "https://item.m.jd.com/product/10222716702779.html",
-        "detail_url": "https://item.jd.com/10222716702779.html",
-        "author": "蔡磊",
+        "sku": "10221834202345",
+        "url": "https://item.m.jd.com/product/10221834202345.html",
+        "detail_url": "https://item.jd.com/10221834202345.html",
         "publisher": "中信出版社",
-        "vender_id": "12324039",
-        "shop_name": "时政图书专营店",
-        "title": "相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社",
+        "vender_id": "54088",
+        "shop_name": "时代蔚蓝图书专营店",
+        "title": "相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励9787521730197 中信出版社 F",
         "sku_status": "1",
-        "_perk_text": "相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社 相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社 相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社",
+        "_perk_text": "相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励9787521730197 中信出版社 F 相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励9787521730197 中信出版社 F 相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励9787521730197 中信出版社 F",
         "is_self": false,
         "category": "名人励志 / 励志与成功",
         "stock_status": "in_stock",
@@ -1660,24 +1880,44 @@
       "all_perks": [],
       "all_versions": [
         {
-          "sku": "10222716702779",
-          "title": "相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社",
-          "shop_name": "时政图书专营店",
+          "sku": "10221834202345",
+          "title": "相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励9787521730197 中信出版社 F",
+          "shop_name": "时代蔚蓝图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10222716702779.html"
+          "detail_url": "https://item.jd.com/10221834202345.html"
         },
         {
-          "sku": "10221828163965",
-          "title": "【现货速发】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 官方正版 【增订版】相信",
-          "shop_name": "弘文图书专营店",
+          "sku": "10222135120155",
+          "title": "相信（增订版）纵使不敌也绝不屈服 蔡磊作品 渐冻症 破冰驿站 内容新增8万字 记录渐冻症抗争全程 企业家精神 励志 中信出版社 9787521730197",
+          "shop_name": "创品世纪图书专营店",
           "is_self": false,
           "show_count_str": "0",
-          "comment_count_str": "25",
+          "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10221828163965.html"
+          "detail_url": "https://item.jd.com/10222135120155.html"
+        },
+        {
+          "sku": "10221711567471",
+          "title": "相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！中信出版集团股份 9787521730197 书籍C",
+          "shop_name": "读买天下图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "4",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221711567471.html"
+        },
+        {
+          "sku": "10223041139231",
+          "title": "相信蔡磊（增订版）：时隔3年，新增8万字，动人记录蔡磊抗争全程！励志成功激励中信出版集团股份 9787521730197 书籍",
+          "shop_name": "读乐尔图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223041139231.html"
         },
         {
           "sku": "10220527661719",
@@ -1690,36 +1930,6 @@
           "detail_url": "https://item.jd.com/10220527661719.html"
         },
         {
-          "sku": "10222256293190",
-          "title": "【正版包邮】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望",
-          "shop_name": "馨海图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222256293190.html"
-        },
-        {
-          "sku": "10226536043819",
-          "title": "【现货速发 正版书籍】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 蔡磊-相信(增订版)",
-          "shop_name": "时代新知图书旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226536043819.html"
-        },
-        {
-          "sku": "10222125116435",
-          "title": "相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 官方正版 相信",
-          "shop_name": "玻璃心图书旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222125116435.html"
-        },
-        {
           "sku": "10222246938246",
           "title": "【现货速发】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 官方正版 相信",
           "shop_name": "弘文图书专营店",
@@ -1730,24 +1940,34 @@
           "detail_url": "https://item.jd.com/10222246938246.html"
         },
         {
-          "sku": "10222256769368",
-          "title": "正版包邮 相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望",
-          "shop_name": "天津五粮图书专营店",
+          "sku": "10222256293190",
+          "title": "【正版包邮】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望",
+          "shop_name": "馨海图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10222256769368.html"
+          "detail_url": "https://item.jd.com/10222256293190.html"
         },
         {
-          "sku": "10226533867963",
-          "title": "【现货速发 正版书籍】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 蔡磊-相信(增订版)",
-          "shop_name": "九堡图书专营店",
+          "sku": "10221828163965",
+          "title": "【现货速发】相信 2026年全新增订版 新增8万字 完整记录蔡磊抗争全程 蔡磊作品 用信念与坚持面对生活的每一个意外与绝望 官方正版 【增订版】相信",
+          "shop_name": "弘文图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "25",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221828163965.html"
+        },
+        {
+          "sku": "10222716702779",
+          "title": "相信 2026年全新增订版新增8万字记录蔡磊抗争全程 所有人一起在书写的奇迹 纵使不敌也绝不屈服 励志正版书籍中信出版社",
+          "shop_name": "时政图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10226533867963.html"
+          "detail_url": "https://item.jd.com/10222716702779.html"
         }
       ],
       "all_skus_count": 9
@@ -1780,6 +2000,7 @@
         "vender_id": "1000004821",
         "shop_name": "时代华语京东自营旗舰店",
         "title": "滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。在反抗与守护中，找回对生活最本真的热爱。",
+        "isbn": "9787580808585",
         "sku_status": "1",
         "_perk_text": "滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。在反抗与守护中，找回对生活最本真的热爱。 滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。在反抗与守护中，找回对生活最本真的热爱。 滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。在反抗与守护中，找回对生活最本真的热爱。",
         "is_self": true,
@@ -1803,94 +2024,24 @@
           "detail_url": "https://item.jd.com/14703353.html"
         },
         {
-          "sku": "10225746144421",
-          "title": "【正版新书】 滚石落下之前+每个冬天的句号都是春暖花开 2册 [法]阿尔贝加缪 江苏凤凰文艺出版社等",
-          "shop_name": "汉道图书专营店",
+          "sku": "10225695338794",
+          "title": "正版包邮 滚石落下之前 (法)阿尔贝·加缪 著 孙玮 译 l.Gabriella 绘 9787580808585 江苏凤凰文艺出版社",
+          "shop_name": "文悦享阅图书官方旗舰店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225746144421.html"
+          "detail_url": "https://item.jd.com/10225695338794.html"
         },
         {
-          "sku": "10222757280228",
-          "title": "【新华正版包邮】滚石落下之前+每个冬天的句号都是春暖花开 2册 法阿尔贝·加缪 江苏凤凰文艺出版社等 阿尔贝·加缪著 著等 书籍 图书",
-          "shop_name": "文轩在线图书专营店",
+          "sku": "10224615858394",
+          "title": "正版全新 滚石落下之前 9787580808585 江苏凤凰文艺出版社 (法) 阿尔贝·加缪著",
+          "shop_name": "卡乐图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10222757280228.html"
-        },
-        {
-          "sku": "10226392195866",
-          "title": "滚石落下之前阿尔贝·加缪历史9787580808585",
-          "shop_name": "时代蔚蓝图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10226392195866.html"
-        },
-        {
-          "sku": "10222447530769",
-          "title": "滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。让我们举重若轻地生活、抗争和爱",
-          "shop_name": "华语臻品图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222447530769.html"
-        },
-        {
-          "sku": "10222757332989",
-          "title": "【新华正版包邮】滚石落下之前+每个冬天的句号都是春暖花开 2册 法阿尔贝·加缪 江苏凤凰文艺出版社等 阿尔贝·加缪著 著等 书籍 图书",
-          "shop_name": "文轩在线专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10222757332989.html"
-        },
-        {
-          "sku": "10221868651125",
-          "title": "滚石落下之前 加缪精神主题手账 加缪文学世界深度探索，如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。 图书",
-          "shop_name": "文轩网旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "24",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10221868651125.html"
-        },
-        {
-          "sku": "10223605213631",
-          "title": "滚石落下之前+局外人 2册 [法]阿尔贝·加缪 阿尔贝·加缪/著 著等 9787580808585",
-          "shop_name": "书百笈图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10223605213631.html"
-        },
-        {
-          "sku": "10223566190044",
-          "title": "正版包邮 滚石落下之前+每个冬天的句号都是春暖花开 2册 [法]阿尔贝加缪 阿尔贝加缪/著 著等 外国小说文学 籍",
-          "shop_name": "天津五粮图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10223566190044.html"
-        },
-        {
-          "sku": "10225705637955",
-          "title": "【官方正版】滚石落下之前 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。在反抗与守护中，找回对生活最本真的热爱。 滚石落下之前",
-          "shop_name": "书纷图书专营店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "0",
-          "perks": [],
-          "detail_url": "https://item.jd.com/10225705637955.html"
+          "detail_url": "https://item.jd.com/10224615858394.html"
         },
         {
           "sku": "10226394346159",
@@ -1903,27 +2054,147 @@
           "detail_url": "https://item.jd.com/10226394346159.html"
         },
         {
-          "sku": "10224265302526",
-          "title": "滚石落下之前 阿尔贝·加缪著",
-          "shop_name": "读乐尔图书专营店",
+          "sku": "10225135493497",
+          "title": "【正版】滚石落下之前(法) 阿尔贝·加缪著江苏凤凰文艺出版社9787580808585",
+          "shop_name": "顿格图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10224265302526.html"
+          "detail_url": "https://item.jd.com/10225135493497.html"
         },
         {
-          "sku": "10225873157285",
-          "title": "全2册滚石落下之前+局外人外国小说正版1957年诺贝尔文学奖得主法国作家加缪代表作 柳鸣九译存在主义文学荒诞哲学代表作品书籍 滚石落下之前 无规格",
-          "shop_name": "书客书图图书专营店",
+          "sku": "10225697495325",
+          "title": "正版包邮 滚石落下之前+每个冬天的句号都是春暖花开 2册 [法]阿尔贝·加缪 阿尔贝·加缪/著 著等 9787580808585 江苏凤凰文艺出版社等",
+          "shop_name": "文悦享阅图书官方旗舰店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225873157285.html"
+          "detail_url": "https://item.jd.com/10225697495325.html"
+        },
+        {
+          "sku": "10225178724290",
+          "title": "滚石落下之前9787580808585(法) 阿尔贝*加缪著江苏凤凰文艺出版社梦溪臻选，正版现货，正规发票。SX",
+          "shop_name": "梦溪图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225178724290.html"
+        },
+        {
+          "sku": "10224836892420",
+          "title": "【新华正版】 滚石落下之前 2026-05 江苏凤凰文艺出版社 法阿尔贝加缪Albert Camus著 9787580808585",
+          "shop_name": "福州学有所成图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224836892420.html"
+        },
+        {
+          "sku": "10225696728120",
+          "title": "正版包邮 滚石落下之前+局外人 2册 [法]阿尔贝·加缪 阿尔贝·加缪/著 著等 9787580808585 江苏凤凰文艺出版社等",
+          "shop_name": "文悦享阅图书官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225696728120.html"
+        },
+        {
+          "sku": "10223605213631",
+          "title": "滚石落下之前+局外人 2册 [法]阿尔贝·加缪 阿尔贝·加缪/著 著等 9787580808585",
+          "shop_name": "书百笈图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223605213631.html"
+        },
+        {
+          "sku": "10226392195866",
+          "title": "滚石落下之前阿尔贝·加缪历史9787580808585",
+          "shop_name": "时代蔚蓝图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226392195866.html"
+        },
+        {
+          "sku": "10225585245355",
+          "title": "央视网（CCTVCOM）滚石落下之前 诺奖得主加缪精神主题手账书 赠卡片+书签 挚爱十词精选文段黑白格调插画诺奖致辞全新翻译 外国文学书籍HY 滚石落下之前",
+          "shop_name": "央视网官方旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225585245355.html"
+        },
+        {
+          "sku": "10222445618694",
+          "title": "滚石落下之前 江苏凤凰文艺出版社 阿尔贝·加缪著 著 如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。 滚石落下之前",
+          "shop_name": "乐典纳旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "1",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222445618694.html"
+        },
+        {
+          "sku": "10221868651125",
+          "title": "滚石落下之前 加缪精神主题手账 加缪文学世界深度探索，如今有太多事物，配得上这么一脚。踢飞那些消耗你的，留下你真正珍视的。 图书",
+          "shop_name": "文轩网旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "24",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10221868651125.html"
+        },
+        {
+          "sku": "10222757280228",
+          "title": "【新华正版包邮】滚石落下之前+每个冬天的句号都是春暖花开 2册 法阿尔贝·加缪 江苏凤凰文艺出版社等 阿尔贝·加缪著 著等 书籍 图书",
+          "shop_name": "文轩在线图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222757280228.html"
+        },
+        {
+          "sku": "10222757332989",
+          "title": "【新华正版包邮】滚石落下之前+每个冬天的句号都是春暖花开 2册 法阿尔贝·加缪 江苏凤凰文艺出版社等 阿尔贝·加缪著 著等 书籍 图书",
+          "shop_name": "文轩在线专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222757332989.html"
+        },
+        {
+          "sku": "10222746235837",
+          "title": "【正版包邮】滚石落下之前 阿尔贝加缪著 以加缪挚爱十词为线索 构建更具体的精神世界 连接更广阔的生命体验 深度还原崇尚真实与自由的加缪形象 LD",
+          "shop_name": "馨海图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222746235837.html"
+        },
+        {
+          "sku": "10225658727073",
+          "title": "【全新正版】 滚石落下之前 阿尔贝加缪著 江苏文艺",
+          "shop_name": "学有所成专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225658727073.html"
         }
       ],
-      "all_skus_count": 13
+      "all_skus_count": 18
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -1952,6 +2223,7 @@
         "publisher": "北京联合出版有限责任公司",
         "vender_id": "0",
         "title": "真实之书 人生最高的修行，是活出真实的自己。柳智宇全新治愈之作《真实之书》 看见自己，人生才算真正开始 购书即赠“看见自己”书签+ 觉察手册",
+        "isbn": "9787559692108",
         "sku_status": "1",
         "arrival_date": "2026-07-19",
         "_perk_text": "真实之书 人生最高的修行，是活出真实的自己。柳智宇全新治愈之作《真实之书》 看见自己，人生才算真正开始 购书即赠“看见自己”书签+ 觉察手册 真实之书 人生最高的修行，是活出真实的自己。柳智宇全新治愈之作《真实之书》 看见自己，人生才算真正开始 购书即赠“看见自己”书签+ 觉察手册 真实之书 人生最高的修行，是活出真实的自己。柳智宇全新治愈之作《真实之书》 看见自己，人生才算真正开始 购书即赠“看见自己”书签+ 觉察手册",
@@ -1959,9 +2231,9 @@
         "is_self": true,
         "category": "大众心理学心理学",
         "stock_status": "pre_order",
-        "show_count": 1,
-        "show_count_str": "1",
-        "comment_count_str": "200+",
+        "show_count": 0,
+        "show_count_str": "",
+        "comment_count_str": "",
         "perks": []
       },
       "all_perks": [],
@@ -1971,10 +2243,30 @@
           "title": "真实之书 人生最高的修行，是活出真实的自己。柳智宇全新治愈之作《真实之书》 看见自己，人生才算真正开始 购书即赠“看见自己”书签+ 觉察手册",
           "shop_name": "京东自营",
           "is_self": true,
-          "show_count_str": "1",
-          "comment_count_str": "200+",
+          "show_count_str": "",
+          "comment_count_str": "",
           "perks": [],
           "detail_url": "https://item.jd.com/15385432.html"
+        },
+        {
+          "sku": "10224493955446",
+          "title": "【赠书签+觉察手册】真实之书: 活出自己 全世界都能拥抱你 柳智宇全新治愈之作SS 真实之书: 活出自己 全世界都能拥抱你 无规格",
+          "shop_name": "风清文化图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224493955446.html"
+        },
+        {
+          "sku": "10224208340950",
+          "title": "【正版包邮】真实之书:活出自己，全世界都能拥抱你柳智宇北京联合出版公司9787559692108",
+          "shop_name": "馨海图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10224208340950.html"
         },
         {
           "sku": "10222740115137",
@@ -1987,6 +2279,56 @@
           "detail_url": "https://item.jd.com/10222740115137.html"
         },
         {
+          "sku": "10225865489120",
+          "title": "真实之书: 活出自己，全世界都能拥抱你",
+          "shop_name": "雪颜清图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225865489120.html"
+        },
+        {
+          "sku": "10223747272657",
+          "title": "真实之书 活出自己 全世界都能拥抱你 柳智宇著 生命成长系列 柳智字全新治愈之作 励志成长的答案之书 北京联合出版公司9787559692108",
+          "shop_name": "创品世纪图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223747272657.html"
+        },
+        {
+          "sku": "10226473077913",
+          "title": "真实之书:活出自己，全世界都能拥抱你/柳智宇9787559692108柳智宇著著北京联合出版公司",
+          "shop_name": "枣庄书海图书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10226473077913.html"
+        },
+        {
+          "sku": "10223730839687",
+          "title": "真实之书：活出自己，全世界都能拥抱你",
+          "shop_name": "玉兰轩图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10223730839687.html"
+        },
+        {
+          "sku": "10222894255385",
+          "title": "【现货速发 正版书籍】真实之书 活出自己全世界都能拥抱你 柳智宇 著 人生高的修行是活出真实的自己 看见自己人生才算真正开始 真实之书：活出自己，全世界都能拥抱你 无规格",
+          "shop_name": "时代新知图书旗舰店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10222894255385.html"
+        },
+        {
           "sku": "10222752099178",
           "title": "人生每一步都算数+真实之书: 活出自己全世界都能拥抱你 人生最高的修行是活出真实的自己柳智宇全新治愈之作看见自己人生才算 真实之书 无规格",
           "shop_name": "书客书图图书专营店",
@@ -1997,17 +2339,27 @@
           "detail_url": "https://item.jd.com/10222752099178.html"
         },
         {
-          "sku": "10224403709944",
-          "title": "【印签版】真实之书：活出自己全世界都能拥抱你 柳智宇著 人生高的修行是活出真实的自己 看见自己人生才算真正开始 【印签版】真实之书：活出自己，全世界都能拥抱你",
-          "shop_name": "槿致图书旗舰店",
+          "sku": "10226151450233",
+          "title": "【认准正版】真实之书：活出自己，全世界都能拥抱你SN2596 真实之书：活出自己，全世界都能拥抱你 无规格",
+          "shop_name": "书墨阁图书专营店",
           "is_self": false,
           "show_count_str": "0",
           "comment_count_str": "0",
           "perks": [],
-          "detail_url": "https://item.jd.com/10224403709944.html"
+          "detail_url": "https://item.jd.com/10226151450233.html"
+        },
+        {
+          "sku": "10225247674374",
+          "title": "【认准正版现货】真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作SN3742",
+          "shop_name": "书慧美套装书专营店",
+          "is_self": false,
+          "show_count_str": "0",
+          "comment_count_str": "0",
+          "perks": [],
+          "detail_url": "https://item.jd.com/10225247674374.html"
         }
       ],
-      "all_skus_count": 4
+      "all_skus_count": 12
     },
     "gap_level": "none",
     "distinctive_strong": [],
@@ -2037,6 +2389,7 @@
         "vender_id": "1000010601",
         "shop_name": "浙江文艺出版社京东自营旗舰店",
         "title": "剑来·山水郎 端午限时机缘版 全3册 烽火戏诸侯古典仙侠力作 8.9高评分国产动画原著小说",
+        "isbn": "9787533982263",
         "sku_status": "1",
         "_perk_text": "剑来·山水郎 端午限时机缘版 全3册 烽火戏诸侯古典仙侠力作 8.9高评分国产动画原著小说 剑来·山水郎 端午限时机缘版 全3册 剑来·山水郎 端午限时机缘版 全3册 烽火戏诸侯古典仙侠力作 8.9高评分国产动画原著小说 剑来·山水郎 端午限时机缘版 全3册 烽火戏诸侯古典仙侠力作 8.9高评分国产动画原著小说",
         "is_self": true,
@@ -2045,7 +2398,8 @@
         "show_count": 500,
         "show_count_str": "500+",
         "comment_count_str": "2万+",
-        "perks": []
+        "perks": [],
+        "_matched_by": "isbn"
       },
       "all_perks": [],
       "all_versions": [
@@ -2060,42 +2414,17 @@
           "detail_url": "https://item.jd.com/14733095.html"
         },
         {
-          "sku": "10225780999643",
-          "title": "剑来全套正版实体书小说 烽火戏诸侯古典仙侠力作剑来山水郎 【端午限定版】剑来山水郎 全3册",
+          "sku": "10027949272580",
+          "title": "剑来全套正版实体书小说 烽火戏诸侯古典仙侠力作剑来山水郎 剑来第一辑第1-7册",
           "shop_name": "文轩网旗舰店",
           "is_self": false,
           "show_count_str": "100+",
           "comment_count_str": "5000+",
-          "perks": [
-            "限量"
-          ],
-          "detail_url": "https://item.jd.com/10225780999643.html"
-        },
-        {
-          "sku": "10225767082171",
-          "title": "剑来山水郎《剑来》第二卷纪念版首发 收录动画授权长幅彩插 裸脊包布、金句刷边 搭配定制函套，附赠趣味飞机盒 剑来·山水郎",
-          "shop_name": "浙江文艺出版社官方旗舰店",
-          "is_self": false,
-          "show_count_str": "1",
-          "comment_count_str": "2",
-          "perks": [
-            "首发",
-            "赠品"
-          ],
-          "detail_url": "https://item.jd.com/10225767082171.html"
-        },
-        {
-          "sku": "10225776769482",
-          "title": "剑来·山水郎 3册 浙江文艺出版社 烽火戏诸侯 著 书籍",
-          "shop_name": "文轩网旗舰店",
-          "is_self": false,
-          "show_count_str": "0",
-          "comment_count_str": "1",
           "perks": [],
-          "detail_url": "https://item.jd.com/10225776769482.html"
+          "detail_url": "https://item.jd.com/10027949272580.html"
         }
       ],
-      "all_skus_count": 4
+      "all_skus_count": 2
     },
     "gap_level": "none",
     "distinctive_strong": [],
