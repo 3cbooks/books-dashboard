@@ -28,7 +28,16 @@
       "礼盒"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "我是你的遗物",
+    "douban_pubdate": "2026-05-28",
+    "douban_publisher": "湖南文艺出版社",
+    "douban_rating": 9.4,
+    "douban_id": 38401309,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "recent",
+    "days_since_pub": 26,
+    "pubdate_verified": "2026-05-28"
   },
   {
     "title": "大中华寻宝记城市系列 泉州寻宝记",
@@ -44,7 +53,16 @@
       "限量"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "泉州寻宝记 : 大中华寻宝记·城市系列1",
+    "douban_pubdate": "2026-06-01",
+    "douban_publisher": "中信出版集团",
+    "douban_rating": null,
+    "douban_id": 38479362,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "recent",
+    "days_since_pub": 22,
+    "pubdate_verified": "2026-06-01"
   },
   {
     "title": "基本演绎法",
@@ -58,7 +76,16 @@
     "rank": 4,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "douban_title": "基本演绎法",
+    "douban_pubdate": "2020-08-28",
+    "douban_publisher": "四川文艺出版社",
+    "douban_rating": 4.8,
+    "douban_id": 35101630,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 2125,
+    "pubdate_verified": "2020-08-28"
   },
   {
     "title": "提灯照河山刷边印特签版 人气畅销书作家淮上经典之作",
@@ -90,7 +117,16 @@
       "礼盒"
     ],
     "source": "当当",
-    "verify_status": "skipped"
+    "douban_title": "请和门外的花坐一会儿",
+    "douban_pubdate": "2025-01-28",
+    "douban_publisher": "机械工业出版社",
+    "douban_rating": 8.5,
+    "douban_id": 37195023,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 511,
+    "pubdate_verified": "2025-01-28"
   },
   {
     "title": "财之道丛书・经营十二条",
@@ -104,7 +140,16 @@
     "rank": 7,
     "perks": [],
     "source": "当当",
-    "verify_status": "skipped"
+    "douban_title": "图解稻盛和夫经营之道 : 全面解读稻盛和夫的传奇经营；季羡林、马云、孙正义、张瑞敏、张勇鼎",
+    "douban_pubdate": "2015-12-28",
+    "douban_publisher": "南方出版社",
+    "douban_rating": null,
+    "douban_id": 26671951,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "older",
+    "days_since_pub": 3830,
+    "pubdate_verified": "2015-12-28"
   },
   {
     "title": "吾辈如神：重构AI时代的生存力与胜任力",
@@ -118,7 +163,16 @@
     "rank": 8,
     "perks": [],
     "source": "当当",
-    "verify_status": "skipped"
+    "douban_title": "吾辈如神 : 重构AI时代的生存力与胜任力",
+    "douban_pubdate": "2026-06-11",
+    "douban_publisher": "北京联合出版公司",
+    "douban_rating": null,
+    "douban_id": 38499138,
+    "verify_status": "verified",
+    "pub_status_dangdang": null,
+    "pub_status": "recent",
+    "days_since_pub": 12,
+    "pubdate_verified": "2026-06-11"
   },
   {
     "title": "无人公司",
@@ -537,7 +591,7 @@
     "author": "李茵豆",
     "category": "经管",
     "rating": null,
-    "cover": "http://img3m5.ddimg.cn/89/27/30054905-1_l_1779854653.jpg",
+    "cover": "http://img3m5.ddimg.cn/89/27/30054905-1_l_1782180651.jpg",
     "url": "http://product.dangdang.com/30054905.html",
     "price": "¥59.00",
     "rank": 5,
