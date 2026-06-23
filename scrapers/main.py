@@ -245,23 +245,29 @@ def main() -> int:
                 log.error("豆瓣校验预售书抛异常:\n%s", traceback.format_exc())
 
     # ============ 抓新闻 ============
-    # 多源策略：百度 + cnpubg + chinaxwcb —— 任何单源被反爬/超时时，其他源还在
+    # 多源策略：百度 + cnpubg + chinaxwcb + Google News
+    # —— 任何单源被反爬/超时时，其他源还在
     # - 百度（强但 GitHub Actions IP 经常反爬）
-    # - cnpubg.com（http 老站，GitHub Actions 偶尔超时）
-    # - chinaxwcb.com（HTTPS，国家新闻出版署门户，最稳）
-    from . import baidu_news, cnpubg_news, chinaxwcb_news
+    # - cnpubg.com（http 老站，GitHub Actions ConnectTimeout）
+    # - chinaxwcb.com（https，GitHub Actions ConnectTimeout）
+    # - Google News RSS（Google CDN，海外+国内双通；GitHub Actions 100% 可达）
+    #   实测 cnpubg/chinaxwcb 在 GitHub Actions runner 上无法访问，
+    #   Google News 是真正的"GitHub Actions 必跑通"兜底源
+    from . import baidu_news, cnpubg_news, chinaxwcb_news, google_news
     news_baidu, status_b = _safe_run("baidu_news", baidu_news.fetch)
     news_cnpubg, status_c = _safe_run("cnpubg_news", cnpubg_news.fetch)
     news_xwcb, status_x = _safe_run("chinaxwcb_news", chinaxwcb_news.fetch)
+    news_google, status_g = _safe_run("google_news", google_news.fetch)
     sources_status["baidu_news"] = status_b
     sources_status["cnpubg_news"] = status_c
     sources_status["chinaxwcb_news"] = status_x
+    sources_status["google_news"] = status_g
 
-    # 合并三源（按 url 去重，按 title 防止"同新闻不同 url"穿透）
+    # 合并四源（按 url 去重，按 title 防止"同新闻不同 url"穿透）
     seen_urls_src = set()
     seen_titles_src = set()
     news = []
-    for n in (news_baidu or []) + (news_cnpubg or []) + (news_xwcb or []):
+    for n in (news_baidu or []) + (news_cnpubg or []) + (news_xwcb or []) + (news_google or []):
         u, t = n.get("url"), n.get("title")
         if u and u in seen_urls_src:
             continue
@@ -273,9 +279,9 @@ def main() -> int:
         if t:
             seen_titles_src.add(t)
     log.info(
-        "新闻多源合并: 百度 %d + cnpubg %d + chinaxwcb %d → 去重后 %d 条",
+        "新闻多源合并: 百度 %d + cnpubg %d + chinaxwcb %d + google %d → 去重后 %d 条",
         len(news_baidu or []), len(news_cnpubg or []),
-        len(news_xwcb or []), len(news),
+        len(news_xwcb or []), len(news_google or []), len(news),
     )
 
     if not news:
