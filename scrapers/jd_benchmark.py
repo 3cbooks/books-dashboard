@@ -28,6 +28,33 @@ from .jd import fetch_detail, fetch_sales_proxy
 log = get_logger("jd_benchmark")
 
 
+# 当当详情页 ISBN 抓取（用于"标题搜索失败 → ISBN 兜底"）
+# 当当列表页里没有 ISBN，要进详情页才能拿。详情页是 GBK 编码。
+# 13 位 ISBN：978 开头 + 10 位数字（中间允许 - 或空格分隔）
+_DD_ISBN_RE = re.compile(r"\b(978(?:[\- ]?\d){10})\b")
+
+
+def _fetch_dangdang_isbn(dangdang_url: str) -> str | None:
+    """从当当详情页抓 ISBN。失败返回 None。
+
+    例：http://product.dangdang.com/30057803.html → 9787521660609
+    """
+    if not dangdang_url:
+        return None
+    resp = http_get(dangdang_url, timeout=10)
+    if resp is None:
+        return None
+    try:
+        text = resp.content.decode("gbk", errors="replace")
+    except Exception:
+        text = resp.text
+    m = _DD_ISBN_RE.search(text)
+    if not m:
+        return None
+    isbn = m.group(1).replace(" ", "").replace("-", "")
+    return isbn if len(isbn) == 13 else None
+
+
 # 京东侧的权益识别（参考当当的规则）
 JD_PERK_PATTERNS = [
     ("亲签",   ("亲签", "签名版", "作者签名")),
@@ -268,7 +295,7 @@ def _recheck_for_self(core: str, dangdang_book: dict,
     return None
 
 
-def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
+def query_jd_for_book(dangdang_book: dict, max_results: int = 20,
                      delay: float = 0.6) -> dict:
     """
     用一本当当书的核心标题，去京东搜索找对标版本。
@@ -337,8 +364,18 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         if tail and 2 <= len(tail) <= 12 and tail not in queries:
             queries.append(tail)
 
+    # 当当详情页 ISBN（用于"主匹配 query 扩展"+"详情匹配兜底"两道关）
+    # 提前抓一次：拿到后用作额外 search keyword + ISBN 严格相等判同款。
+    # 标题营销词污染（如"2026中华人民共和国劳动法（实用版）(第四版)"）会让
+    # extract_core_title 截到 12 字 → 主匹配失败，但 ISBN 完全相等的版本应认为是同款。
+    dd_url_for_isbn = dangdang_book.get("url") or ""
+    dd_isbn = _fetch_dangdang_isbn(dd_url_for_isbn) if dd_url_for_isbn else None
+    if dd_isbn:
+        queries.append(dd_isbn)
+
     # 收集所有 query 命中的 SKU 并集（之前只取第一个有结果的 query）
     all_found_skus: set[str] = set()
+    isbn_query_skus: set[str] = set()
     for keyword in queries:
         url = f"https://so.m.jd.com/ware/search.action?keyword={quote(keyword)}&book=y"
         resp = http_get(url, timeout=15, extra_headers={"User-Agent": MOBILE_UA})
@@ -346,9 +383,16 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
             continue
         skus = set(re.findall(r'item\.m\.jd\.com/product/(\d{6,14})\.html', resp.text))
         skus2 = set(re.findall(r'"sku(?:Id)?":\s*"?(\d{6,14})"?', resp.text))
-        all_found_skus.update(skus | skus2)
+        round_skus = skus | skus2
+        all_found_skus.update(round_skus)
+        # ISBN query 召回的 SKU 大概率 ISBN 相等，优先过详情判同款，避免被 [:max] 切掉
+        if dd_isbn and keyword == dd_isbn:
+            isbn_query_skus.update(round_skus)
 
-    found_skus = list(all_found_skus)[:max_results]
+    # 把 ISBN query 召回的 SKU 排在最前面（保证主匹配阶段能优先看到 ISBN 一致的同款）
+    isbn_first = list(isbn_query_skus)
+    rest = [s for s in all_found_skus if s not in isbn_query_skus]
+    found_skus = (isbn_first + rest)[:max_results]
 
     if not found_skus:
         return {"available": False, "reason": "no_search_result"}
@@ -388,38 +432,43 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
             time.sleep(delay)
             continue
 
-        # 系列序号守护：当当书名带数字（如"人间小满3""肥志百科17"）
-        # → 京东 SKU 标题必须含相同数字（防止选到"人间小满 1+2 套装"）
-        # 用 dd_serial_match 在前面已经提取过
-        if dd_serial:
-            # 京东标题里要么含相同数字，要么是含"全 N 册"等明显套装标识
-            jd_t_full = info.get("title", "")  # 不 normalize 避免数字被吃掉
-            has_serial = (
-                dd_serial in jd_t_full
-                # 套装也算（虽然包含 1+2+...+N，但里面有这本书）
-                or re.search(rf"全\s*\d+\s*册|套装\s*\d|1\s*\+\s*2", jd_t_full)
+        # ISBN 严格相等 → 直接判同款（绕过下面的标题匹配 + 序号守护）
+        # 是最强的同款信号，标题再怎么营销词污染也不会改 ISBN
+        jd_isbn = (info.get("isbn") or "").replace("-", "").replace(" ", "")
+        match_isbn = bool(dd_isbn and jd_isbn and jd_isbn == dd_isbn)
+
+        if not match_isbn:
+            # 系列序号守护：当当书名带数字（如"人间小满3""肥志百科17"）
+            # → 京东 SKU 标题必须含相同数字（防止选到"人间小满 1+2 套装"）
+            if dd_serial:
+                # 京东标题里要么含相同数字，要么是含"全 N 册"等明显套装标识
+                jd_t_full = info.get("title", "")  # 不 normalize 避免数字被吃掉
+                has_serial = (
+                    dd_serial in jd_t_full
+                    # 套装也算（虽然包含 1+2+...+N，但里面有这本书）
+                    or re.search(rf"全\s*\d+\s*册|套装\s*\d|1\s*\+\s*2", jd_t_full)
+                )
+                if not has_serial:
+                    time.sleep(delay)
+                    continue
+
+            # 三重匹配（任一通过即视为同款）：
+            #  1. strict: 整段核心字串出现在京东标题
+            #  2. loose:  去尾数核心字串 + 作者
+            #  3. token:  关键词分词 ≥2 个出现（最宽松，解决空格/顺序差异）
+            match_strict = pop_core_normalized in self_t
+            match_loose = (
+                len(pop_core_stripped) >= 3
+                and pop_core_stripped in self_t
+                and (not author_short or author_short in self_t)
             )
-            if not has_serial:
+            match_token = (
+                len(keyword_tokens) >= 2
+                and sum(1 for t in keyword_tokens if t in self_t) >= 2
+            )
+            if not (match_strict or match_loose or match_token):
                 time.sleep(delay)
                 continue
-
-        # 三重匹配（任一通过即视为同款）：
-        #  1. strict: 整段核心字串出现在京东标题
-        #  2. loose:  去尾数核心字串 + 作者
-        #  3. token:  关键词分词 ≥2 个出现（最宽松，解决空格/顺序差异）
-        match_strict = pop_core_normalized in self_t
-        match_loose = (
-            len(pop_core_stripped) >= 3
-            and pop_core_stripped in self_t
-            and (not author_short or author_short in self_t)
-        )
-        match_token = (
-            len(keyword_tokens) >= 2
-            and sum(1 for t in keyword_tokens if t in self_t) >= 2
-        )
-        if not (match_strict or match_loose or match_token):
-            time.sleep(delay)
-            continue
         sd = sales.get(sku, {})
         info["show_count"] = sd.get("show_count", 0)
         info["show_count_str"] = sd.get("show_count_str", "")
@@ -428,6 +477,8 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         # 这样能识别到"主 SKU 标题没写但变体里有"的权益（如套装里的'亲签版'）
         perk_text = info.get("_perk_text") or info.get("title", "")
         info["perks"] = detect_jd_perks(perk_text)
+        if match_isbn:
+            info["_matched_by"] = "isbn"
         candidates.append(info)
         time.sleep(delay)
 
@@ -435,7 +486,51 @@ def query_jd_for_book(dangdang_book: dict, max_results: int = 12,
         log.info("  ↪ 已剔除 %d 个对手品牌 SKU (当当/新华等)", skipped_rivals)
 
     if not candidates:
-        return {"available": False, "reason": "no_match_after_detail"}
+        # ============ ISBN 兜底搜索（2026-06-23 加固） ============
+        # 主匹配通过标题 + ISBN 都没找到同款 → 直接拿 ISBN 当 keyword 反查
+        # 适用场景：标题搜索的 12 个候选里完全不包含京东自营 SKU（如自营 14699555
+        # 在 "9787521660609" 这个 query 下能搜到，但 "2026中华人民共和国劳动法" 的
+        # 12 SKU 里反而出现了；不同的搜索路径召回不同的 SKU，ISBN 多搜一轮兜底）
+        if dd_isbn:
+            log.info("  ↪ 标题匹配空，用 ISBN %s 兜底搜索", dd_isbn)
+            url = f"https://so.m.jd.com/ware/search.action?keyword={dd_isbn}&book=y"
+            resp = http_get(url, timeout=15, extra_headers={"User-Agent": MOBILE_UA})
+            isbn_skus: list[str] = []
+            if resp is not None:
+                isbn_skus = list(set(
+                    re.findall(r'item\.m\.jd\.com/product/(\d{6,14})\.html', resp.text)
+                    + re.findall(r'"sku(?:Id)?":\s*"?(\d{6,14})"?', resp.text)
+                ))
+                # 排除主搜已经查过的 SKU
+                isbn_skus = [s for s in isbn_skus if s not in found_skus][:max_results]
+            isbn_sales = fetch_sales_proxy(isbn_skus, batch_size=20) if isbn_skus else {}
+            for sku in isbn_skus:
+                info = fetch_detail(sku)
+                if not info:
+                    time.sleep(delay)
+                    continue
+                if is_rival_seller(info.get("title", ""), info.get("shop_name", "")):
+                    time.sleep(delay)
+                    continue
+                # ISBN 严格相等 = 同款
+                jd_isbn = (info.get("isbn") or "").replace("-", "").replace(" ", "")
+                if jd_isbn != dd_isbn:
+                    time.sleep(delay)
+                    continue
+                sd = isbn_sales.get(sku, {})
+                info["show_count"] = sd.get("show_count", 0)
+                info["show_count_str"] = sd.get("show_count_str", "")
+                info["comment_count_str"] = sd.get("comment_count_str", "")
+                perk_text = info.get("_perk_text") or info.get("title", "")
+                info["perks"] = detect_jd_perks(perk_text)
+                info["_matched_by"] = "isbn"
+                candidates.append(info)
+                time.sleep(delay)
+            if candidates:
+                log.info("  ↪ ISBN 兜底救回 %d 个候选 SKU", len(candidates))
+
+        if not candidates:
+            return {"available": False, "reason": "no_match_after_detail"}
 
     # 选最佳匹配多级排序：
     # 1. 店铺优先级（标准自营 > POP > 京喜）

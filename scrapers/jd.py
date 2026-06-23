@@ -245,8 +245,10 @@ DETAIL_PATTERNS = {
     "title":      re.compile(r'<title>([^<]+)</title>'),
     # "PublishingTime":"2025-08"  或 "出版时间"
     "pubdate":    re.compile(r'"(?:PublishingTime|出版时间)"\s*:\s*"([^"]+)"'),
-    # ISBN: 在 detailParams 里 "ISBN":"9787510482427"
-    "isbn":       re.compile(r'"ISBN"\s*:\s*"([^"]+)"'),
+    # ISBN: 京东移动详情页里没有 "ISBN" 字段名，统一用 upc（13 位 ISBN-13）
+    # 例: "upc":"9787521660609"
+    # 兼容：少数页面用 "ISBN":"..." 字段（PC 版老接口）
+    "isbn":       re.compile(r'"(?:upc|ISBN)"\s*:\s*\n?\s*"(978\d{10})"'),
     # "skuStatus":"1" → 1 在售 / 0 下架
     "sku_status": re.compile(r'"skuStatus"\s*:\s*"?(\d+)"?'),
     # "ArrivalDate":"2026-07-17" → 预订到货日期
