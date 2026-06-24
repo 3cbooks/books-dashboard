@@ -6,46 +6,57 @@
   <title>图书趋势看板 · Books Trend Dashboard</title>
   <meta name="description" content="行业专家视角的中国图书市场每日趋势看板：新书发现、行业新闻、增量机会洞察。">
 
-  <!-- Tailwind CSS via CDN（无需打包） -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS via CDN
+       2026-06-24: 之前用 cdn.tailwindcss.com (cloudfront)，国内运营商对它
+       DNS 污染严重，手机白屏。改用 @tailwindcss/browser@4（v4 浏览器版），
+       通过 jsdelivr → unpkg 双 CDN fallback：
+         - jsdelivr 在国内有 cdn.jsdmirror / fastly 镜像，可达性显著高
+         - unpkg 也有 cf 加速，作为第二备份
+       v4 用 CSS @theme 语法定义主题，不再用 window.tailwind.config -->
+  <script>
+    (function() {
+      var sources = [
+        'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+        'https://unpkg.com/@tailwindcss/browser@4',
+        'https://fastly.jsdelivr.net/npm/@tailwindcss/browser@4',
+      ];
+      function load(idx) {
+        if (idx >= sources.length) return;
+        var s = document.createElement('script');
+        s.src = sources[idx];
+        s.onerror = function() { load(idx + 1); };
+        document.head.appendChild(s);
+      }
+      load(0);
+    })();
+  </script>
+  <!-- v4 主题配置（旧 v3 用的 tailwind.config = {...} 在 v4 不再支持） -->
+  <style type="text/tailwindcss">
+    @theme {
+      /* 主色：薄荷绿系（"增量"的视觉语言） */
+      --color-mint-50:  #ecfdf5;
+      --color-mint-100: #d1fae5;
+      --color-mint-200: #a7f3d0;
+      --color-mint-300: #6ee7b7;
+      --color-mint-400: #34d399;
+      --color-mint-500: #10b981;
+      --color-mint-600: #059669;
+      --color-mint-700: #047857;
+      /* 点缀：柠黄 */
+      --color-lemon-300: #fcd34d;
+      --color-lemon-400: #fbbf24;
+      --color-lemon-500: #f59e0b;
+      /* 字体（中文优先苹方/微软雅黑，英文 Inter） */
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+    }
+  </style>
   <!-- safelist：动态 class 名（如 bg-rose-50）需要预先列出，否则会被打包工具移除 -->
   <div class="hidden bg-rose-50 bg-rose-100 text-rose-700 border-rose-100 border-rose-200
               bg-amber-50 bg-amber-100 text-amber-700 border-amber-100 border-amber-200
               bg-violet-50 bg-violet-100 text-violet-700 border-violet-100 border-violet-200
               bg-emerald-50 bg-emerald-100 text-emerald-700 border-emerald-100 border-emerald-200"></div>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            // 主色：薄荷绿系（"增量"的视觉语言）
-            mint: {
-              50:  '#ecfdf5',
-              100: '#d1fae5',
-              200: '#a7f3d0',
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-            },
-            // 点缀：柠黄
-            lemon: {
-              300: '#fcd34d',
-              400: '#fbbf24',
-              500: '#f59e0b',
-            },
-          },
-          fontFamily: {
-            // 中文：苹方/思源黑体；英文：Inter；衬线：Noto Serif（用在标题）
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'PingFang SC',
-                   'Hiragino Sans GB', 'Microsoft YaHei', 'sans-serif'],
-            serif: ['Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'serif'],
-          },
-        },
-      },
-    }
-  </script>
 
   <!-- Chart.js 用于数据图表 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
