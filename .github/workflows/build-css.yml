@@ -1,0 +1,98 @@
+name: 🎨 预编译 Tailwind CSS
+
+# 触发条件：index.html 或主题样式变更时重新生成
+# 一次性手动触发也行
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - '.github/workflows/build-css.yml'
+      - 'tailwind.config.js'
+      - 'src/input.css'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: 编译 Tailwind → assets/css/tailwind.min.css
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 检出仓库
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🟢 装 Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 装 tailwindcss
+        run: |
+          npm install -D tailwindcss@3.4.16 postcss autoprefixer
+
+      - name: 🛠️ 生成 tailwind.config.js + input.css
+        run: |
+          # 配置：扫描 index.html 里实际用到的 class，自定义 mint/lemon 色板和字体
+          cat > tailwind.config.js <<'EOF'
+          module.exports = {
+            content: ['./index.html', './assets/**/*.{js,html}'],
+            theme: {
+              extend: {
+                colors: {
+                  mint: {
+                    50:  '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0',
+                    300: '#6ee7b7', 400: '#34d399', 500: '#10b981',
+                    600: '#059669', 700: '#047857',
+                  },
+                  lemon: {
+                    300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b',
+                  },
+                },
+                fontFamily: {
+                  sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'PingFang SC',
+                         'Hiragino Sans GB', 'Microsoft YaHei', 'sans-serif'],
+                  serif: ['Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'serif'],
+                },
+              },
+            },
+            plugins: [],
+            // safelist：动态生成的 class（如 bg-rose-50/bg-amber-100 等），
+            // 防止编译时被 PurgeCSS 误删
+            safelist: [
+              { pattern: /^(bg|text|border)-(rose|amber|violet|emerald|mint)-(50|100|200|400|500|600|700)$/ },
+            ],
+          }
+          EOF
+          mkdir -p src
+          cat > src/input.css <<'EOF'
+          @tailwind base;
+          @tailwind components;
+          @tailwind utilities;
+          EOF
+
+      - name: 🎨 编译 CSS
+        run: |
+          mkdir -p assets/css
+          npx tailwindcss -c tailwind.config.js -i src/input.css -o assets/css/tailwind.min.css --minify
+          echo "✅ 生成完毕"
+          ls -lh assets/css/tailwind.min.css
+
+      - name: 💾 提交编译结果
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/css/tailwind.min.css
+
+          if git diff --staged --quiet; then
+            echo "ℹ️ CSS 无变化，跳过提交"
+            exit 0
+          fi
+
+          DATE=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M')
+          git commit -m "build: 预编译 Tailwind CSS $DATE"
+          git push
+          echo "✅ 已提交"
