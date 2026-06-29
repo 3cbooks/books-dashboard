@@ -58,6 +58,16 @@
           <span class="w-1.5 h-1.5 bg-mint-500 rounded-full animate-pulse"></span>
           <span class="font-medium">数据更新于 <span id="last-update">—</span></span>
         </span>
+        <!-- 访客统计：不蒜子（busuanzi）开源服务，无需注册，跨页面累计 -->
+        <span id="visitor-stats"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
+                     bg-slate-50 border border-slate-200 text-slate-600">
+          👥 累计访问
+          <span id="busuanzi_value_site_pv" class="font-semibold text-slate-700">…</span>
+          次 / 访客
+          <span id="busuanzi_value_site_uv" class="font-semibold text-slate-700">…</span>
+          人
+        </span>
         <a href="mailto:jiangqianyi@jd.com?subject=【图书趋势看板】反馈建议"
            class="hidden md:inline-flex items-center gap-1 text-slate-500
                   hover:text-mint-700 transition"
@@ -176,5 +186,9 @@
 
   <!-- App JS（带版本号防缓存）-->
   <script src="assets/js/app.js?v=20260617b"></script>
+
+  <!-- 访客统计（不蒜子，免费开源） -->
+  <!-- 必须 async=false 才能让顶部 <span id="busuanzi_value_*"> 被填充 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
