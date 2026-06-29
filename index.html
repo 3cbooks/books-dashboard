@@ -58,16 +58,6 @@
           <span class="w-1.5 h-1.5 bg-mint-500 rounded-full animate-pulse"></span>
           <span class="font-medium">数据更新于 <span id="last-update">—</span></span>
         </span>
-        <!-- 访客统计：不蒜子（busuanzi）开源服务，无需注册，跨页面累计 -->
-        <span id="visitor-stats"
-              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                     bg-slate-50 border border-slate-200 text-slate-600">
-          👥 累计访问
-          <span id="busuanzi_value_site_pv" class="font-semibold text-slate-700">…</span>
-          次 / 访客
-          <span id="busuanzi_value_site_uv" class="font-semibold text-slate-700">…</span>
-          人
-        </span>
         <a href="mailto:jiangqianyi@jd.com?subject=【图书趋势看板】反馈建议"
            class="hidden md:inline-flex items-center gap-1 text-slate-500
                   hover:text-mint-700 transition"
@@ -178,11 +168,27 @@
         © 2026 Books Trend Dashboard ·
         数据来源: 当当 / 京东 / 豆瓣 / 微信读书 / 百度新闻 / 出版商务网 / Publishers Weekly
       </div>
-      <div>
-        每日北京时间 03:00 自动更新 · Powered by GitHub Actions + Pages
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- 访客统计：不蒜子 + 历史基数 100（6-17 至 6-29 期间百度统计未导出的部分） -->
+        <span id="visitor-stats" class="inline-flex items-center gap-1.5 text-slate-500">
+          👥 累计访问
+          <span id="visitor-pv" class="font-semibold text-slate-700">…</span>
+          次 / 访客
+          <span id="visitor-uv" class="font-semibold text-slate-700">…</span>
+          人
+        </span>
+        <span>每日北京时间 03:00 自动更新 · Powered by GitHub Actions + Pages</span>
       </div>
     </div>
   </footer>
+
+  <!-- 不蒜子原始 span（隐藏），脚本要它存在才能注入数字 -->
+  <span id="busuanzi_container_site_pv" style="display:none">
+    <span id="busuanzi_value_site_pv">0</span>
+  </span>
+  <span id="busuanzi_container_site_uv" style="display:none">
+    <span id="busuanzi_value_site_uv">0</span>
+  </span>
 
   <!-- App JS（带版本号防缓存）-->
   <script src="assets/js/app.js?v=20260617b"></script>
@@ -190,5 +196,41 @@
   <!-- 访客统计（不蒜子，免费开源） -->
   <!-- 必须 async=false 才能让顶部 <span id="busuanzi_value_*"> 被填充 -->
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script>
+    // 不蒜子从 2026-06-29 才开始计数，之前 6-17~6-29 这段时间的访问要用基数补回。
+    // 基数 100（粗略估值，可在百度统计导出后修正为精确数字）
+    const VISITOR_BASE_PV = 100;
+    const VISITOR_BASE_UV = 100;
+
+    // 不蒜子是异步加载的，需要轮询 busuanzi_value_site_pv 被填充
+    function updateVisitorStats() {
+      const pvEl = document.getElementById('busuanzi_value_site_pv');
+      const uvEl = document.getElementById('busuanzi_value_site_uv');
+      const pvDisp = document.getElementById('visitor-pv');
+      const uvDisp = document.getElementById('visitor-uv');
+      if (!pvEl || !uvEl || !pvDisp || !uvDisp) return false;
+
+      const pvRaw = parseInt(pvEl.textContent, 10);
+      const uvRaw = parseInt(uvEl.textContent, 10);
+      // 不蒜子未加载完成时这两个值是 0 / NaN
+      if (isNaN(pvRaw) || isNaN(uvRaw) || pvRaw === 0) return false;
+
+      pvDisp.textContent = (pvRaw + VISITOR_BASE_PV).toLocaleString('zh-CN');
+      uvDisp.textContent = (uvRaw + VISITOR_BASE_UV).toLocaleString('zh-CN');
+      return true;
+    }
+    // 不蒜子加载延迟较大，每秒轮询直到拿到数字（最多 10 秒）
+    let attempts = 0;
+    const timer = setInterval(() => {
+      if (updateVisitorStats() || ++attempts > 10) {
+        clearInterval(timer);
+        // 即使超时也至少显示基数，不让用户看到 "…"
+        if (attempts > 10) {
+          document.getElementById('visitor-pv').textContent = VISITOR_BASE_PV.toLocaleString('zh-CN');
+          document.getElementById('visitor-uv').textContent = VISITOR_BASE_UV.toLocaleString('zh-CN');
+        }
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
