@@ -14,16 +14,7 @@
       "独家"
     ],
     "source": "当当",
-    "douban_title": "离开前请叫醒我",
-    "douban_pubdate": "2015-06-01",
-    "douban_publisher": "湖南文艺出版社",
-    "douban_rating": 6.5,
-    "douban_id": 26448151,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 4062,
-    "pubdate_verified": "2015-06-01"
+    "verify_status": "unverified"
   },
   {
     "title": "格格不入 全二册",
@@ -39,16 +30,7 @@
       "礼盒"
     ],
     "source": "当当",
-    "douban_title": "巫玉之光续集（全二册）",
-    "douban_pubdate": "2011-10-19",
-    "douban_publisher": "故宫出版社",
-    "douban_rating": null,
-    "douban_id": 6999382,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 5383,
-    "pubdate_verified": "2011-10-19"
+    "verify_status": "unverified"
   },
   {
     "title": "大中华寻宝记城市系列 泉州寻宝记",
@@ -64,16 +46,7 @@
       "限量"
     ],
     "source": "当当",
-    "douban_title": "泉州寻宝记 : 大中华寻宝记·城市系列1",
-    "douban_pubdate": "2026-06-01",
-    "douban_publisher": "中信出版集团",
-    "douban_rating": null,
-    "douban_id": 38479362,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 44,
-    "pubdate_verified": "2026-06-01"
+    "verify_status": "unverified"
   },
   {
     "title": "杠杆思维 AI时代给普通人的认知升级系统 李尚龙新书",
@@ -87,16 +60,7 @@
     "rank": 4,
     "perks": [],
     "source": "当当",
-    "douban_title": "杠杆思维 : AI时代给普通人的认知升级系统",
-    "douban_pubdate": "2026-07-28",
-    "douban_publisher": "万卷出版公司",
-    "douban_rating": null,
-    "douban_id": 38534870,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "preorder",
-    "days_since_pub": -13,
-    "pubdate_verified": "2026-07-28"
+    "verify_status": "unverified"
   },
   {
     "title": "紫：陪安东尼度过漫长岁月Ⅶ",
@@ -112,16 +76,7 @@
       "亲签"
     ],
     "source": "当当",
-    "douban_title": "紫：陪安东尼度过漫长岁月Ⅶ",
-    "douban_pubdate": "2026-05-28",
-    "douban_publisher": "湖南文艺出版社",
-    "douban_rating": 7.9,
-    "douban_id": 38493973,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 48,
-    "pubdate_verified": "2026-05-28"
+    "verify_status": "unverified"
   },
   {
     "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
@@ -135,7 +90,7 @@
     "rank": 6,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "小学生化学元素大图鉴 附赠“元素周期表”挂图 带孩子走进原子与分子的奇妙世界 从小培养科学脑",
@@ -151,7 +106,7 @@
       "赠品"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "树人：培养幸福而优秀的孩子",
@@ -168,7 +123,7 @@
       "限量"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "滚石落下之前 如今有太多事物 配得上这么一脚 踢飞那些消耗你的 留下你真正珍视的 在反抗与守护中 找回对生活最本真的热爱当当自营",
@@ -216,7 +171,7 @@
     "raw_title": "吾辈如神：重构AI时代的生存力与胜任力",
     "author": "彼得",
     "category": "科技",
-    "rating": null,
+    "rating": 5.0,
     "cover": "http://img3m5.ddimg.cn/22/30/30071965-1_l_1781145772.jpg",
     "url": "http://product.dangdang.com/30071965.html",
     "price": "¥77.90",
@@ -258,7 +213,7 @@
     "rating": null,
     "cover": "http://img3m0.ddimg.cn/57/28/30072000-1_l_1782202992.jpg",
     "url": "http://product.dangdang.com/30072000.html",
-    "price": "¥24.10",
+    "price": "¥22.20",
     "rank": 15,
     "perks": [],
     "source": "当当"
@@ -286,7 +241,7 @@
     "rating": null,
     "cover": "http://img3m6.ddimg.cn/53/24/30071996-1_l_1783490189.jpg",
     "url": "http://product.dangdang.com/30071996.html",
-    "price": "¥17.60",
+    "price": "¥16.20",
     "rank": 17,
     "perks": [],
     "source": "当当"
@@ -296,7 +251,7 @@
     "raw_title": "十日终焉10钟鸣 杀虫队队员新书 当当自营",
     "author": "杀虫队队员",
     "category": "热销",
-    "rating": 4.1,
+    "rating": 4.2,
     "cover": "http://img3m7.ddimg.cn/90/35/30035007-1_l_1779419730.jpg",
     "url": "http://product.dangdang.com/30035007.html",
     "price": "¥38.50",
@@ -672,7 +627,7 @@
     "raw_title": "《宣传画史稿》 朱海辰 著 经典画作 历史图像 一部宣传画艺术史 为当代主题美术创作提供参考 20年研究 超500幅宣传画作品 难忘的时代印记 “中国好书”作者 国家出版基金支持项目",
     "author": "朱海辰",
     "category": "人文",
-    "rating": 4.8,
+    "rating": 4.9,
     "cover": "http://img3m8.ddimg.cn/15/11/30061068-1_l_1780386799.jpg",
     "url": "http://product.dangdang.com/30061068.html",
     "price": "¥132.00",

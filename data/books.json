@@ -5,7 +5,7 @@
     "author": "卢思浩",
     "category": "热销",
     "rating": null,
-    "cover": "http://img3m1.ddimg.cn/72/7/30083301-1_l_1784008298.jpg",
+    "cover": "http://img3m1.ddimg.cn/72/7/30083301-1_l_1784184851.jpg",
     "url": "http://product.dangdang.com/30083301.html",
     "price": "¥33.80",
     "rank": 1,
@@ -17,17 +17,17 @@
     "verify_status": "unverified"
   },
   {
-    "title": "格格不入 全二册",
-    "raw_title": "格格不入 全二册 全新刷边典藏版 印特签 畅销作家巫哲经典作品  全新修订典藏版 新增十周年后记  当当自营图书",
-    "author": "巫哲",
+    "title": "此刻是春天当当",
+    "raw_title": "此刻是春天当当亲签版 卢思浩2025全新长篇力作  纵使世界寒冬  但我耕种春天",
+    "author": "卢思浩",
     "category": "热销",
     "rating": null,
-    "cover": "http://img3m2.ddimg.cn/61/35/30069232-1_l_1781604635.jpg",
-    "url": "http://product.dangdang.com/30069232.html",
-    "price": "¥52.80",
+    "cover": "http://img3m7.ddimg.cn/34/28/30053167-1_l_1779846329.jpg",
+    "url": "http://product.dangdang.com/30053167.html",
+    "price": "¥28.50",
     "rank": 2,
     "perks": [
-      "礼盒"
+      "亲签"
     ],
     "source": "当当",
     "verify_status": "unverified"
@@ -49,16 +49,18 @@
     "verify_status": "unverified"
   },
   {
-    "title": "杠杆思维 AI时代给普通人的认知升级系统 李尚龙新书",
-    "raw_title": "杠杆思维 AI时代给普通人的认知升级系统 李尚龙新书 当当专享印签版 当当自营图书",
-    "author": "李尚龙",
-    "category": "科技",
+    "title": "HOW&WHY美国经典少儿百科知识全书 精华典藏版",
+    "raw_title": "HOW&WHY美国经典少儿百科知识全书 精华典藏版（赠送互动小问答手册！迪士尼、凯迪克金奖绘画团队，荣获美国国家出版奖、全国优秀科普作品！60年殿堂级儿童百科品牌，50多个国家家长的共同选择！）",
+    "author": "美国世界图书出版公司",
+    "category": "童书",
     "rating": null,
-    "cover": "http://img3m9.ddimg.cn/88/36/30076189-1_l_1782801631.jpg",
-    "url": "http://product.dangdang.com/30076189.html",
-    "price": "¥45.80",
+    "cover": "http://img3m2.ddimg.cn/89/25/30079952-1_l_1782806050.jpg",
+    "url": "http://product.dangdang.com/30079952.html",
+    "price": "¥99.00",
     "rank": 4,
-    "perks": [],
+    "perks": [
+      "赠品"
+    ],
     "source": "当当",
     "verify_status": "unverified"
   },
@@ -79,16 +81,18 @@
     "verify_status": "unverified"
   },
   {
-    "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
-    "raw_title": "真实之书  印签版  活出自己 全世界都能拥抱你  “生命成长” 系列的开篇之作",
-    "author": "柳智宇",
+    "title": "我们长在大地上三册礼盒",
+    "raw_title": "我们长在大地上三册礼盒",
+    "author": "汪曾祺",
     "category": "热销",
-    "rating": 5.0,
-    "cover": "http://img3m9.ddimg.cn/33/15/30045939-1_l_1779254036.jpg",
-    "url": "http://product.dangdang.com/30045939.html",
-    "price": "¥39.90",
+    "rating": null,
+    "cover": "http://img3m6.ddimg.cn/91/19/30062926-1_l_1783074741.jpg",
+    "url": "http://product.dangdang.com/30062926.html",
+    "price": "¥89.40",
     "rank": 6,
-    "perks": [],
+    "perks": [
+      "礼盒"
+    ],
     "source": "当当",
     "verify_status": "skipped"
   },
@@ -109,19 +113,16 @@
     "verify_status": "skipped"
   },
   {
-    "title": "树人：培养幸福而优秀的孩子",
-    "raw_title": "树人：培养幸福而优秀的孩子（限量签名版）",
-    "author": "郑委",
+    "title": "真实之书 印签版 活出自己 全世界都能拥抱你 “生命成长” 系列的开篇之作",
+    "raw_title": "真实之书  印签版  活出自己 全世界都能拥抱你  “生命成长” 系列的开篇之作",
+    "author": "柳智宇",
     "category": "热销",
     "rating": 5.0,
-    "cover": "http://img3m7.ddimg.cn/11/29/30078587-1_l_1783490169.jpg",
-    "url": "http://product.dangdang.com/30078587.html",
-    "price": "¥48.00",
+    "cover": "http://img3m9.ddimg.cn/33/15/30045939-1_l_1779254036.jpg",
+    "url": "http://product.dangdang.com/30045939.html",
+    "price": "¥39.90",
     "rank": 8,
-    "perks": [
-      "亲签",
-      "限量"
-    ],
+    "perks": [],
     "source": "当当",
     "verify_status": "skipped"
   },
@@ -139,21 +140,6 @@
     "source": "当当"
   },
   {
-    "title": "我们长在大地上三册礼盒",
-    "raw_title": "我们长在大地上三册礼盒",
-    "author": "汪曾祺",
-    "category": "热销",
-    "rating": null,
-    "cover": "http://img3m6.ddimg.cn/91/19/30062926-1_l_1783074741.jpg",
-    "url": "http://product.dangdang.com/30062926.html",
-    "price": "¥89.40",
-    "rank": 10,
-    "perks": [
-      "礼盒"
-    ],
-    "source": "当当"
-  },
-  {
     "title": "米吴科学漫画・奇妙万象篇 第十辑37-40册",
     "raw_title": "米吴科学漫画・奇妙万象篇 第十辑37-40册（共4册）赠知识海报卡牌集卡册 米吴漫画上新 小学生超爱看的科学漫画6-12岁儿童科普童书课外阅读 专家推荐",
     "author": "",
@@ -162,20 +148,7 @@
     "cover": "http://img3m1.ddimg.cn/42/25/30053571-1_l_1779273832.jpg",
     "url": "http://product.dangdang.com/30053571.html",
     "price": "¥69.80",
-    "rank": 11,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "吾辈如神：重构AI时代的生存力与胜任力",
-    "raw_title": "吾辈如神：重构AI时代的生存力与胜任力",
-    "author": "彼得",
-    "category": "科技",
-    "rating": 5.0,
-    "cover": "http://img3m5.ddimg.cn/22/30/30071965-1_l_1781145772.jpg",
-    "url": "http://product.dangdang.com/30071965.html",
-    "price": "¥77.90",
-    "rank": 12,
+    "rank": 10,
     "perks": [],
     "source": "当当"
   },
@@ -188,7 +161,7 @@
     "cover": "http://img3m7.ddimg.cn/29/26/30083357-1_l_1783567220.jpg",
     "url": "http://product.dangdang.com/30083357.html",
     "price": "¥49.90",
-    "rank": 13,
+    "rank": 11,
     "perks": [],
     "source": "当当"
   },
@@ -201,61 +174,7 @@
     "cover": "http://img3m4.ddimg.cn/10/12/30073834-1_l_1781573557.jpg",
     "url": "http://product.dangdang.com/30073834.html",
     "price": "¥27.40",
-    "rank": 14,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "世界经典神话与传说故事 四年级上册快乐读书吧人教版新版升级版人民教育出版社",
-    "raw_title": "世界经典神话与传说故事 四年级上册快乐读书吧人教版新版升级版人民教育出版社",
-    "author": "",
-    "category": "社科",
-    "rating": null,
-    "cover": "http://img3m0.ddimg.cn/57/28/30072000-1_l_1782202992.jpg",
-    "url": "http://product.dangdang.com/30072000.html",
-    "price": "¥22.20",
-    "rank": 15,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "五行大义 争鸣系列002",
-    "raw_title": "五行大义 争鸣系列002 当当独家特装版 中华书局出版",
-    "author": "萧吉",
-    "category": "热销",
-    "rating": 3.5,
-    "cover": "http://img3m5.ddimg.cn/12/2/30073935-1_l_1783564086.jpg",
-    "url": "http://product.dangdang.com/30073935.html",
-    "price": "¥88.00",
-    "rank": 16,
-    "perks": [
-      "独家"
-    ],
-    "source": "当当"
-  },
-  {
-    "title": "中国神话传说 四年级上册快乐读书吧 人教版 新版升级版 人民教育出版社",
-    "raw_title": "中国神话传说 四年级上册快乐读书吧 人教版 新版升级版 人民教育出版社",
-    "author": "",
-    "category": "社科",
-    "rating": null,
-    "cover": "http://img3m6.ddimg.cn/53/24/30071996-1_l_1783490189.jpg",
-    "url": "http://product.dangdang.com/30071996.html",
-    "price": "¥16.20",
-    "rank": 17,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "十日终焉10钟鸣 杀虫队队员新书",
-    "raw_title": "十日终焉10钟鸣 杀虫队队员新书 当当自营",
-    "author": "杀虫队队员",
-    "category": "热销",
-    "rating": 4.2,
-    "cover": "http://img3m7.ddimg.cn/90/35/30035007-1_l_1779419730.jpg",
-    "url": "http://product.dangdang.com/30035007.html",
-    "price": "¥38.50",
-    "rank": 18,
+    "rank": 12,
     "perks": [],
     "source": "当当"
   },
@@ -268,7 +187,20 @@
     "cover": "http://img3m4.ddimg.cn/96/0/30081444-1_l_1783990755.jpg",
     "url": "http://product.dangdang.com/30081444.html",
     "price": "¥44.20",
-    "rank": 19,
+    "rank": 13,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "吾辈如神：重构AI时代的生存力与胜任力",
+    "raw_title": "吾辈如神：重构AI时代的生存力与胜任力",
+    "author": "彼得",
+    "category": "科技",
+    "rating": 5.0,
+    "cover": "http://img3m5.ddimg.cn/22/30/30071965-1_l_1781145772.jpg",
+    "url": "http://product.dangdang.com/30071965.html",
+    "price": "¥77.90",
+    "rank": 14,
     "perks": [],
     "source": "当当"
   },
@@ -281,24 +213,90 @@
     "cover": "http://img3m4.ddimg.cn/0/23/30083724-1_l_1783558355.jpg",
     "url": "http://product.dangdang.com/30083724.html",
     "price": "¥22.40",
+    "rank": 15,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "请和我门外的花坐一会儿",
+    "raw_title": "请和我门外的花坐一会儿  当当专享汪老画作透卡3张 汪曾祺诞辰106周年 祝福礼盒面包袋  愿你春和景明 夏日生花 好景常在 软fufu的治愈系读物 抚平焦虑 过松软的日子",
+    "author": "汪曾祺",
+    "category": "热销",
+    "rating": 5.0,
+    "cover": "http://img3m1.ddimg.cn/41/24/30042581-1_l_1778575984.jpg",
+    "url": "http://product.dangdang.com/30042581.html",
+    "price": "¥89.00",
+    "rank": 16,
+    "perks": [
+      "礼盒"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "海浪",
+    "raw_title": "海浪(三面刷边礼盒版)：外封自带夜光工艺  享帆布包+透卡+金句卡+飞机盒 弗吉尼亚伍尔夫巅峰之作",
+    "author": "弗吉尼亚・伍尔夫",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m5.ddimg.cn/73/23/30073105-1_l_1783302527.jpg",
+    "url": "http://product.dangdang.com/30073105.html",
+    "price": "¥29.90",
+    "rank": 17,
+    "perks": [
+      "礼盒"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "杠杆思维 AI时代给普通人的认知升级系统 李尚龙新书",
+    "raw_title": "杠杆思维 AI时代给普通人的认知升级系统 李尚龙新书 当当专享印签版 当当自营图书",
+    "author": "李尚龙",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m9.ddimg.cn/88/36/30076189-1_l_1782801631.jpg",
+    "url": "http://product.dangdang.com/30076189.html",
+    "price": "¥45.80",
+    "rank": 18,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "2026中华人民共和国劳动法",
+    "raw_title": "2026中华人民共和国劳动法（实用版）(第四版)",
+    "author": "中国法治出版社",
+    "category": "热销",
+    "rating": null,
+    "cover": "http://img3m3.ddimg.cn/17/2/30057803-1_l_1779262996.jpg",
+    "url": "http://product.dangdang.com/30057803.html",
+    "price": "¥10.00",
+    "rank": 19,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "十日终焉10钟鸣 杀虫队队员新书",
+    "raw_title": "十日终焉10钟鸣 杀虫队队员新书 当当自营",
+    "author": "杀虫队队员",
+    "category": "热销",
+    "rating": 4.2,
+    "cover": "http://img3m7.ddimg.cn/90/35/30035007-1_l_1779419730.jpg",
+    "url": "http://product.dangdang.com/30035007.html",
+    "price": "¥38.50",
     "rank": 20,
     "perks": [],
     "source": "当当"
   },
   {
-    "title": "沙海腔隙",
-    "raw_title": "沙海腔隙 限量刷边版 南派三叔新书《沙海腔隙》是前传 看完《藏海花》看《沙海腔隙》 再看《沙海1+2》当当自营图书",
-    "author": "南派三叔",
+    "title": "病鹤 经典短篇集《老妓抄》全新文库本 知名译者蕾克倾力翻译 新增代表作《病鹤》等四篇目 空脊锁线双封平装",
+    "raw_title": "病鹤 经典短篇集《老妓抄》全新文库本 知名译者蕾克倾力翻译 新增代表作《病鹤》等四篇目 空脊锁线双封平装 当当自营",
+    "author": "冈本加乃子",
     "category": "小说",
     "rating": null,
-    "cover": "http://img3m0.ddimg.cn/98/23/30084020-1_l_1783660858.jpg",
-    "url": "http://product.dangdang.com/30084020.html",
-    "price": "¥39.50",
-    "rank": 2,
-    "perks": [
-      "限量",
-      "礼盒"
-    ],
+    "cover": "http://img3m1.ddimg.cn/45/35/30077631-1_l_1784173511.jpg",
+    "url": "http://product.dangdang.com/30077631.html",
+    "price": "¥41.60",
+    "rank": 3,
+    "perks": [],
     "source": "当当"
   },
   {
@@ -310,27 +308,12 @@
     "cover": "http://img3m9.ddimg.cn/23/1/30066719-1_l_1781493447.jpg",
     "url": "http://product.dangdang.com/30066719.html",
     "price": "¥39.80",
-    "rank": 3,
+    "rank": 4,
     "perks": [
       "亲签",
       "限量",
       "礼盒",
       "赠品"
-    ],
-    "source": "当当"
-  },
-  {
-    "title": "此刻是春天当当",
-    "raw_title": "此刻是春天当当亲签版 卢思浩2025全新长篇力作  纵使世界寒冬  但我耕种春天",
-    "author": "卢思浩",
-    "category": "小说",
-    "rating": null,
-    "cover": "http://img3m7.ddimg.cn/34/28/30053167-1_l_1779846329.jpg",
-    "url": "http://product.dangdang.com/30053167.html",
-    "price": "¥28.50",
-    "rank": 4,
-    "perks": [
-      "亲签"
     ],
     "source": "当当"
   },
@@ -348,17 +331,17 @@
     "source": "当当"
   },
   {
-    "title": "请和我门外的花坐一会儿",
-    "raw_title": "请和我门外的花坐一会儿  当当专享汪老画作透卡3张 汪曾祺诞辰106周年 祝福礼盒面包袋  愿你春和景明 夏日生花 好景常在 软fufu的治愈系读物 抚平焦虑 过松软的日子",
-    "author": "汪曾祺",
-    "category": "文学",
+    "title": "地铁三部曲 典藏纪念版全3册 刷版版 飞机盒发货",
+    "raw_title": "地铁三部曲 典藏纪念版全3册 刷版版 飞机盒发货 限量编码 随书订制周边赠品 俄罗斯废土末日文学科幻小说作者点赞封面当当字体图书",
+    "author": "德米特里・格鲁霍夫斯基",
+    "category": "小说",
     "rating": 5.0,
-    "cover": "http://img3m1.ddimg.cn/41/24/30042581-1_l_1778575984.jpg",
-    "url": "http://product.dangdang.com/30042581.html",
-    "price": "¥89.00",
-    "rank": 4,
+    "cover": "http://img3m8.ddimg.cn/52/34/30082588-1_l_1783654197.jpg",
+    "url": "http://product.dangdang.com/30082588.html",
+    "price": "¥198.00",
+    "rank": 6,
     "perks": [
-      "礼盒"
+      "限量"
     ],
     "source": "当当"
   },
@@ -392,47 +375,28 @@
     "source": "当当"
   },
   {
-    "title": "终活 师永刚 著",
-    "raw_title": "终活 师永刚 著 当当专享限量亲签版(随书附送终活清单+项目经理式家属速成秘笈；癌症治疗的通识课 无国界病人2；AI时代病人自救样本，中国版终活笔记)",
-    "author": "师永刚",
+    "title": "只有ICU医生知道 影视版权已授权 剧集开发中 微信读书2025年度榜单top1 写给每一个认真活着的人 ICU女医生16年生死手记",
+    "raw_title": "只有ICU医生知道 影视版权已授权 剧集开发中 微信读书2025年度榜单top1 写给每一个认真活着的人 ICU女医生16年生死手记 当当自营",
+    "author": "医生",
     "category": "文学",
-    "rating": null,
-    "cover": "http://img3m6.ddimg.cn/13/5/30081856-1_l_1783908320.jpg",
-    "url": "http://product.dangdang.com/30081856.html",
-    "price": "¥62.40",
+    "rating": 5.0,
+    "cover": "http://img3m0.ddimg.cn/63/15/30062700-1_l_1783058587.jpg",
+    "url": "http://product.dangdang.com/30062700.html",
+    "price": "¥41.20",
     "rank": 7,
-    "perks": [
-      "亲签",
-      "限量",
-      "赠品"
-    ],
+    "perks": [],
     "source": "当当"
   },
   {
-    "title": "海浪",
-    "raw_title": "海浪(三面刷边礼盒版)：外封自带夜光工艺  享帆布包+透卡+金句卡+飞机盒 弗吉尼亚伍尔夫巅峰之作",
-    "author": "弗吉尼亚・伍尔夫",
-    "category": "童书",
-    "rating": null,
-    "cover": "http://img3m5.ddimg.cn/73/23/30073105-1_l_1783302527.jpg",
-    "url": "http://product.dangdang.com/30073105.html",
-    "price": "¥29.90",
-    "rank": 3,
-    "perks": [
-      "礼盒"
-    ],
-    "source": "当当"
-  },
-  {
-    "title": "我大于一切 把人生的主位，还给自己 从只能靠自己到全然活出自己",
-    "raw_title": "我大于一切  把人生的主位，还给自己  从只能靠自己到全然活出自己",
-    "author": "晴山",
-    "category": "童书",
-    "rating": null,
-    "cover": "http://img3m5.ddimg.cn/22/29/30068005-1_l_1782457104.jpg",
-    "url": "http://product.dangdang.com/30068005.html",
-    "price": "¥32.80",
-    "rank": 4,
+    "title": "地球上离故乡最远的地方",
+    "raw_title": "地球上离故乡最远的地方（七堇年全新旅行随笔，深度记叙南美之行，于山海间回望故乡与自我。）",
+    "author": "七堇年",
+    "category": "文学",
+    "rating": 4.0,
+    "cover": "http://img3m2.ddimg.cn/50/19/30075062-1_l_1782870905.jpg",
+    "url": "http://product.dangdang.com/30075062.html",
+    "price": "¥45.60",
+    "rank": 8,
     "perks": [],
     "source": "当当"
   },
@@ -445,10 +409,38 @@
     "cover": "http://img3m2.ddimg.cn/80/11/30071132-1_l_1781665165.jpg",
     "url": "http://product.dangdang.com/30071132.html",
     "price": "¥39.80",
+    "rank": 4,
+    "perks": [
+      "亲签"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "五种时间 收获复利人生【当当",
+    "raw_title": "五种时间 收获复利人生【当当专享亲签版】五种时间升级版 王潇 著 人生管理策略书 时间管理 重建人生秩序 正版书籍",
+    "author": "王潇",
+    "category": "童书",
+    "rating": null,
+    "cover": "http://img3m9.ddimg.cn/12/33/30079479-1_l_1783480451.jpg",
+    "url": "http://product.dangdang.com/30079479.html",
+    "price": "¥53.70",
     "rank": 5,
     "perks": [
       "亲签"
     ],
+    "source": "当当"
+  },
+  {
+    "title": "about关于11 有余地的生活 小红书 著 about关于内容品牌 MOOK书 生活方式 休闲爱好 深耕生活 治愈自我",
+    "raw_title": "about关于11 有余地的生活 小红书 著 about关于内容品牌 MOOK书 生活方式 休闲爱好 深耕生活 治愈自我",
+    "author": "小红书",
+    "category": "童书",
+    "rating": null,
+    "cover": "http://img3m4.ddimg.cn/87/33/30075594-1_l_1783911151.jpg",
+    "url": "http://product.dangdang.com/30075594.html",
+    "price": "¥66.00",
+    "rank": 6,
+    "perks": [],
     "source": "当当"
   },
   {
@@ -460,20 +452,7 @@
     "cover": "http://img3m3.ddimg.cn/61/22/30080023-1_l_1783323249.jpg",
     "url": "http://product.dangdang.com/30080023.html",
     "price": "¥34.00",
-    "rank": 6,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "肥志百科17原来你是这样的发明A篇",
-    "raw_title": "肥志百科17原来你是这样的发明A篇",
-    "author": "肥志",
-    "category": "社科",
-    "rating": null,
-    "cover": "http://img3m2.ddimg.cn/67/33/30066862-1_l_1781782589.jpg",
-    "url": "http://product.dangdang.com/30066862.html",
-    "price": "¥31.70",
-    "rank": 2,
+    "rank": 7,
     "perks": [],
     "source": "当当"
   },
@@ -486,22 +465,23 @@
     "cover": "http://img3m1.ddimg.cn/86/35/30072821-1_l_1783321473.jpg",
     "url": "http://product.dangdang.com/30072821.html",
     "price": "¥36.00",
-    "rank": 3,
+    "rank": 2,
     "perks": [],
     "source": "当当"
   },
   {
-    "title": "吾皇猫漫画名著 童年 高尔基 随书附送童年人物贴纸+速通攻略+课程表 考试不用愁！快乐读书吧 六年级上册阅读",
-    "raw_title": "吾皇猫漫画名著 童年 高尔基 随书附送童年人物贴纸+速通攻略+课程表 考试不用愁！快乐读书吧 六年级上册阅读（全网超三千万粉丝IP“吾皇猫”名著系列开篇力作！降低名著阅读门槛，让名著像漫画一样好读！）",
-    "author": "高尔基",
+    "title": "我喜欢我喜欢我 独家限量",
+    "raw_title": "我喜欢我喜欢我  独家限量亲签版 温暖奶爸James杨永聪 高能量妈妈白雪首/部漫画书 全网百万粉丝2400万人气期待 当当自营图书",
+    "author": "杨永聪",
     "category": "社科",
     "rating": null,
-    "cover": "http://img3m4.ddimg.cn/72/23/30077064-1_l_1782871185.jpg",
-    "url": "http://product.dangdang.com/30077064.html",
+    "cover": "http://img3m1.ddimg.cn/61/8/30083191-1_l_1784008742.jpg",
+    "url": "http://product.dangdang.com/30083191.html",
     "price": "¥39.80",
-    "rank": 4,
+    "rank": 3,
     "perks": [
-      "赠品"
+      "亲签",
+      "限量"
     ],
     "source": "当当"
   },
@@ -510,36 +490,36 @@
     "raw_title": "肥志百科18原来你是这样的美食E篇",
     "author": "肥志",
     "category": "社科",
-    "rating": null,
+    "rating": 5.0,
     "cover": "http://img3m4.ddimg.cn/69/35/30066864-1_l_1781782806.jpg",
     "url": "http://product.dangdang.com/30066864.html",
+    "price": "¥31.70",
+    "rank": 4,
+    "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "肥志百科17原来你是这样的发明A篇",
+    "raw_title": "肥志百科17原来你是这样的发明A篇",
+    "author": "肥志",
+    "category": "社科",
+    "rating": 5.0,
+    "cover": "http://img3m2.ddimg.cn/67/33/30066862-1_l_1781782589.jpg",
+    "url": "http://product.dangdang.com/30066862.html",
     "price": "¥31.70",
     "rank": 5,
     "perks": [],
     "source": "当当"
   },
   {
-    "title": "精灵之子套装8册",
-    "raw_title": "精灵之子套装8册",
+    "title": "精灵之子儿童奇幻文学全8册 [9-14岁]桥梁书 官方正版 美国超人气奇幻外国儿童文学 适合小学生阅读 提高阅读写作 共情 想象力 自信 独立思考 决断力 领导力 爆款畅销",
+    "raw_title": "精灵之子儿童奇幻文学全8册 [9-14岁]桥梁书 官方正版 美国超人气奇幻外国儿童文学 适合小学生阅读 提高阅读写作 共情 想象力 自信 独立思考 决断力 领导力 爆款畅销",
     "author": "香农・梅辛基",
     "category": "经管",
     "rating": 3.0,
-    "cover": "http://img3m3.ddimg.cn/52/34/29991013-1_l_1783653562.jpg",
+    "cover": "http://img3m3.ddimg.cn/52/34/29991013-1_l_1784184990.jpg",
     "url": "http://product.dangdang.com/29991013.html",
     "price": "¥139.00",
-    "rank": 4,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "非法智慧 张之路大幻想系列",
-    "raw_title": "非法智慧 张之路大幻想系列",
-    "author": "张之路",
-    "category": "经管",
-    "rating": null,
-    "cover": "http://img3m5.ddimg.cn/70/23/30052015-1_l_1782893440.jpg",
-    "url": "http://product.dangdang.com/30052015.html",
-    "price": "¥23.40",
     "rank": 5,
     "perks": [],
     "source": "当当"
@@ -571,6 +551,19 @@
     "source": "当当"
   },
   {
+    "title": "你好，安东医生：宝宝体检记",
+    "raw_title": "你好，安东医生：宝宝体检记（畅销260万册 安东医生系列新作！呆萌动物的欢乐体检记！3-6岁）",
+    "author": "西村敏雄",
+    "category": "经管",
+    "rating": null,
+    "cover": "http://img3m4.ddimg.cn/42/2/30076044-1_l_1783043449.jpg",
+    "url": "http://product.dangdang.com/30076044.html",
+    "price": "¥27.40",
+    "rank": 8,
+    "perks": [],
+    "source": "当当"
+  },
+  {
     "title": "1929",
     "raw_title": "1929",
     "author": "安德鲁・罗斯・索尔金",
@@ -584,6 +577,34 @@
     "source": "当当"
   },
   {
+    "title": "央地之间：转移支付的政治及其他",
+    "raw_title": "央地之间：转移支付的政治及其他（增订本）（本书焕新改版，限量钤印。以转移支付为独特的观察视角，深度剖析央地互动的底层逻辑，探寻渐进式改革的公共政策空间）",
+    "author": "王瑞民",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m7.ddimg.cn/76/24/30076177-1_l_1782122425.jpg",
+    "url": "http://product.dangdang.com/30076177.html",
+    "price": "¥64.60",
+    "rank": 2,
+    "perks": [
+      "限量"
+    ],
+    "source": "当当"
+  },
+  {
+    "title": "智者千问：普通人如何练就AI超能力",
+    "raw_title": "智者千问：普通人如何练就AI超能力",
+    "author": "杜雨",
+    "category": "科技",
+    "rating": null,
+    "cover": "http://img3m3.ddimg.cn/51/19/30071103-1_l_1780992434.jpg",
+    "url": "http://product.dangdang.com/30071103.html",
+    "price": "¥45.50",
+    "rank": 3,
+    "perks": [],
+    "source": "当当"
+  },
+  {
     "title": "OPE一人即系统：AI时代的单人创业家范式 张祺博士力作 借 AI 解锁单人创业未来",
     "raw_title": "OPE一人即系统：AI时代的单人创业家范式 张祺博士力作 借 AI 解锁单人创业未来",
     "author": "张祺",
@@ -592,34 +613,23 @@
     "cover": "http://img3m9.ddimg.cn/97/33/30054319-1_l_1779267298.jpg",
     "url": "http://product.dangdang.com/30054319.html",
     "price": "¥74.10",
-    "rank": 2,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "场景经济：智能时代经济发展新范式",
-    "raw_title": "场景经济：智能时代经济发展新范式",
-    "author": "尹西明",
-    "category": "科技",
-    "rating": null,
-    "cover": "http://img3m5.ddimg.cn/72/34/30073005-1_l_1781249174.jpg",
-    "url": "http://product.dangdang.com/30073005.html",
-    "price": "¥37.40",
-    "rank": 3,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "观念的穹顶：经济思想史二十四讲",
-    "raw_title": "观念的穹顶：经济思想史二十四讲",
-    "author": "罗杰・E.巴克豪斯",
-    "category": "科技",
-    "rating": null,
-    "cover": "http://img3m1.ddimg.cn/20/13/30071171-1_l_1781056426.jpg",
-    "url": "http://product.dangdang.com/30071171.html",
-    "price": "¥85.00",
     "rank": 4,
     "perks": [],
+    "source": "当当"
+  },
+  {
+    "title": "假面骑士系列视觉志：55周年纪念版",
+    "raw_title": "假面骑士系列视觉志：55周年纪念版（当当首刷限定版）首刷限量 含亚克力摆台 明信片套组（39张） 飞机盒发货 当当自营",
+    "author": "上海新创华文化发展有限公司",
+    "category": "人文",
+    "rating": null,
+    "cover": "http://img3m7.ddimg.cn/39/29/30055647-1_l_1778738080.jpg",
+    "url": "http://product.dangdang.com/30055647.html",
+    "price": "¥57.60",
+    "rank": 1,
+    "perks": [
+      "限量"
+    ],
     "source": "当当"
   },
   {
@@ -631,7 +641,7 @@
     "cover": "http://img3m8.ddimg.cn/15/11/30061068-1_l_1780386799.jpg",
     "url": "http://product.dangdang.com/30061068.html",
     "price": "¥132.00",
-    "rank": 1,
+    "rank": 2,
     "perks": [],
     "source": "当当"
   },
@@ -644,19 +654,6 @@
     "cover": "http://img3m1.ddimg.cn/92/3/30061541-1_l_1779934037.jpg",
     "url": "http://product.dangdang.com/30061541.html",
     "price": "¥25.90",
-    "rank": 2,
-    "perks": [],
-    "source": "当当"
-  },
-  {
-    "title": "好世界：草木之心与古花鸟画之美 三色封面",
-    "raw_title": "好世界：草木之心与古花鸟画之美  三色封面随机发货 广西师范大学 《照夜白》作者新作，一百余幅高清花鸟画，四十篇文字解读，一本书打开中国古代绘画艺术之门",
-    "author": "韦羲",
-    "category": "人文",
-    "rating": 5.0,
-    "cover": "http://img3m0.ddimg.cn/6/27/30075810-1_l_1783305439.jpg",
-    "url": "http://product.dangdang.com/30075810.html",
-    "price": "¥57.20",
     "rank": 3,
     "perks": [],
     "source": "当当"
