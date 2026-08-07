@@ -13,12 +13,7 @@
       "赠品"
     ],
     "source": "当当",
-    "douban_title": "HOW&WHY美国经典少儿百科知识全书 精华典藏版（赠送互动小问答手册！迪士尼、凯迪克金奖绘画团队，荣获美国国家出版奖、全国优秀科普作品！60年殿堂级儿童百科品牌，50多个国家家长的共同选择！） : 精华典藏版",
-    "douban_pubdate": null,
-    "douban_publisher": "美国世界图书出版公司",
-    "douban_rating": null,
-    "douban_id": 38534650,
-    "verify_status": "verified"
+    "verify_status": "unverified"
   },
   {
     "title": "好妈妈胜过好老师3",
@@ -32,23 +27,14 @@
     "rank": 2,
     "perks": [],
     "source": "当当",
-    "douban_title": "好妈妈胜过好老师3 : 自由流经的地方爱才会生长",
-    "douban_pubdate": "2026-07-28",
-    "douban_publisher": "作家出版社",
-    "douban_rating": null,
-    "douban_id": 38525938,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "recent",
-    "days_since_pub": 10,
-    "pubdate_verified": "2026-07-28"
+    "verify_status": "unverified"
   },
   {
     "title": "唐诗三百首译注",
     "raw_title": "唐诗三百首译注（彩图珍藏本）布面精装 三面全彩刷边（随书附赠精美藏书票+明信片+限量编号+70周年社庆纪念章）",
     "author": "蘅塘退士",
     "category": "热销",
-    "rating": null,
+    "rating": 5.0,
     "cover": "http://img3m0.ddimg.cn/34/14/30074650-1_l_1785983569.jpg",
     "url": "http://product.dangdang.com/30074650.html",
     "price": "¥148.00",
@@ -59,16 +45,7 @@
       "赠品"
     ],
     "source": "当当",
-    "douban_title": "唐诗三百首译注",
-    "douban_pubdate": "2019-12-28",
-    "douban_publisher": "上海古籍出版社",
-    "douban_rating": null,
-    "douban_id": 34873299,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "older",
-    "days_since_pub": 2414,
-    "pubdate_verified": "2019-12-28"
+    "verify_status": "unverified"
   },
   {
     "title": "学习观：从感觉懂了到真正学会",
@@ -82,16 +59,7 @@
     "rank": 4,
     "perks": [],
     "source": "当当",
-    "douban_title": "学习观 : 从感觉懂了到真正学会",
-    "douban_pubdate": "2026-07-12",
-    "douban_publisher": "电子工业出版社",
-    "douban_rating": null,
-    "douban_id": 38571741,
-    "verify_status": "verified",
-    "pub_status_dangdang": null,
-    "pub_status": "recent",
-    "days_since_pub": 26,
-    "pubdate_verified": "2026-07-12"
+    "verify_status": "unverified"
   },
   {
     "title": "一群喵小剧场1 特典版 如果历史是一群喵系列新书",
@@ -105,12 +73,7 @@
     "rank": 5,
     "perks": [],
     "source": "当当",
-    "douban_title": "肥志百科8原来你是这样的动物D篇  如果历史是一群喵作者肥志全新力作 : 如果历史是一群喵作者肥志全新力作",
-    "douban_pubdate": null,
-    "douban_publisher": "广东旅游出版社",
-    "douban_rating": null,
-    "douban_id": 36493004,
-    "verify_status": "verified"
+    "verify_status": "unverified"
   },
   {
     "title": "让夏天漫过我 张皓宸“四季计划”夏辑清爽来袭 用文字给这炎热的夏天降降温 散文+小说跨文体新书 写给所有正在人生漂流期的人",
@@ -124,15 +87,15 @@
     "rank": 6,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "它的正义",
-    "raw_title": "它的正义 当当专享Papi妈妈亲签+小狗印章 赠车贴及fa条拉页 当当自营",
+    "raw_title": "它的正义 当当专享Papi妈妈亲签 赠车贴及fa条拉页 当当自营",
     "author": "Papi妈妈",
     "category": "热销",
     "rating": 5.0,
-    "cover": "http://img3m1.ddimg.cn/39/11/30086931-1_l_1785908930.jpg",
+    "cover": "http://img3m1.ddimg.cn/39/11/30086931-1_l_1786073911.jpg",
     "url": "http://product.dangdang.com/30086931.html",
     "price": "¥39.80",
     "rank": 7,
@@ -140,7 +103,7 @@
       "亲签"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "卢思浩 离开前请叫醒我",
@@ -157,14 +120,14 @@
       "独家"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "五行大义 争鸣系列002",
     "raw_title": "五行大义 争鸣系列002 当当独家特装版 中华书局出版",
     "author": "萧吉",
     "category": "热销",
-    "rating": 3.2,
+    "rating": 3.6,
     "cover": "http://img3m5.ddimg.cn/12/2/30073935-1_l_1785477215.jpg",
     "url": "http://product.dangdang.com/30073935.html",
     "price": "¥88.00",
