@@ -13,7 +13,7 @@
       "赠品"
     ],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "unverified",
     "douban_title": "HOW&WHY美国经典少儿百科知识全书 精华典藏版（赠送互动小问答手册！迪士尼、凯迪克金奖绘画团队，荣获美国国家出版奖、全国优秀科普作品！60年殿堂级儿童百科品牌，50多个国家家长的共同选择！） : 精华典藏版",
     "douban_pubdate": null,
     "douban_publisher": "美国世界图书出版公司",
@@ -32,7 +32,7 @@
     "rank": 2,
     "perks": [],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "unverified",
     "douban_title": "袖珍现代汉语词典商务印书馆",
     "douban_pubdate": null,
     "douban_publisher": "商务国际辞书编辑部",
@@ -54,7 +54,7 @@
       "赠品"
     ],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "unverified",
     "douban_title": "唐诗三百首（古典名著全本全注全译）",
     "douban_pubdate": null,
     "douban_publisher": "岳麓书社",
@@ -76,7 +76,7 @@
       "独家"
     ],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "unverified",
     "douban_title": "离开前请叫醒我",
     "douban_pubdate": "2015-06-01",
     "douban_publisher": "湖南文艺出版社",
@@ -99,7 +99,7 @@
     "rank": 5,
     "perks": [],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "unverified",
     "douban_title": "肥志百科8原来你是这样的动物D篇  如果历史是一群喵作者肥志全新力作 : 如果历史是一群喵作者肥志全新力作",
     "douban_pubdate": null,
     "douban_publisher": "广东旅游出版社",
@@ -118,7 +118,7 @@
     "rank": 6,
     "perks": [],
     "source": "当当",
-    "verify_status": "verified",
+    "verify_status": "skipped",
     "douban_title": "新时代与新飞跃——21世纪马克思主义的实践伟力",
     "douban_pubdate": null,
     "douban_publisher": "浙江人民出版社",
@@ -139,7 +139,7 @@
       "独家"
     ],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "我爱幼儿园",
@@ -153,7 +153,7 @@
     "rank": 8,
     "perks": [],
     "source": "当当",
-    "verify_status": "unverified"
+    "verify_status": "skipped"
   },
   {
     "title": "达・芬奇：500年纪念版",
